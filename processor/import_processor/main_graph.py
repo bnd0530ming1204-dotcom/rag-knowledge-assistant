@@ -80,5 +80,5 @@ class KBImportWorkflow:
 
 if __name__ == "__main__":
     workflow = KBImportWorkflow()
-    graph = workflow.graph
-    print(graph)
+    workflow_graph = workflow.graph
+    print(workflow_graph)
