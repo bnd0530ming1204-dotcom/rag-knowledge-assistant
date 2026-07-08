@@ -1,8 +1,10 @@
+import json
 import logging
 
 from langgraph.constants import END
 from langgraph.graph import StateGraph
 
+from processor.import_processor.base import setup_logging
 from processor.import_processor.nodes.a_node_entry import NodeEntry
 from processor.import_processor.nodes.b_node_pdf_to_md import NodePDFToMD
 from processor.import_processor.nodes.c_node_md_img import NodeMDImg
@@ -36,6 +38,7 @@ class KBImportWorkflow:
         elif state.get("is_md_read_enabled"):
             return "c_node_md_img"
         else:
+            logging.info("route_after_entry路由器：未指定导入文件类型")
             return END
 
     def build_graph(self):
@@ -78,7 +81,26 @@ class KBImportWorkflow:
 
         return graph_compile
 
+    def run(self, state: ImportGraphState, stream: bool = False):
+
+        if stream:
+            return self.graph.stream(state,stream_mode="values")
+        else:
+            return self.graph.invoke(state)
+
+
 if __name__ == "__main__":
+    # 启用日志
+    setup_logging()
+
     workflow = KBImportWorkflow()
-    workflow_graph = workflow.graph
-    print(workflow_graph)
+    # workflow_graph = workflow.graph
+    init_state = {"import_file_path": r"E:\H3C.md"}
+
+    for event in workflow.run(init_state, stream=True):
+        print(f"state: {event}")
+
+    # final_state = workflow.run(init_state, stream=False)
+    # print(json.dumps(final_state, ensure_ascii=False, indent=4))
+
+
