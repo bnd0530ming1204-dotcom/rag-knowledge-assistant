@@ -1,6 +1,7 @@
 import json
 import logging
 import time
+import zipfile
 from pathlib import Path
 
 import requests
@@ -154,14 +155,40 @@ class NodePDFToMD(BaseNode):
 
     def _step_3_download_and_extract(self, zip_url: str, output_dir_obj: Path, pdf_stem: str) -> str:
         logging.info(f"_step_3_download_and_extract下载并解压改名")
-        return "md_path"
+
+        # 1 下载
+        response = requests.get(zip_url)
+        if response.status_code!=200:
+            raise FileProcessingError(message=f"获得下载文件失败: {response.text}")
+        zip_save_path = output_dir_obj / f"{pdf_stem}_result.zip"
+        with open(zip_save_path,"wb") as f:
+            f.write(response.content)
+
+        # 2 创建目录
+        extract_target_dir = output_dir_obj / pdf_stem
+        extract_target_dir.mkdir(parents=True, exist_ok=True)
+
+        # 3 解压
+        with zipfile.ZipFile(zip_save_path, "r") as  zip_file_obj:
+            zip_file_obj.extractall(extract_target_dir)
+        self.logger.info(f"【ZIP解压】已清空旧的解压目录：{extract_target_dir}")
+
+        # 4 改名
+        self.logger.info(f"【MD重命名】找到MinerU生成的full.md文件")
+        target_md_file = extract_target_dir / "full.md"
+        self.logger.info(f"【MD重命名】开始将full.md文件进行重命名")
+        new_md_path = target_md_file.with_name(f"{pdf_stem}.md")
+        target_md_file.rename(new_md_path)
+        self.logger.info(f"【MD重命名】重命名成功，文件名：{pdf_stem}.md")
+
+        return str(new_md_path.absolute()) # 返回绝对路径的字符串
 
 
 if __name__ == "__main__":
     setup_logging()
 
     init_state = {
-        "pdf_path": "E:\H3C.pdf",
+        "pdf_path": "E:\hak180产品安全手册.pdf",
         "file_dir": "E:\output"
     }
 
