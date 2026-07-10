@@ -78,7 +78,6 @@ pip install fastapi
 pip install "uvicorn[standard]"
 
 
-
 """
     清华镜像
 """
@@ -175,3 +174,19 @@ knowledge/
 """
 扫描后的图片：List[Tuple[str,str,Tuple[str,str]]]
 扫描后的图片：list[(图片名，图片路径,(图片上文，图片下文))]
+
+"""
+    mineru上传
+"""
+response = requests.post(url, headers=header, json=data)
+result = response.json()
+signed_url = result["data"]["file_urls"][0]
+batch_id = result["data"]["batch_id"]
+
+requests.put(signed_url, data=f)
+
+poll_url = f"{mineru_config.base_url}/extract-results/batch/{batch_id}"
+res_poll = requests.get(url=poll_url, headers=header, timeout=10)
+extract_results = poll_data["data"]["extract_result"]
+result_item = extract_results[0]
+full_zip_url = result_item["full_zip_url"]
