@@ -38,7 +38,7 @@ class NodePDFToMD(BaseNode):
 
         # 5 设置state结果
         state["md_content"] = md_content
-        state["md_path"] = md_path
+        state["md_path"] = md_path # E:\works-class\sz0525课程\掌柜智库课件0525\1.笔记\xxx.md
         return state
 
     def _step_1_validate_paths(self, state: ImportGraphState):
