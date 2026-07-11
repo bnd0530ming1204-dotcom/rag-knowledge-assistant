@@ -14,4 +14,14 @@ class NodeMDImg(BaseNode):
     def process(self, state: ImportGraphState):
         logging.info(f"{self.name}节点开始执行...")
 
+        # 1 参数处理
+
+        # 2 图片扫描
+
+        # 3 视觉模型摘要
+
+        # 4 上传minio，替换md
+
+        # 5 保存备份md
+
         return state
