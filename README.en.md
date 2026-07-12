@@ -18,6 +18,7 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
 删除旧版本：pip uninstall torch torchvision torchaudio -y
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126 (5090)
 pip install --pre torch torchvision --index-url https://download.pytorch.org/whl/nightly/cu128 (5090)
 cuda开发工具：https://developer.nvidia.com/cuda-12-4-0-download-archive
