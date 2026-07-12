@@ -23,11 +23,22 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 pip install --pre torch torchvision --index-url https://download.pytorch.org/whl/nightly/cu128 (5090)
 cuda开发工具：https://developer.nvidia.com/cuda-12-4-0-download-archive
 检查pytorch状态：python -c "import torch; print('CUDA Available:', torch.cuda.is_available())"
+"""
+    环境中安装了 TensorFlow
+    transformers 库的 TensorFlow 后端模块不支持 Keras 3
+    BGE-M3 是 PyTorch 模型、推理完全不需要 TensorFlow，
+    但 transformers 导入时会自动探测环境中的所有深度学习后端，
+    可能触发 TensorFlow 模块的加载，从而抛出错误
+"""
+冲突解决1：pip install tf-keras
+冲突解决2：pip uninstall tensorflow keras tf-keras -y
 
 测试：
 import torch
 print(torch.cuda.is_available())  # 如果输出 True，说明成功认出显卡！
 print(torch.version.cuda)         # 这会显示你安装的 PyTorch 自带的 CUDA 版本（比如 12.1）
+
+
 
 """
     mineru
