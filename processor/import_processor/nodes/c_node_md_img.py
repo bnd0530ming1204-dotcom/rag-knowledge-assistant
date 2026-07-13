@@ -2,10 +2,11 @@ import base64
 import json
 import logging
 import os
+import re
 import time
 from collections import deque
 from pathlib import Path
-from typing import Tuple, re, List, Dict, Deque
+from typing import Tuple, List, Dict, Deque
 
 from langchain_openai import ChatOpenAI
 from minio import Minio
@@ -32,7 +33,7 @@ class NodeMDImg(BaseNode):
 
         # 1 参数处理
         md_content, md_path_obj, images_dir = self._step_1_get_content(state)
-        print(f"md_content:{md_content},md_path_obj:{md_path_obj},images_dir:{images_dir}")
+        # print(f"md_content:{md_content},md_path_obj:{md_path_obj},images_dir:{images_dir}")
 
         # 2 图片扫描
         target_images = self._step_2_scan_images(md_content, images_dir)  # List[(str,str,Tuple[str,str])]
@@ -91,9 +92,9 @@ class NodeMDImg(BaseNode):
             context = self._find_image_in_md(md_content, image_file)  # 找到图片的上下文
 
             # 过滤MD中未引用的图片
-            # if not context:
-            #     self.logger.warning(f"图片未在MD中引用，跳过处理：{image_file}")
-            #     continue
+            if not context:
+                self.logger.warning(f"图片未在MD中引用，跳过处理：{image_file}")
+                continue
 
             target_images.append((image_file, img_path, context))  # List[(str,str,Tuple(pre,post))]
 
@@ -178,13 +179,17 @@ class NodeMDImg(BaseNode):
         vl_ai = get_llm_client(lm_config.vl_model)
 
         # 2 调用模型
+        pre_text = ""
+        post_text = ""
+        if image_content:
+            pre_text, post_text = image_content
         messages = [
             {
                 "role": "user",
                 "content": [
                     {
                         "type": "text",
-                        "text": f"""这是"{root_folder}"文件中的一张图片，图片上文部分为"{image_content[0]}"，下文部分为"{image_content[1]}"，请用中文简要总结这张图片的内容，用于 Markdown 图片标题。尽量不要超过10个字"""
+                        "text": f"""这是"{root_folder}"文件中的一张图片，图片上文部分为"{pre_text}"，下文部分为"{post_text}"，请用中文简要总结这张图片的内容，用于 Markdown 图片标题。尽量不要超过10个字"""
                     },
                     {
                         "type": "image_url",
@@ -212,11 +217,10 @@ class NodeMDImg(BaseNode):
         self.clean_minio_directory(minio_client, upload_dir)
 
         # 2 批量上传图片，获得minio的urls
-        urls = self.upload_images_batch(minio_client,upload_dir, target_images)
+        urls = self.upload_images_batch(minio_client, upload_dir, target_images)
 
         # 3 将摘要和url路径合并
-        image_info = self.merge_summary_and_url(summaries,urls)
-
+        image_info = self.merge_summary_and_url(summaries, urls)
 
         # 4 替换md文件的摘要和路径
         md_content = self.process_md_file(md_content, image_info)
@@ -234,16 +238,63 @@ class NodeMDImg(BaseNode):
                 self.logger.error(f"删除失败：{error}")
 
     # 步骤4方法2批量上传文件
-    def upload_images_batch(self, minio_client:Minio, upload_dir:str, target_images:List[Tuple[str, str, Tuple[str, str]]]):
-        pass
+    def upload_images_batch(self, minio_client: Minio, upload_dir: str,
+                            target_images: List[Tuple[str, str, Tuple[str, str]]]):
+        urls = {}
+        for img_file, img_path, _ in target_images:
+            # 上传
+            object_name = f"{upload_dir}/{img_file}"  # minio文件对象名(路径:带后缀)
+            print(f"上传文件：{object_name}")
+            urls[img_file] = self.upload_to_minio(minio_client, img_path, object_name)  # 返回minio的url
+
+        return urls
 
     # 步骤4方法3合并参数
-    def merge_summary_and_url(self, summaries: Dict[str, str], urls)->Dict[str, Tuple[str, str]]:
-        pass
+    def merge_summary_and_url(self, summaries: Dict[str, str], urls) -> Dict[str, Tuple[str, str]]:
+        image_info = {}
+        for image_file, summary in summaries.items():
+            # image_info[image_file] = (summary, urls[image_file])
+            # v url = urls.get(image_file)
+            if url := urls.get(image_file):
+                image_info[image_file] = (summary, url)
+        return image_info
 
     # 步骤4方法4替换md中的url和摘要summary
-    def process_md_file(self, md_content:str, image_info:Dict[str, Tuple[str, str]]):
-        pass
+    def process_md_file(self, md_content: str, image_info: Dict[str, Tuple[str, str]]):
+        for image_file, (summary, url) in image_info.items():
+            pattern = re.compile(r"!\[.*?\]\(.*?" + re.escape(image_file) + r".*?\)")
+            md_content = pattern.sub(lambda m: f"![{summary}]({url})", md_content)
+        return md_content
+
+    # 步骤4方法5上传minio
+    def upload_to_minio(self, minio_client: Minio, img_path: str, object_name: str) -> str:
+
+        # 上传minio
+        ifSuccess = minio_client.fput_object(bucket_name=minio_config.bucket_name, object_name=object_name,
+                                             file_path=img_path,
+                                             content_type=f"image/{os.path.splitext(img_path)[1][1:]}")
+        url = f"http://{minio_config.endpoint}/{minio_config.bucket_name}/{object_name}"  # http://192.168.222.99:9000/桶名/项目名/文档名/107.png
+        return url
+
+    # 步骤5保存和备份新文档
+    def _step_5_backup_new_md_file(self, origin_md_path: str, md_content: str) -> str:
+        """
+        步骤5：将处理后的MD内容保存为新文件（原文件不变，避免数据丢失）
+        新文件命名规则：原文件名 + _new.md（如test.md → test_new.md）
+        :param origin_md_path: 原始MD文件完整路径
+        :param md_content: 处理后的新MD内容
+        :return: 新MD文件的完整路径
+        """
+        # 构造新文件路径：替换原后缀为 _new.md
+        new_md_file_name = os.path.splitext(origin_md_path)[0] + "_new.md"
+
+        # 写入新MD内容（覆盖写入，若文件已存在则更新）
+        with open(new_md_file_name, "w", encoding="utf-8") as f:
+            f.write(md_content)
+
+        self.logger.info(f"处理后MD文件已保存，新文件路径：{new_md_file_name}")
+
+        return new_md_file_name
 
 
 if __name__ == "__main__":
