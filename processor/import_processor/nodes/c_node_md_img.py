@@ -1,3 +1,4 @@
+import base64
 import json
 import logging
 import os
@@ -6,9 +7,17 @@ from collections import deque
 from pathlib import Path
 from typing import Tuple, re, List, Dict, Deque
 
+from langchain_openai import ChatOpenAI
+from minio import Minio
+from minio.deleteobjects import DeleteObject
+
+from config.lm_config import lm_config
+from config.minio_config import minio_config
 from processor.import_processor.base import BaseNode, setup_logging
 from processor.import_processor.exceptions import StateFieldError, FileProcessingError
 from processor.import_processor.state import ImportGraphState
+from utils.llm_utils import get_llm_client
+from utils.minio_utils import get_minio_client
 
 
 class NodeMDImg(BaseNode):
@@ -112,10 +121,10 @@ class NodeMDImg(BaseNode):
         summaries = {}
         request_deque = deque()
 
-        for img_file,image_path,context in target_images:
+        for img_file, image_path, context in target_images:
             self._apply_api_rate_limit(request_deque, max_requests=10)
             # 调用视觉模型
-            summaries[img_file] = self._summarize_image(image_path,root_folder=doc_stem , image_content=context) # 图片摘要
+            summaries[img_file] = self._summarize_image(image_path, root_folder=doc_stem, image_content=context)  # 图片摘要
         return summaries
 
     # 步骤3方法1
@@ -159,13 +168,83 @@ class NodeMDImg(BaseNode):
     # 步骤3方法2
     def _summarize_image(self, image_path: str, root_folder: str, image_content: Tuple[str, str]) -> str:
 
-        # 1 llm模型工具
+        # 0 图片的base64编码
+        with open(image_path, "rb") as img_file:
+            image_base64 = base64.b64encode(img_file.read()).decode("utf-8")
+
+        # 1 vlm模型工具
+        # ai = ChatOpenAI(model=lm_config.vl_model, temperature=lm_config.llm_temperature, base_url=lm_config.base_url,
+        #                 api_key=lm_config.api_key, model_kwargs={"response_format": {"type": "json_object"}})
+        vl_ai = get_llm_client(lm_config.vl_model)
 
         # 2 调用模型
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"""这是"{root_folder}"文件中的一张图片，图片上文部分为"{image_content[0]}"，下文部分为"{image_content[1]}"，请用中文简要总结这张图片的内容，用于 Markdown 图片标题。尽量不要超过10个字"""
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{image_base64}"
+                        }
+                    }
+                ]
+            }
+        ]
+        response = vl_ai.invoke(messages)
 
         # 3 处理返回摘要信息
+        return response.content.strip().replace("\n", "")
 
-        return "图片描述"
+    def _step_4_upload_and_replace(self, doc_stem: str, target_images: List[Tuple[str, str, Tuple[str, str]]],
+                                   summaries: Dict[str, str], md_content: str):
+        # 0 minio客户端
+        minio_client = get_minio_client()
+        minio_img_dir = minio_config.img_dir
+        upload_dir = f"{minio_img_dir}/{doc_stem}"
+        print(f"将图片存入{upload_dir}目录下")
+
+        # 1 清理minio目录
+        self.clean_minio_directory(minio_client, upload_dir)
+
+        # 2 批量上传图片，获得minio的urls
+        urls = self.upload_images_batch(minio_client,upload_dir, target_images)
+
+        # 3 将摘要和url路径合并
+        image_info = self.merge_summary_and_url(summaries,urls)
+
+
+        # 4 替换md文件的摘要和路径
+        md_content = self.process_md_file(md_content, image_info)
+
+        return md_content
+
+    # 步骤4方法1清理目录
+    def clean_minio_directory(self, minio_client: Minio, upload_dir):
+        objects_to_delete = minio_client.list_objects(minio_config.bucket_name, prefix=upload_dir, recursive=True)
+        # 构造删除列表
+        delete_list = [DeleteObject(obj.object_name) for obj in objects_to_delete]
+        if delete_list:
+            errors = minio_client.remove_objects(minio_config.bucket_name, delete_list)
+            for error in errors:
+                self.logger.error(f"删除失败：{error}")
+
+    # 步骤4方法2批量上传文件
+    def upload_images_batch(self, minio_client:Minio, upload_dir:str, target_images:List[Tuple[str, str, Tuple[str, str]]]):
+        pass
+
+    # 步骤4方法3合并参数
+    def merge_summary_and_url(self, summaries: Dict[str, str], urls)->Dict[str, Tuple[str, str]]:
+        pass
+
+    # 步骤4方法4替换md中的url和摘要summary
+    def process_md_file(self, md_content:str, image_info:Dict[str, Tuple[str, str]]):
+        pass
+
 
 if __name__ == "__main__":
     setup_logging()
