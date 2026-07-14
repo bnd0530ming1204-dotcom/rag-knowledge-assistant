@@ -1,7 +1,12 @@
+import re
 from typing import List, Dict
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from sympy.polys.subresultants_qq_zz import final_touches
 
 from processor.import_processor.base import BaseNode
 from processor.import_processor.exceptions import StateFieldError
+from processor.import_processor.import_config import get_config
 from processor.import_processor.state import ImportGraphState
 
 
@@ -23,12 +28,28 @@ class NodeDocumentSplit(BaseNode):
 
         # 2 标题切(初切)
         sections, title_count, lines_count = self._step_2_split_by_title(content, file_title)
+        # for section in sections:
+        #     print(f"{section['title']}")
+        #     print(f"{section['content']}")
+        #     print("========================================================================================================")
+        # print(f"标题数量: {title_count}")
+        # print(f"行数: {lines_count}")
+
+
+        print("----------------------------------------------------------------------------------------------")
 
         # 3 无标题兜底(默认标题)
         sections = self._step_3_handle_no_title(content, sections, title_count, file_title)
 
         # 4 块精细化处理(长切短合)
         sections = self._step_4_refine_chunks(sections)
+        for section in sections:
+            print(f"{section['title']}")
+            print(f"{section['content']}")
+            print("========================================================================================================")
+        print(f"标题数量: {title_count}")
+        print(f"行数: {lines_count}")
+
 
         # 5 打印日志
         self._step_5_print_stats(lines_count, sections)
@@ -65,41 +86,72 @@ class NodeDocumentSplit(BaseNode):
         lines = content.split("\n")
         current_lines = []
         in_code_block = False
+        current_title = ""
 
         # 切换逻辑(标题切)
-        title_pattern = r'\s*#{1,6}\s+.+'
+        title_pattern = r'\s*#{1,6}\s+.+'  # 标题正则
 
+        # 独立封装刷新块的逻辑函数
+        def _flush_section():
+            if not current_lines:
+                return
+            # 封装sections块的案例代码
+            sections.append(
+                {
+                    "title": current_title,
+                    "content": "\n".join(current_lines),
+                    "parent_title": "",
+                    "file_title": file_title
+                }
+            )
 
         for line in lines:
             striped_line = line.strip()
 
             # 判断是否在代码块中
-            if striped_line.startwith("````") or striped_line.startwith("~~~"):
+            if striped_line.startswith("```") or striped_line.startswith("~~~"):
                 in_code_block = not in_code_block
                 current_lines.append(line)
+                continue
 
+            if (not in_code_block) and (re.match(title_pattern, line)):
+                # 标题处理，将之前存好的块内容封装成一个sections块
+                _flush_section()
+                current_title = striped_line  # 换标题
+                # current_lines = []
+                current_lines = [current_title]
+                title_count += 1
+            else:
+                current_lines.append(line)  # 普通行或者代码块
 
-        # 封装sections块的案例代码
-        sections.append(
-            {
-                "title": file_title,
-                "content": "\n".join(current_lines),
-                "parent_title": "",
-                "file_title": file_title
-            }
-        )
-
+        _flush_section()
         return sections, title_count, len(lines)
 
     # 步骤3：无标题兜底(默认标题)
     def _step_3_handle_no_title(self, content, sections, title_count, file_title):
         print("node_document_split: 步骤3：无标题兜底(默认标题)")
+        if title_count == 0:
+            return [{"title": "无标题", "content": content, "file_title": file_title}]
         return sections
 
     # 步骤4：块精细化处理(长切短合)
     def _step_4_refine_chunks(self, sections):
+
         print("node_document_split: 步骤4：块精细化处理(长切短合)")
-        return sections
+
+        # 长切列表
+        refined_split = []
+        for sec in sections:
+            refined_split.extend(self.split_long_section(sec))  # 长切操作
+
+        # 短合列表
+        final_sections = self.merge_short_sections(refined_split)  # 短合操作
+
+        for sec in final_sections:
+            if not sec.get("parent_title"):
+                sec["parent_title"] = sec.get("title") or ""
+
+        return final_sections
 
     def _step_5_print_stats(self, lines_count, sections):
         print("node_document_split: 步骤5：打印日志")
@@ -108,6 +160,57 @@ class NodeDocumentSplit(BaseNode):
     def _step_6_backup(self, state, sections):
         print("node_document_split: 步骤6：备份")
         pass
+
+    # 步骤4方法1长切
+    def split_long_section(self, section: Dict[str, str]):
+        print("node_document_split: 步骤4方法1长切")
+        content = section.get("content", "")
+        content_len = len(content)
+        # 长度合标，直接返回
+        if content_len <= get_config().max_content_length:
+            return [section]
+
+        title = section.get("title")  # 没有换行符的title
+        prefix = f"{title}\n\n" if title else ""
+        available_len = get_config().max_content_length - len(prefix)  # 切分标准
+
+        # 去重标题
+        body = content
+        if title and body.lstrip().startswith(title):
+            body = body[body.find(title) + len(title):].lstrip()
+
+        # 切分器
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=available_len,
+            chunk_overlap=0,
+            separators=["\n\n", "\n", "。", "！", "？", "；", ".", "!", "?", ";", " "]
+        )
+
+        # 切分结果
+        sub_sections = []
+
+        for index, chunk in enumerate(splitter.split_text(body), start=1):
+            text = chunk.strip()
+            if not text:
+                continue
+            full_text = (prefix + text).strip()
+
+            sub_sections.append(
+                {
+                    "title": f"{title} - {index}" if title else f"chunk - {index}",
+                    "content": full_text,
+                    "parent_title": title,
+                    "part": index,
+                    "file_title": section.get("file_title")
+                }
+            )
+
+        return sub_sections
+
+    # 步骤4方法2短合
+    def merge_short_sections(self, refined_split):
+        print("node_document_split: 步骤4方法2短合")
+        return refined_split
 
 
 if __name__ == "__main__":
