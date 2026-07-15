@@ -11,13 +11,14 @@ def get_bge_m3_ef():
         return _bge_m3_ef
 
     _bge_m3_ef = BGEM3EmbeddingFunction(
-        model_name=embedding_config.bge_m3,
+        model_name=embedding_config.bge_m3_path,
         device=embedding_config.bge_device,
         use_fp16=embedding_config.bge_fp16
     )
 
     return _bge_m3_ef
 
+# 获得向量数据，并且解析出稠密和稀疏的向浮点量值
 def generate_embeddings(texts):
     """
     为文本生成向量嵌入
@@ -34,6 +35,6 @@ def generate_embeddings(texts):
         processed_sparse.append(sparse_dict)
 
     return {
-        "dense": [emb.tolist() for emb in embeddings["dense"]],
+        "dense": [d.tolist() for d in embeddings["dense"]],
         "sparse": processed_sparse
     }
