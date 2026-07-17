@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from typing import List, Dict
 
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -35,6 +36,14 @@ class NodeItemNameRecognition(BaseNode):
 
         # 4 回填数据(item_name - > chunks)
         self._step_4_update_chunks(state, chunks, item_name)
+        # path = "E:\output\B530\hybrid_auto\B530_new_new_chunks.json"
+        # with open(path, "w", encoding="utf-8") as f:
+        #     json.dump(
+        #         chunks,
+        #         f,
+        #         ensure_ascii=False,
+        #         indent=2
+        #     )
 
         # 5 主体名称向量化（稠密，稀疏）
         dense_vector, sparse_vector = self._step_5_generate_vectors(item_name)
