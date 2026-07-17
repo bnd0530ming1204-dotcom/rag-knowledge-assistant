@@ -3,12 +3,16 @@ from typing import List, Dict
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
+from pymilvus import DataType
+from sympy.interactive.session import enable_automatic_symbols
 
 from config.lm_config import lm_config
+from config.milvus_config import milvus_config
 from processor.import_processor.base import BaseNode
 from processor.import_processor.exceptions import StateFieldError
 from processor.import_processor.state import ImportGraphState
 from utils.embedding_utils import generate_embeddings
+from utils.milvus_utils import get_milvus_client, escape_milvus_string
 
 
 class NodeItemNameRecognition(BaseNode):
@@ -138,14 +142,99 @@ class NodeItemNameRecognition(BaseNode):
 
     def _step_5_generate_vectors(self, item_name):
         print("node_item_name_recognition: 步骤5：主体名称向量化,返回稠密和稀疏数据")
-        embeddings = generate_embeddings([item_name]) # 稠密和稀疏向量
+        embeddings = generate_embeddings([item_name])  # 稠密和稀疏向量
         dense = embeddings["dense"][0]
         sparse = embeddings["sparse"][0]
         return dense, sparse
 
     def _step_6_save_to_milvus(self, state, file_title, item_name, dense_vector, sparse_vector):
         print("node_item_name_recognition: 步骤6：存入milvus向量库")
-        pass
+
+        milvus_url = milvus_config.milvus_url  # 链接地址
+        collection_name = milvus_config.item_name_collection  # 表名
+        # 校验
+        if not milvus_url or not collection_name:
+            raise Exception("Milvus配置错误")
+
+        # 链接端
+        client = get_milvus_client()
+
+        # 字段(数据结构)
+        schema = client.create_schema(auto_id=True, enable_dynamic_field=True)
+        schema.add_field(
+            field_name="pk",
+            datatype=DataType.INT64,
+            is_primary=True,
+            auto_id=True
+        )
+        schema.add_field(
+            field_name="file_title",
+            datatype=DataType.VARCHAR,
+            max_length=100
+        )
+        schema.add_field(
+            field_name="item_name",
+            datatype=DataType.VARCHAR,
+            max_length=100
+        )
+        schema.add_field(
+            field_name="dense_vector",
+            datatype=DataType.FLOAT_VECTOR,
+            dim=1024
+        )
+        schema.add_field(
+            field_name="sparse_vector",
+            datatype=DataType.SPARSE_FLOAT_VECTOR
+        )
+
+        # 索引
+        index_params = client.prepare_index_params()
+        index_params.add_index(
+            field_name="dense_vector",
+            index_name="dense_vector_index",
+            index_type="IVF_FLAT",  # 分组+精确搜索
+            metric_type="COSINE",
+            params={"nlist": 128}  # 聚类数（影响检索精度/速度）
+        )
+        index_params.add_index(
+            field_name="sparse_vector",  # 字段名
+            index_name="sparse_vector_index",  # 索引名
+            index_type="SPARSE_INVERTED_INDEX",  # 索引类型
+            metric_type="IP",  # 相似度计算方式（内积）
+            params={
+                "inverted_index_algo": "DAAT_MAXSCORE",
+                # 高效的稀疏检索算法
+
+                "normalize": True,
+                # ↑ L2 归一化，让内积 (IP) 等价于余弦相似度
+
+                "quantization": "none"
+                # ↑ 关闭量化，保持原始精度：模型生成的向量已经压缩的一半的精度了（BGE_FP16=1），这里就不再压缩了
+                # "quantization": "none" → 存储原始向量，不压缩
+                # "quantization": "sq8" → 存储压缩后的向量（8-bit 量化
+            })
+
+        # 建表
+        if not client.has_collection(collection_name):
+            client.create_collection(collection_name=collection_name, schema=schema, index_params=index_params)
+
+        # 幂等性清理同名表数据(collection)
+        safe_item_name = escape_milvus_string(item_name)
+        filter_expr = f'item_name=="{safe_item_name}"'
+        client.delete(collection_name=collection_name, filter=filter_expr)
+
+        # 插入一条
+        data = {
+            "file_title": file_title,
+            "item_name": item_name,
+            "dense_vector": dense_vector,
+            "sparse_vector": sparse_vector
+        }
+        client.insert(collection_name, [data])
+        client.load_collection(collection_name)  # 将表数据从存储引擎加载到搜索引擎，为了将来查询相似度用
+
+        state["item_name"] = item_name
+        return state
 
 
 if __name__ == '__main__':
