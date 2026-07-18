@@ -227,7 +227,7 @@ class NodeItemNameRecognition(BaseNode):
         if not client.has_collection(collection_name):
             client.create_collection(collection_name=collection_name, schema=schema, index_params=index_params)
 
-        # 幂等性清理同名表数据(collection)
+        # 幂等性清理同名(item_name)表数据(collection)
         safe_item_name = escape_milvus_string(item_name)
         filter_expr = f'item_name=="{safe_item_name}"'
         client.delete(collection_name=collection_name, filter=filter_expr)

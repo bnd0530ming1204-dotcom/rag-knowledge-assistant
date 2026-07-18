@@ -21,20 +21,20 @@ class NodeBGEEmbedding(BaseNode):
 
         # 2 数据向量化
         output_data = self._step_generate_embeddings(chunks)
-        for item in output_data:
-            item_name = item.get("item_name")
-            content = item.get("content")
-            print(f"{item_name}")
-            sparse_vector = item.get("sparse_vector")
-            print(sparse_vector)
-        path = "E:\output\B530\hybrid_auto\B530_new_new_new_chunks.json"
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(
-                output_data,
-                f,
-                ensure_ascii=False,
-                indent=2
-            )
+        # for item in output_data:
+        #     item_name = item.get("item_name")
+        #     content = item.get("content")
+        #     print(f"{item_name}")
+        #     sparse_vector = item.get("sparse_vector")
+        #     print(sparse_vector)
+        # path = "E:\output\B530\hybrid_auto\B530_new_new_new_chunks.json"
+        # with open(path, "w", encoding="utf-8") as f:
+        #     json.dump(
+        #         output_data,
+        #         f,
+        #         ensure_ascii=False,
+        #         indent=2
+        #     )
 
         # 3 返回结果
         state["chunks"] = output_data
