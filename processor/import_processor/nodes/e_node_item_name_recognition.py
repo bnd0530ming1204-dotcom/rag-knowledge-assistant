@@ -36,7 +36,7 @@ class NodeItemNameRecognition(BaseNode):
 
         # 4 回填数据(item_name - > chunks)
         self._step_4_update_chunks(state, chunks, item_name)
-        path = f"{state.get('file_title')}_new_chunks.json"
+        path = f"{Path(state.get('md_path')).parent}/{state.get('file_title')}_new_new_chunks.json"
         with open(path, "w", encoding="utf-8") as f:
             json.dump(
                 chunks,

@@ -1,9 +1,14 @@
 import json
 from typing import Dict, List
 
+from langchain_core.messages import SystemMessage, HumanMessage
+
 from processor.query_processor.base import NodeBase
+from processor.query_processor.prompt.item_name_confirm import ITEM_NAME_EXTRACT_TEMPLATE, \
+    ITEM_NAME_EXTRACT_SYSTEM_PROMPT
 from processor.query_processor.state import QueryGraphState
 from tool.logger import logger
+from utils.llm_utils import get_llm_client
 from utils.mongo_history_utils import get_recent_messages, save_chat_message
 
 
@@ -39,6 +44,7 @@ class NodeItemNameConfirm(NodeBase):
         rewritten_query = extract_res["rewritten_query"]  # 模型改写后的问题
         state["rewritten_query"] = rewritten_query
         state["item_names"] = item_names
+        print("extract_res:", extract_res)
 
         # 5，6 向量搜索(搜索知识库)，搜索结果对齐(整理)
         align_result = {}
@@ -73,10 +79,42 @@ class NodeItemNameConfirm(NodeBase):
     def _step_4_extract_info(self, original_query, history) -> Dict:
         print("step_4: 模型提取意图主体")
 
-        result = {
-            "item_names": [],
-            "rewritten_query": original_query,
-        }
+        # llm客户端
+        ai_client = get_llm_client()
+
+        # 拼接上下文(history+original_query)，prompt
+        history_text = ""
+        for msg in history:
+            role = msg.get("role")
+            content = msg.get("text")
+            history_text += f"{role}: {content}\n"
+
+        user_prompt = ITEM_NAME_EXTRACT_TEMPLATE.format(
+            history_text=history_text,
+            query=original_query,
+        )
+        messages = [
+            SystemMessage(content=ITEM_NAME_EXTRACT_SYSTEM_PROMPT),
+            HumanMessage(content=user_prompt)
+        ]
+
+        # 调用llm大模型
+        response = ai_client.invoke(messages)
+        response_content = response.content
+        # if response_content.startswith("```json"):
+        #     response_content = response_content.replace("```json", "").replace("```", "")
+
+        # 结果解析
+        result = json.loads(response_content)
+        print("result:", result)
+        if "item_names" not in result:
+            result["item_names"] = []
+        if "rewritten_query" not in result:
+            result["rewritten_query"] = original_query
+        if result["item_names"]:
+            result["item_names"] = [name.replace(" ", "").replace("\n", "").replace("\t", "").replace("\r", "") for name
+                                    in result["item_names"]]
+
         return result
 
     # 步骤5 向量化并检索

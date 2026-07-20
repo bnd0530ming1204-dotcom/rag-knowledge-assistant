@@ -1,6 +1,6 @@
 import json
+from pathlib import Path
 from typing import List, Dict
-
 
 from processor.import_processor.base import BaseNode
 from processor.import_processor.exceptions import StateFieldError
@@ -27,7 +27,7 @@ class NodeBGEEmbedding(BaseNode):
         #     print(f"{item_name}")
         #     sparse_vector = item.get("sparse_vector")
         #     print(sparse_vector)
-        path = f"{state.get('file_title')}_new_chunks.json"
+        path = f"{Path(state.get('md_path')).parent}/{state.get('file_title')}_new_new_new_chunks.json"
         with open(path, "w", encoding="utf-8") as f:
             json.dump(
                 output_data,
@@ -86,7 +86,9 @@ class NodeBGEEmbedding(BaseNode):
 
 if __name__ == "__main__":
     node = NodeBGEEmbedding()
-    with open("E:\output\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)_chunks.json", "r", encoding="utf-8") as f:
+    with open(
+            "E:\output\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)_chunks.json",
+            "r", encoding="utf-8") as f:
         chunks_content = f.read()
 
     json_state = json.loads(chunks_content)
