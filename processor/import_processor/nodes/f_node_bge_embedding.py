@@ -27,14 +27,14 @@ class NodeBGEEmbedding(BaseNode):
         #     print(f"{item_name}")
         #     sparse_vector = item.get("sparse_vector")
         #     print(sparse_vector)
-        # path = "E:\output\B530\hybrid_auto\B530_new_new_new_chunks.json"
-        # with open(path, "w", encoding="utf-8") as f:
-        #     json.dump(
-        #         output_data,
-        #         f,
-        #         ensure_ascii=False,
-        #         indent=2
-        #     )
+        path = f"{state.get('file_title')}_new_chunks.json"
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(
+                output_data,
+                f,
+                ensure_ascii=False,
+                indent=2
+            )
 
         # 3 返回结果
         state["chunks"] = output_data
@@ -86,7 +86,7 @@ class NodeBGEEmbedding(BaseNode):
 
 if __name__ == "__main__":
     node = NodeBGEEmbedding()
-    with open("E:\output\B530\hybrid_auto\B530_new_new_chunks.json", "r", encoding="utf-8") as f:
+    with open("E:\output\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)_chunks.json", "r", encoding="utf-8") as f:
         chunks_content = f.read()
 
     json_state = json.loads(chunks_content)
