@@ -3,12 +3,15 @@ from typing import Dict, List
 
 from langchain_core.messages import SystemMessage, HumanMessage
 
+from config.milvus_config import milvus_config
 from processor.query_processor.base import NodeBase
 from processor.query_processor.prompt.item_name_confirm import ITEM_NAME_EXTRACT_TEMPLATE, \
     ITEM_NAME_EXTRACT_SYSTEM_PROMPT
 from processor.query_processor.state import QueryGraphState
 from tool.logger import logger
+from utils.embedding_utils import generate_embeddings
 from utils.llm_utils import get_llm_client
+from utils.milvus_utils import get_milvus_client, create_hybrid_search_requests, hybrid_search
 from utils.mongo_history_utils import get_recent_messages, save_chat_message
 
 
@@ -50,6 +53,9 @@ class NodeItemNameConfirm(NodeBase):
         align_result = {}
         if len(item_names) >= 0:
             query_results = self._step_5_vectorize_and_query(item_names)
+            # print(f"milvus根据提取到的item_names的匹配结果：")
+            # for query_result in query_results:
+            #     print(query_result)
             align_result = self._step_6_align_item_names(query_results)
         else:
             logger.info("Node: 未提取到商品名，跳过向量检索")
@@ -120,26 +126,75 @@ class NodeItemNameConfirm(NodeBase):
     # 步骤5 向量化并检索
     def _step_5_vectorize_and_query(self, item_names) -> List[Dict]:
         print("step_5: 向量化并检索,检索出来对应item_name的向量库中的相似的商品名称的列表")
-        result: List[Dict] = []
-        return result
+        results: List[Dict] = []  # 大模型识别的可能名称:milvus的匹配结果集合
+
+        # milvus的客户端，集合名称
+        milvus_client = get_milvus_client()
+        collection_name = milvus_config.item_name_collection
+
+        # 条件向量化
+        embeddings = generate_embeddings(item_names)
+
+        # 相似性匹配
+        for i in range(len(item_names)):
+            dense_vector = embeddings.get("dense")[i]
+            sparse_vector = embeddings.get("sparse")[i]
+            reqs = create_hybrid_search_requests(dense_vector=dense_vector, sparse_vector=sparse_vector, limit=5)
+            search_res = hybrid_search(
+                client=milvus_client,
+                collection_name=collection_name,
+                reqs=reqs,
+                ranker_weights=(0.8, 0.2),
+                norm_score=True,
+                output_fields=["item_name"],
+            )
+
+            # 结果处理
+            matches = []
+            if search_res and len(search_res) > 0:
+                # print("此处是意图识别的向量搜索结果：")
+                # print(search_res)
+                for hit in search_res[0]:
+                    # 将search_res中的匹配结果封装到matches中
+                    matches.append({
+                        "item_name": hit.entity.get("item_name"),
+                        "score": hit.get("distance"),
+                    })
+
+            results.append({
+                "extracted_name": item_names[i],
+                "matches": matches  # 相似性匹配结果
+            })
+
+        # 返回
+        return results
 
     # 步骤6 对齐结果
     def _step_6_align_item_names(self, query_results: List[Dict]) -> Dict:
         print("step_6: 对齐结果,高分结果和低分结果整合")
+
+        # 高于0.8分=高度匹配，
+
+        # 高于0.6低于0.8=可能匹配，有可选项options
+
+        # 低于0.6,无匹配结果
+
         return {
             "confirmed_item_names": [],  # 确认后的高分商品名称（>0.8)
             "options": [],  # 可能低分商品名称(>0.6)
         }
 
-    # 步骤7 状态state信息整理#
+    # 步骤7 状态state信息整理
     def _step_7_check_confirmation(self, state, align_result: Dict, history):
         print("step_7: 状态state信息,根据第六步高分低分对齐结果整理")
+
+        state["answer"] = "" # 如果有高于0.6的可选项options(反问用户，你想问的是xxx设备吗)或者低于0.6（抱歉，未找到相关产品）
+        state["item_names"] = [] # 如果有高于0.8的，才封装state进入后续节点
         return state
 
     # 步骤8 写入历史会话
     def _step_8_write_history(self, state, session_id, rewritten_query, message_id):
         print("step_8: 写入历史会话，更新")
-
 
 if __name__ == "__main__":
     # 初始化图状态
