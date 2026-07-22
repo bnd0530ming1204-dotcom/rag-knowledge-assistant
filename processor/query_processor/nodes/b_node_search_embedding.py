@@ -53,7 +53,7 @@ class NodeSearchEmbedding(NodeBase):
             output_fields=["chunk_id", "content", "item_name"]
         )
 
-        print(response[0])
+        # print(response[0])
         # return state
         return {"embedding_chunks": response[0] if response else []}  # [[结果解析]]
 
