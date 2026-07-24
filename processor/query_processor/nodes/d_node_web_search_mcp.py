@@ -46,7 +46,9 @@ class NodeWebSearchMcp(NodeBase):
 
         # 4 return state
         # print(docs)
-        return {"web_search_docs": docs}
+        # state["web_search_docs"] = docs
+        # return state #{"web_search_docs": docs}
+        return  {"web_search_docs": docs}
 
     async def _mcp_call(self, query):
         # 创建mcp工具

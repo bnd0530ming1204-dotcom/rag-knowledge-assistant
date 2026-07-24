@@ -190,7 +190,7 @@ class NodeItemNameConfirm(NodeBase):
                 continue
 
             high_results = [m for m in matches if m.get("score", 0) >= 0.8]  # 高分结果
-            mid_results = [m for m in matches if m.get("score", 0) >= 0.6]  # 中分结果
+            mid_results = [m for m in matches if 0.8 > m.get("score", 0) >= 0.6]  # 中分结果
 
             """
                 有高分则取高分，无高分取中分
@@ -221,6 +221,7 @@ class NodeItemNameConfirm(NodeBase):
             if len(mid_results) > 0:
                 for mr in mid_results[:5]:
                     options.append(mr.get("item_name"))
+
             #########################################################
 
         # 规则C：低于0.6,无匹配结果,不处理，都是空值
@@ -251,6 +252,7 @@ class NodeItemNameConfirm(NodeBase):
             # 封装结果
             state["item_names"] = confirmed
             state["answer"] = ""
+            return state
 
         # 2 有备选(>0.6)
         if options:
@@ -258,6 +260,7 @@ class NodeItemNameConfirm(NodeBase):
             state["item_names"] = []
             options_str = "、".join(options)
             state["answer"] = f"您是想问以下哪个产品：{options_str}？请明确一下型号。"
+            return state
 
         # 3 没命中
         if not confirmed and not options:
@@ -292,7 +295,6 @@ class NodeItemNameConfirm(NodeBase):
             item_names=state.get("item_names", []),  # 补充关联的商品名列表
             message_id=message_id  # 消息ID，指定更新已存在的用户消息（而非新增）
         )
-
 
 
 if __name__ == "__main__":

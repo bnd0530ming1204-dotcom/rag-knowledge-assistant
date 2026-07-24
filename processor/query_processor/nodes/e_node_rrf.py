@@ -44,7 +44,7 @@ class NodeRrf(NodeBase):
         # 4 返回结果处理
         rrf_chunks = [doc for doc, _ in rrf_merge_results]  # 只要文档不要分
         state["rrf_chunks"] = rrf_chunks
-        print(f"rrf_chunks：{rrf_chunks}")
+        # print(f"rrf_chunks：{rrf_chunks}")
         return state
 
     def _rrf_merge(self, rrf_inputs: List[Tuple], k: int = 60, max_results: int = 5):
