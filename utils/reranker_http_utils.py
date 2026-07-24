@@ -28,8 +28,8 @@ def rerank_documents(query: str, documents: list[str]) -> list[float]:
     # print(response)
     rerank_scores = [0.0] * len(documents)
     results = response.get("output").get("results")
-    for index, result in enumerate(results):
-        rerank_scores[index] = result.get("relevance_score")
+    for result in results:
+        rerank_scores[result.get("index")] = result.get("relevance_score")
 
     print(f"rerank_scores:{rerank_scores}")
     return rerank_scores
