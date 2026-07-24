@@ -25,6 +25,11 @@ def rerank_documents(query: str, documents: list[str]) -> list[float]:
         message = response.get("message")
         raise RuntimeError(f"DashScope rerank 调用失败: {message}")
     # 打印查看response的数据结构
-    print(response)
+    # print(response)
+    rerank_scores = [0.0] * len(documents)
+    results = response.get("output").get("results")
+    for index, result in enumerate(results):
+        rerank_scores[index] = result.get("relevance_score")
 
-    return None
+    print(f"rerank_scores:{rerank_scores}")
+    return rerank_scores
