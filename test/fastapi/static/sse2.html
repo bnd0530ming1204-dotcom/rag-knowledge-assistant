@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>前端页面sse2</title>
+</head>
+<body>
+<h3>sse2测试页面</h3>
+<input type="text" value="" id="sessionIdInput" placeholder="请输入session_id"/>
+<button onclick="connectSSE()"> 提交</button>
+<div id="result"></div>
+</body>
+<script>
+    function connectSSE() {
+        const sessionId = document.getElementById("sessionIdInput").value;
+        const eventSource = new EventSource(`http://localhost:8000/stream/${sessionId}`)
+        const resultDom = document.getElementById("result")
+
+        eventSource.onmessage = function (event) {
+            if (event.data === '[END]') {
+                eventSource.close();
+                return;
+            }
+            resultDom.innerHTML += event.data + "<br/>"
+        }
+    }
+</script>
+</html>
