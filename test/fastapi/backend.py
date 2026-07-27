@@ -4,13 +4,13 @@ from starlette.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 # cors
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], # 允许所有的源
-    allow_credentials=True, # 允许客户端传递cookie
-    allow_methods=["*"], # get和post都行
-    allow_headers=["*"], # 请求头所有信息都行
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"], # 允许所有的源
+#     allow_credentials=True, # 允许客户端传递cookie
+#     allow_methods=["*"], # get和post都行
+#     allow_headers=["*"], # 请求头所有信息都行
+# )
 
 @app.get("/api/data")
 def get_data():

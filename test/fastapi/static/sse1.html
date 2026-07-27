@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SSE1</title>
+    </head>
+
+    <body>
+        <h3>场景1：基础的sse测试</h3>
+        <div id="result"></div>
+        <button onclick="b()"> 点我 </button>
+        <button onclick="a()"> 点我 </button>
+
+        <script>
+            function b(){
+                alert(1);
+            }
+            function a() {
+                resultDom = document.getElementById('result'); // 页面位置
+                eventSource = new EventSource('http://localhost:8000/simple_stream'); // 链接服务点sse的地址对象
+                eventSource.onmessage = function(event) {
+                    if (event.data === "[END]") {
+                        eventSource.close();
+                        return;
+                    }
+                    resultDom.innerHTML += event.data ;
+                }
+            }
+        </script>
+    </body>
+
+</html>
+

@@ -11,10 +11,10 @@ async def simple_async():
     return {"message": "Hello async"}
 
 # ✅ 同步版本
-# @app.get("/simple-sync")
-# def simple_sync():
-#     print(threading.current_thread().ident)
-#     return {"message": "Hello sync"}
+@app.get("/simple-sync")
+def simple_sync():
+    print(threading.current_thread().ident)
+    return {"message": "Hello sync"}
 
 if __name__ == "__main__":
     import uvicorn
