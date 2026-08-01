@@ -67,8 +67,9 @@ class NodeBGEEmbedding(BaseNode):
             five_ready_xlh_texts = []
             five_texts = chunks[i:i + batch_size]  # 第一次从0块取到4块，一共取5块
             for doc in five_texts:
-                item_name = doc["item_name"]
+                item_name = doc.get("item_name", "")
                 content = doc["content"]
+                doc.setdefault("item_name", "")
                 five_ready_xlh_texts.append(f"{item_name}\n{content}" if item_name else content)
 
             embeddings = generate_embeddings(five_ready_xlh_texts)  # 向量化结果
@@ -87,7 +88,7 @@ class NodeBGEEmbedding(BaseNode):
 if __name__ == "__main__":
     node = NodeBGEEmbedding()
     with open(
-            "E:\output\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)\华为擎云B530 用户指南-(PUCZ,Windows11_03,zh-cn)_chunks.json",
+            "./output/example/example_chunks.json",
             "r", encoding="utf-8") as f:
         chunks_content = f.read()
 

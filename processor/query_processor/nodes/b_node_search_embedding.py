@@ -26,7 +26,6 @@ class NodeSearchEmbedding(NodeBase):
 
         # 1 参数处理
         logger.info(f"【{self.name}】节点逻辑")
-        item_names = state.get("item_names")  # 元数据过滤条件
         query = state.get("rewritten_query")  # 语义搜索条件
 
         query_embeddings = generate_embeddings([query])  # 参数向量化
@@ -41,7 +40,7 @@ class NodeSearchEmbedding(NodeBase):
         reqs = create_hybrid_search_requests(
             dense_vector=dense_vector,
             sparse_vector=sparse_vector,
-            expr=f'item_name in {item_names}'
+            expr=None
         )
 
         # 4 发送请求
@@ -50,7 +49,7 @@ class NodeSearchEmbedding(NodeBase):
             collection_name=chunks_collection,
             reqs=reqs,
             ranker_weights=(0.8, 0.2),
-            output_fields=["chunk_id", "content", "item_name"]
+            output_fields=["chunk_id", "content", "title", "file_title"]
         )
 
         # print(response[0])

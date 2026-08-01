@@ -38,7 +38,7 @@ class NodePDFToMD(BaseNode):
 
         # 5 设置state结果
         state["md_content"] = md_content
-        state["md_path"] = md_path # E:\works-class\sz0525课程\掌柜智库课件0525\1.笔记\xxx.md
+        state["md_path"] = md_path
         return state
 
     def _step_1_validate_paths(self, state: ImportGraphState):
@@ -188,8 +188,8 @@ if __name__ == "__main__":
     setup_logging()
 
     init_state = {
-        "pdf_path": "E:\hak180产品安全手册.pdf",
-        "file_dir": "E:\output"
+        "pdf_path": "./苹果产品用户指南.pdf",
+        "file_dir": r"./output"
     }
 
     node = NodePDFToMD()

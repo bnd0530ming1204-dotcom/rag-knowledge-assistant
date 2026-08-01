@@ -104,7 +104,7 @@ class NodeAnswerOutput(NodeBase):
         # 1. 获取问题和商品名
         # 优先使用重写后的问题
         question = state.get("rewritten_query") or state.get("original_query", "")
-        item_names = state["item_names"]
+        item_names = state.get("item_names") or []
 
         # 2. 格式化上下文文档
         context_str, char_budget = self._format_reranked_docs(

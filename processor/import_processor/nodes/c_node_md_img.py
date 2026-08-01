@@ -35,9 +35,23 @@ class NodeMDImg(BaseNode):
         md_content, md_path_obj, images_dir = self._step_1_get_content(state)
         # print(f"md_content:{md_content},md_path_obj:{md_path_obj},images_dir:{images_dir}")
 
+        # MinerU 新版结果可能不包含 images 目录。图片理解不是 MVP 必需能力，
+        # 此时直接透传 Markdown，避免触发视觉模型和 MinIO。
+        if not images_dir.is_dir():
+            self.logger.info(f"图片目录不存在，跳过图片处理: {images_dir}")
+            state["md_content"] = md_content
+            state["md_path"] = str(md_path_obj)
+            return state
+
         # 2 图片扫描
         target_images = self._step_2_scan_images(md_content, images_dir)  # List[(str,str,Tuple[str,str])]
         print(f"target_images:{target_images}")
+
+        if not target_images:
+            self.logger.info("未发现 Markdown 引用的有效图片，跳过图片处理")
+            state["md_content"] = md_content
+            state["md_path"] = str(md_path_obj)
+            return state
 
         # 3 视觉模型摘要
         summaries = self._step_3_generate_summaries(md_path_obj.stem, target_images)
@@ -63,7 +77,7 @@ class NodeMDImg(BaseNode):
         if not md_path_obj.exists():
             raise FileProcessingError(message=f"输入文件不存在: {md_path}")
 
-        md_content = state["md_content"]
+        md_content = state.get("md_content")
 
         # 测试用代码
         if not md_content:
@@ -301,7 +315,7 @@ if __name__ == "__main__":
     setup_logging()
 
     init_state = {
-        "md_path": "E:\output\B530\hybrid_auto\B530.md",
+        "md_path": "./output/example/example.md",
         "md_content": None
     }
 

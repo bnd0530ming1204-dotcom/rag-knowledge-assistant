@@ -27,7 +27,7 @@ async def redirect_old_path():
 
 @app.get("/download/excel")
 async def download_excel():
-    excel_path = "E:/月度报表.xlsx"
+    excel_path = "./data/月度报表.xlsx"
     # 返回文件并指定下载文件名
     return FileResponse(
         path=excel_path,

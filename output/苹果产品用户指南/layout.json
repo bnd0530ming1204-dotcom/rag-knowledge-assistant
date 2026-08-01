@@ -1,0 +1,2420 @@
+{
+    "pdf_info": [
+        {
+            "preproc_blocks": [
+                {
+                    "bbox": [
+                        215,
+                        79,
+                        378,
+                        101
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                217,
+                                80,
+                                376,
+                                100
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        217,
+                                        80,
+                                        376,
+                                        100
+                                    ],
+                                    "type": "text",
+                                    "content": "苹果产品用户指南",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        129,
+                        508,
+                        180
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                131,
+                                506,
+                                141
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        131,
+                                        506,
+                                        141
+                                    ],
+                                    "type": "text",
+                                    "content": "本指南介绍苹果系列产品的基本功能、使用方法、安全注意事项以及日常维护技巧。内容",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                148,
+                                311,
+                                161
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        148,
+                                        311,
+                                        161
+                                    ],
+                                    "type": "text",
+                                    "content": "涵盖 iPhone、iPad、Mac、Apple Watch 和 AirPods",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                167,
+                                301,
+                                178
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        167,
+                                        301,
+                                        178
+                                    ],
+                                    "type": "text",
+                                    "content": "等常见产品，帮助用户快速了解苹果生态系统。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        213,
+                        219,
+                        231
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                215,
+                                217,
+                                230
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        215,
+                                        217,
+                                        230
+                                    ],
+                                    "type": "text",
+                                    "content": "一、苹果生态系统简介",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        259,
+                        508,
+                        311
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                260,
+                                502,
+                                272
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        260,
+                                        502,
+                                        272
+                                    ],
+                                    "type": "text",
+                                    "content": "苹果公司通过硬件、操作系统和服务构建了完整的生态体系。iPhone 使用 iOS 系统，iPad",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                277,
+                                505,
+                                292
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        277,
+                                        505,
+                                        292
+                                    ],
+                                    "type": "text",
+                                    "content": "使用 iPadOS，Mac 使用 macOS，Apple Watch 使用 watchOS。不同设备之间可以通过 Apple",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                297,
+                                271,
+                                308
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        297,
+                                        271,
+                                        308
+                                    ],
+                                    "type": "text",
+                                    "content": "ID 实现数据同步、文件共享和设备协同。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ],
+            "discarded_blocks": [],
+            "page_size": [
+                595,
+                841
+            ],
+            "page_idx": 0,
+            "para_blocks": [
+                {
+                    "bbox": [
+                        215,
+                        79,
+                        378,
+                        101
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                217,
+                                80,
+                                376,
+                                100
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        217,
+                                        80,
+                                        376,
+                                        100
+                                    ],
+                                    "type": "text",
+                                    "content": "苹果产品用户指南",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        129,
+                        508,
+                        180
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                131,
+                                506,
+                                141
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        131,
+                                        506,
+                                        141
+                                    ],
+                                    "type": "text",
+                                    "content": "本指南介绍苹果系列产品的基本功能、使用方法、安全注意事项以及日常维护技巧。内容",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                148,
+                                311,
+                                161
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        148,
+                                        311,
+                                        161
+                                    ],
+                                    "type": "text",
+                                    "content": "涵盖 iPhone、iPad、Mac、Apple Watch 和 AirPods",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                167,
+                                301,
+                                178
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        167,
+                                        301,
+                                        178
+                                    ],
+                                    "type": "text",
+                                    "content": "等常见产品，帮助用户快速了解苹果生态系统。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        213,
+                        219,
+                        231
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                215,
+                                217,
+                                230
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        215,
+                                        217,
+                                        230
+                                    ],
+                                    "type": "text",
+                                    "content": "一、苹果生态系统简介",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        259,
+                        508,
+                        311
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                260,
+                                502,
+                                272
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        260,
+                                        502,
+                                        272
+                                    ],
+                                    "type": "text",
+                                    "content": "苹果公司通过硬件、操作系统和服务构建了完整的生态体系。iPhone 使用 iOS 系统，iPad",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                277,
+                                505,
+                                292
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        277,
+                                        505,
+                                        292
+                                    ],
+                                    "type": "text",
+                                    "content": "使用 iPadOS，Mac 使用 macOS，Apple Watch 使用 watchOS。不同设备之间可以通过 Apple",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                297,
+                                271,
+                                308
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        297,
+                                        271,
+                                        308
+                                    ],
+                                    "type": "text",
+                                    "content": "ID 实现数据同步、文件共享和设备协同。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ]
+        },
+        {
+            "preproc_blocks": [
+                {
+                    "bbox": [
+                        75,
+                        78,
+                        245,
+                        96
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                79,
+                                243,
+                                95
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        79,
+                                        243,
+                                        95
+                                    ],
+                                    "type": "text",
+                                    "content": "二、Apple ID 与设备初始化",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        508,
+                        175
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                123,
+                                426,
+                                139
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        123,
+                                        426,
+                                        139
+                                    ],
+                                    "type": "text",
+                                    "content": "首次使用苹果设备时，需要创建或登录 Apple ID。Apple ID 用于访问 App",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                142,
+                                506,
+                                155
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        142,
+                                        506,
+                                        155
+                                    ],
+                                    "type": "text",
+                                    "content": "Store、iCloud、Apple Music 等服务。新设备开机后，根据屏幕提示完成语言选择、网络连",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                161,
+                                389,
+                                172
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        161,
+                                        389,
+                                        172
+                                    ],
+                                    "type": "text",
+                                    "content": "接、面容识别或指纹设置，并建议开启双重认证提高账户安全性。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        75,
+                        207,
+                        232,
+                        225
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                209,
+                                230,
+                                223
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        209,
+                                        230,
+                                        223
+                                    ],
+                                    "type": "text",
+                                    "content": "三、iPhone 基础使用指南",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        253,
+                        509,
+                        305
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                255,
+                                505,
+                                264
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        255,
+                                        505,
+                                        264
+                                    ],
+                                    "type": "text",
+                                    "content": "iPhone 是苹果最主要的移动设备。用户可以通过主屏幕访问应用，通过控制中心快速调整",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                272,
+                                505,
+                                283
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        272,
+                                        505,
+                                        283
+                                    ],
+                                    "type": "text",
+                                    "content": "亮度、音量和无线功能。相机支持照片、人像、视频等模式。设置中的隐私权限管理可以",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                291,
+                                279,
+                                301
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        291,
+                                        279,
+                                        301
+                                    ],
+                                    "type": "text",
+                                    "content": "控制应用访问位置、照片和麦克风等信息。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ],
+            "discarded_blocks": [],
+            "page_size": [
+                595,
+                841
+            ],
+            "page_idx": 1,
+            "para_blocks": [
+                {
+                    "bbox": [
+                        75,
+                        78,
+                        245,
+                        96
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                79,
+                                243,
+                                95
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        79,
+                                        243,
+                                        95
+                                    ],
+                                    "type": "text",
+                                    "content": "二、Apple ID 与设备初始化",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        508,
+                        175
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                123,
+                                426,
+                                139
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        123,
+                                        426,
+                                        139
+                                    ],
+                                    "type": "text",
+                                    "content": "首次使用苹果设备时，需要创建或登录 Apple ID。Apple ID 用于访问 App",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                142,
+                                506,
+                                155
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        142,
+                                        506,
+                                        155
+                                    ],
+                                    "type": "text",
+                                    "content": "Store、iCloud、Apple Music 等服务。新设备开机后，根据屏幕提示完成语言选择、网络连",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                161,
+                                389,
+                                172
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        161,
+                                        389,
+                                        172
+                                    ],
+                                    "type": "text",
+                                    "content": "接、面容识别或指纹设置，并建议开启双重认证提高账户安全性。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        75,
+                        207,
+                        232,
+                        225
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                209,
+                                230,
+                                223
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        209,
+                                        230,
+                                        223
+                                    ],
+                                    "type": "text",
+                                    "content": "三、iPhone 基础使用指南",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        253,
+                        509,
+                        305
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                255,
+                                505,
+                                264
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        255,
+                                        505,
+                                        264
+                                    ],
+                                    "type": "text",
+                                    "content": "iPhone 是苹果最主要的移动设备。用户可以通过主屏幕访问应用，通过控制中心快速调整",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                272,
+                                505,
+                                283
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        272,
+                                        505,
+                                        283
+                                    ],
+                                    "type": "text",
+                                    "content": "亮度、音量和无线功能。相机支持照片、人像、视频等模式。设置中的隐私权限管理可以",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                291,
+                                279,
+                                301
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        291,
+                                        279,
+                                        301
+                                    ],
+                                    "type": "text",
+                                    "content": "控制应用访问位置、照片和麦克风等信息。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ]
+        },
+        {
+            "preproc_blocks": [
+                {
+                    "bbox": [
+                        75,
+                        78,
+                        190,
+                        95
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                79,
+                                188,
+                                95
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        79,
+                                        188,
+                                        95
+                                    ],
+                                    "type": "text",
+                                    "content": "四、iPad 使用技巧",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        514,
+                        156
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                123,
+                                512,
+                                138
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        123,
+                                        512,
+                                        138
+                                    ],
+                                    "type": "text",
+                                    "content": "iPad 适合学习、办公和娱乐。用户可以利用分屏功能同时运行多个应用，也可以搭配 Apple",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                142,
+                                281,
+                                154
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        142,
+                                        281,
+                                        154
+                                    ],
+                                    "type": "text",
+                                    "content": "Pencil 进行绘画、笔记和设计工作。iPadOS",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        158,
+                        381,
+                        174
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                162,
+                                377,
+                                171
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        162,
+                                        377,
+                                        171
+                                    ],
+                                    "type": "text",
+                                    "content": "提供文件管理、多任务处理以及键盘连接功能，提高生产效率。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        75,
+                        208,
+                        215,
+                        225
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                210,
+                                213,
+                                224
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        210,
+                                        213,
+                                        224
+                                    ],
+                                    "type": "text",
+                                    "content": "五、Mac电脑操作指南",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        253,
+                        478,
+                        285
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 4,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                255,
+                                475,
+                                265
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        255,
+                                        475,
+                                        265
+                                    ],
+                                    "type": "text",
+                                    "content": "Mac 使用 macOS 系统，具有稳定、安全和高效的特点。Finder 用于管理文件，Dock",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                272,
+                                283,
+                                285
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        272,
+                                        283,
+                                        285
+                                    ],
+                                    "type": "text",
+                                    "content": "用于快速打开应用。用户可以使用 Spotlight",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        289,
+                        402,
+                        304
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 5,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                291,
+                                399,
+                                301
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        291,
+                                        399,
+                                        301
+                                    ],
+                                    "type": "text",
+                                    "content": "搜索文件和应用，通过系统设置调整显示、网络、电池和账户信息。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ],
+            "discarded_blocks": [],
+            "page_size": [
+                595,
+                841
+            ],
+            "page_idx": 2,
+            "para_blocks": [
+                {
+                    "bbox": [
+                        75,
+                        78,
+                        190,
+                        95
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                79,
+                                188,
+                                95
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        79,
+                                        188,
+                                        95
+                                    ],
+                                    "type": "text",
+                                    "content": "四、iPad 使用技巧",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        514,
+                        156
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                123,
+                                512,
+                                138
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        123,
+                                        512,
+                                        138
+                                    ],
+                                    "type": "text",
+                                    "content": "iPad 适合学习、办公和娱乐。用户可以利用分屏功能同时运行多个应用，也可以搭配 Apple",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                142,
+                                281,
+                                154
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        142,
+                                        281,
+                                        154
+                                    ],
+                                    "type": "text",
+                                    "content": "Pencil 进行绘画、笔记和设计工作。iPadOS",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        158,
+                        381,
+                        174
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                162,
+                                377,
+                                171
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        162,
+                                        377,
+                                        171
+                                    ],
+                                    "type": "text",
+                                    "content": "提供文件管理、多任务处理以及键盘连接功能，提高生产效率。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        75,
+                        208,
+                        215,
+                        225
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                210,
+                                213,
+                                224
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        210,
+                                        213,
+                                        224
+                                    ],
+                                    "type": "text",
+                                    "content": "五、Mac电脑操作指南",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        253,
+                        478,
+                        285
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 4,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                255,
+                                475,
+                                265
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        255,
+                                        475,
+                                        265
+                                    ],
+                                    "type": "text",
+                                    "content": "Mac 使用 macOS 系统，具有稳定、安全和高效的特点。Finder 用于管理文件，Dock",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                272,
+                                283,
+                                285
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        272,
+                                        283,
+                                        285
+                                    ],
+                                    "type": "text",
+                                    "content": "用于快速打开应用。用户可以使用 Spotlight",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        289,
+                        402,
+                        304
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 5,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                291,
+                                399,
+                                301
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        291,
+                                        399,
+                                        301
+                                    ],
+                                    "type": "text",
+                                    "content": "搜索文件和应用，通过系统设置调整显示、网络、电池和账户信息。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ]
+        },
+        {
+            "preproc_blocks": [
+                {
+                    "bbox": [
+                        75,
+                        78,
+                        253,
+                        96
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                79,
+                                251,
+                                95
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        79,
+                                        251,
+                                        95
+                                    ],
+                                    "type": "text",
+                                    "content": "六、Apple Watch 与健康功能",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        512,
+                        157
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                124,
+                                511,
+                                137
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        124,
+                                        511,
+                                        137
+                                    ],
+                                    "type": "text",
+                                    "content": "Apple Watch 可以连接 iPhone，提供通知提醒、运动记录、健康监测等功能。用户可以通过",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                143,
+                                487,
+                                153
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        143,
+                                        487,
+                                        153
+                                    ],
+                                    "type": "text",
+                                    "content": "健身应用记录步数、心率和运动情况，同时可以设置紧急联系人，提高日常安全保障。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        76,
+                        190,
+                        211,
+                        207
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                190,
+                                209,
+                                206
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        190,
+                                        209,
+                                        206
+                                    ],
+                                    "type": "text",
+                                    "content": "七、AirPods 使用方法",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        235,
+                        512,
+                        269
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                238,
+                                509,
+                                247
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        238,
+                                        509,
+                                        247
+                                    ],
+                                    "type": "text",
+                                    "content": "AirPods 通过蓝牙连接苹果设备，并支持自动切换、空间音频和降噪功能。用户可以在蓝牙",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                254,
+                                499,
+                                265
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        254,
+                                        499,
+                                        265
+                                    ],
+                                    "type": "text",
+                                    "content": "设置中管理设备连接，在控制中心调整播放模式。日常使用中应保持耳机和充电盒清洁。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ],
+            "discarded_blocks": [],
+            "page_size": [
+                595,
+                841
+            ],
+            "page_idx": 3,
+            "para_blocks": [
+                {
+                    "bbox": [
+                        75,
+                        78,
+                        253,
+                        96
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                79,
+                                251,
+                                95
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        79,
+                                        251,
+                                        95
+                                    ],
+                                    "type": "text",
+                                    "content": "六、Apple Watch 与健康功能",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        512,
+                        157
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                124,
+                                511,
+                                137
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        124,
+                                        511,
+                                        137
+                                    ],
+                                    "type": "text",
+                                    "content": "Apple Watch 可以连接 iPhone，提供通知提醒、运动记录、健康监测等功能。用户可以通过",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                143,
+                                487,
+                                153
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        143,
+                                        487,
+                                        153
+                                    ],
+                                    "type": "text",
+                                    "content": "健身应用记录步数、心率和运动情况，同时可以设置紧急联系人，提高日常安全保障。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        76,
+                        190,
+                        211,
+                        207
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                76,
+                                190,
+                                209,
+                                206
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        190,
+                                        209,
+                                        206
+                                    ],
+                                    "type": "text",
+                                    "content": "七、AirPods 使用方法",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        235,
+                        512,
+                        269
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                238,
+                                509,
+                                247
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        238,
+                                        509,
+                                        247
+                                    ],
+                                    "type": "text",
+                                    "content": "AirPods 通过蓝牙连接苹果设备，并支持自动切换、空间音频和降噪功能。用户可以在蓝牙",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                254,
+                                499,
+                                265
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        254,
+                                        499,
+                                        265
+                                    ],
+                                    "type": "text",
+                                    "content": "设置中管理设备连接，在控制中心调整播放模式。日常使用中应保持耳机和充电盒清洁。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ]
+        },
+        {
+            "preproc_blocks": [
+                {
+                    "bbox": [
+                        74,
+                        78,
+                        219,
+                        95
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                79,
+                                216,
+                                94
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        79,
+                                        216,
+                                        94
+                                    ],
+                                    "type": "text",
+                                    "content": "八、iCloud 与数据管理",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        516,
+                        157
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                126,
+                                513,
+                                135
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        126,
+                                        513,
+                                        135
+                                    ],
+                                    "type": "text",
+                                    "content": "iCloud 可以同步照片、联系人、备忘录和文件。开启iCloud备份后，设备数据可以在更换设",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                143,
+                                487,
+                                153
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        143,
+                                        487,
+                                        153
+                                    ],
+                                    "type": "text",
+                                    "content": "备时快速恢复。用户应定期检查存储空间，并删除不需要的数据以保持良好运行状态。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        190,
+                        205,
+                        207
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                190,
+                                202,
+                                206
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        190,
+                                        202,
+                                        206
+                                    ],
+                                    "type": "text",
+                                    "content": "九、安全与维护建议",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        235,
+                        518,
+                        269
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                237,
+                                515,
+                                248
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        237,
+                                        515,
+                                        248
+                                    ],
+                                    "type": "text",
+                                    "content": "苹果设备应保持系统更新，避免安装来源不明的软件。建议开启密码锁、Face ID、Touch ID",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                255,
+                                455,
+                                265
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        255,
+                                        455,
+                                        265
+                                    ],
+                                    "type": "text",
+                                    "content": "和查找功能。长期使用时注意电池健康，避免高温环境，并使用官方认证配件。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        75,
+                        301,
+                        205,
+                        319
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 4,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                303,
+                                203,
+                                318
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        303,
+                                        203,
+                                        318
+                                    ],
+                                    "type": "text",
+                                    "content": "十、常见问题与总结",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        347,
+                        509,
+                        398
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 5,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                349,
+                                505,
+                                359
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        349,
+                                        505,
+                                        359
+                                    ],
+                                    "type": "text",
+                                    "content": "当设备出现卡顿、无法连接网络或应用异常时，可以尝试重新启动设备、检查系统更新或",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                367,
+                                505,
+                                376
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        367,
+                                        505,
+                                        376
+                                    ],
+                                    "type": "text",
+                                    "content": "联系苹果官方支持。合理使用苹果产品能够充分发挥设备性能，提升学习、工作和生活效",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                382,
+                                95,
+                                397
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        382,
+                                        95,
+                                        397
+                                    ],
+                                    "type": "text",
+                                    "content": "率。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ],
+            "discarded_blocks": [],
+            "page_size": [
+                595,
+                841
+            ],
+            "page_idx": 4,
+            "para_blocks": [
+                {
+                    "bbox": [
+                        74,
+                        78,
+                        219,
+                        95
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 0,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                79,
+                                216,
+                                94
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        79,
+                                        216,
+                                        94
+                                    ],
+                                    "type": "text",
+                                    "content": "八、iCloud 与数据管理",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        123,
+                        516,
+                        157
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 1,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                126,
+                                513,
+                                135
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        126,
+                                        513,
+                                        135
+                                    ],
+                                    "type": "text",
+                                    "content": "iCloud 可以同步照片、联系人、备忘录和文件。开启iCloud备份后，设备数据可以在更换设",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                143,
+                                487,
+                                153
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        143,
+                                        487,
+                                        153
+                                    ],
+                                    "type": "text",
+                                    "content": "备时快速恢复。用户应定期检查存储空间，并删除不需要的数据以保持良好运行状态。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        74,
+                        190,
+                        205,
+                        207
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 2,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                190,
+                                202,
+                                206
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        190,
+                                        202,
+                                        206
+                                    ],
+                                    "type": "text",
+                                    "content": "九、安全与维护建议",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        235,
+                        518,
+                        269
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 3,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                237,
+                                515,
+                                248
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        237,
+                                        515,
+                                        248
+                                    ],
+                                    "type": "text",
+                                    "content": "苹果设备应保持系统更新，避免安装来源不明的软件。建议开启密码锁、Face ID、Touch ID",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                255,
+                                455,
+                                265
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        255,
+                                        455,
+                                        265
+                                    ],
+                                    "type": "text",
+                                    "content": "和查找功能。长期使用时注意电池健康，避免高温环境，并使用官方认证配件。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                },
+                {
+                    "bbox": [
+                        75,
+                        301,
+                        205,
+                        319
+                    ],
+                    "type": "title",
+                    "angle": 0,
+                    "index": 4,
+                    "lines": [
+                        {
+                            "bbox": [
+                                77,
+                                303,
+                                203,
+                                318
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        303,
+                                        203,
+                                        318
+                                    ],
+                                    "type": "text",
+                                    "content": "十、常见问题与总结",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "level": 2
+                },
+                {
+                    "bbox": [
+                        74,
+                        347,
+                        509,
+                        398
+                    ],
+                    "type": "text",
+                    "angle": 0,
+                    "index": 5,
+                    "lines": [
+                        {
+                            "bbox": [
+                                78,
+                                349,
+                                505,
+                                359
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        78,
+                                        349,
+                                        505,
+                                        359
+                                    ],
+                                    "type": "text",
+                                    "content": "当设备出现卡顿、无法连接网络或应用异常时，可以尝试重新启动设备、检查系统更新或",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                77,
+                                367,
+                                505,
+                                376
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        77,
+                                        367,
+                                        505,
+                                        376
+                                    ],
+                                    "type": "text",
+                                    "content": "联系苹果官方支持。合理使用苹果产品能够充分发挥设备性能，提升学习、工作和生活效",
+                                    "score": 1.0
+                                }
+                            ]
+                        },
+                        {
+                            "bbox": [
+                                76,
+                                382,
+                                95,
+                                397
+                            ],
+                            "spans": [
+                                {
+                                    "bbox": [
+                                        76,
+                                        382,
+                                        95,
+                                        397
+                                    ],
+                                    "type": "text",
+                                    "content": "率。",
+                                    "score": 1.0
+                                }
+                            ]
+                        }
+                    ],
+                    "merge_prev": false
+                }
+            ]
+        }
+    ],
+    "_backend": "hybrid",
+    "_effort": "medium",
+    "_ocr_enable": false,
+    "_version_name": "3.4.4"
+}

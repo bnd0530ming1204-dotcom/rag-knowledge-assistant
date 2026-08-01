@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 
 from processor.import_processor.base import BaseNode
@@ -29,15 +30,17 @@ class NodeEntry(BaseNode):
             raise FileProcessingError(message=f"文件不存在: {import_file_path}")
 
         # 5 md还是pdf
-        if import_file_path_obj.suffix == ".md":
+        if import_file_path_obj.suffix.lower() == ".md":
             state["is_md_read_enabled"] = True
             state["md_path"] = import_file_path
-        elif import_file_path_obj.suffix == ".pdf":
+        elif import_file_path_obj.suffix.lower() == ".pdf":
             state["is_pdf_read_enabled"] = True
             state["pdf_path"] = import_file_path
         else:
             raise FileProcessingError(message=f"不支持的文件格式: {import_file_path}")
 
         state["file_title"] = import_file_path_obj.stem
-        state["file_dir"] = r"E:\output"
+        output_dir = Path(os.getenv("OUTPUT_DIR", "./output"))
+        output_dir.mkdir(parents=True, exist_ok=True)
+        state["file_dir"] = str(output_dir)
         return state

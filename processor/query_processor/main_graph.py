@@ -1,11 +1,10 @@
 from dotenv import load_dotenv
-from langgraph.constants import END, START
+from langgraph.constants import END
 from langgraph.graph import StateGraph
 
-from processor.query_processor.nodes.a_node_item_name_confirm import NodeItemNameConfirm
+from processor.query_processor.nodes.a_node_prepare_query import NodePrepareQuery
 from processor.query_processor.nodes.b_node_search_embedding import NodeSearchEmbedding
 from processor.query_processor.nodes.c_node_search_embedding_hyde import NodeSearchEmbeddingHyde
-from processor.query_processor.nodes.d_node_web_search_mcp import NodeWebSearchMcp
 from processor.query_processor.nodes.e_node_rrf import NodeRrf
 from processor.query_processor.nodes.f_node_rerank import NodeRerank
 from processor.query_processor.nodes.g_node_answer_output import NodeAnswerOutput
@@ -37,10 +36,9 @@ class KBQueryWorkflow:
     # 实例化
     def _init_nodes(self):
         print("实例化所有节点...")
-        self.node_item_name_confirm = NodeItemNameConfirm()
+        self.node_prepare_query = NodePrepareQuery()
         self.node_search_embedding = NodeSearchEmbedding()
         self.node_search_embedding_hyde = NodeSearchEmbeddingHyde()
-        self.node_web_search_mcp = NodeWebSearchMcp()
         self.node_rrf = NodeRrf()
         self.node_rerank = NodeRerank()
         self.node_answer_output = NodeAnswerOutput()
@@ -48,10 +46,9 @@ class KBQueryWorkflow:
     # 注册
     def _register_nodes(self):
         print("注册所有节点...")
-        self.workflow.add_node("node_item_name_confirm", self.node_item_name_confirm)
+        self.workflow.add_node("node_prepare_query", self.node_prepare_query)
         self.workflow.add_node("node_search_embedding", self.node_search_embedding)
         self.workflow.add_node("node_search_embedding_hyde", self.node_search_embedding_hyde)
-        self.workflow.add_node("node_web_search_mcp", self.node_web_search_mcp)
         self.workflow.add_node("node_rrf", self.node_rrf)
         self.workflow.add_node("node_rerank", self.node_rerank)
         self.workflow.add_node("node_answer_output", self.node_answer_output)
@@ -60,36 +57,31 @@ class KBQueryWorkflow:
     def _setup_routes(self):
         print("设置路由规则...")
         # 入口
-        self.workflow.set_entry_point("node_item_name_confirm")
+        self.workflow.set_entry_point("node_prepare_query")
         # self.workflow.add_node(START,"node_item_name_confirm")
 
         # 条件边
         self.workflow.add_conditional_edges(
-            "node_item_name_confirm",
-            self._route_after_item_name_confirm,
+            "node_prepare_query",
+            self._route_after_prepare_query,
             {
                 "node_search_embedding": "node_search_embedding",
                 "node_search_embedding_hyde": "node_search_embedding_hyde",
-                "node_web_search_mcp": "node_web_search_mcp",
-                "node_answer_output": "node_answer_output"  # 问题确认后，不进入任何检索分支，直接返回结果
             }
         )
 
         # 注册边
         self.workflow.add_edge("node_search_embedding", "node_rrf")
         self.workflow.add_edge("node_search_embedding_hyde", "node_rrf")
-        self.workflow.add_edge("node_web_search_mcp", "node_rrf")
 
         self.workflow.add_edge("node_rrf", "node_rerank")
         self.workflow.add_edge("node_rerank", "node_answer_output")
         self.workflow.add_edge("node_answer_output", END)
 
     # 路由-条件
-    def _route_after_item_name_confirm(self, state: QueryGraphState) -> str:
+    def _route_after_prepare_query(self, state: QueryGraphState):
         print("路由-条件...")
-        if state.get("answer"):
-            return "node_answer_output"
-        return ["node_search_embedding", "node_search_embedding_hyde", "node_web_search_mcp"]
+        return ["node_search_embedding", "node_search_embedding_hyde"]
 
     # 编译图
     def compile(self):

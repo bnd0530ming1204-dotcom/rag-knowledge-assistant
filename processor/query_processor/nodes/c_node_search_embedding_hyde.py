@@ -30,7 +30,6 @@ class NodeSearchEmbeddingHyde(NodeBase):
         logger.info(f"【{self.name}】节点逻辑")
 
         # 1 参数处理
-        item_names = state.get("item_names")  # 命中设备名
         rewritten_query = state.get("rewritten_query")  # 语义搜索条件
 
         # 2 大模型生成假设性文档
@@ -41,7 +40,7 @@ class NodeSearchEmbeddingHyde(NodeBase):
         response = self._setp_2_search_embedding_hyde(
             rewritten_query=rewritten_query,
             hyde_doc=hyde_doc,
-            item_names=item_names
+            item_names=[]
         )
 
         # 4 结果解析
@@ -80,14 +79,14 @@ class NodeSearchEmbeddingHyde(NodeBase):
         reqs = create_hybrid_search_requests(
             dense_vector=dense_vector,
             sparse_vector=sparse_vector,
-            expr=f'item_name in {item_names}'
+            expr=None
         )
         response = hybrid_search(
             client=milvus_client,
             collection_name=collection_name,
             reqs=reqs,
             limit=5,
-            output_fields=["chunk_id", "content", "item_name"]
+            output_fields=["chunk_id", "content", "title", "file_title"]
         )
 
         return response

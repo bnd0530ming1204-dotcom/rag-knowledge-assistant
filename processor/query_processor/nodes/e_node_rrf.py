@@ -26,11 +26,11 @@ class NodeRrf(NodeBase):
         logger.info(f"【{self.name}】节点逻辑")
 
         # 1 参数处理
-        embedding_chunks = state.get("embedding_chunks")
-        hyde_embedding_chunks = state.get("hyde_embedding_chunks")
+        embedding_chunks = state.get("embedding_chunks") or []
+        hyde_embedding_chunks = state.get("hyde_embedding_chunks") or []
 
-        embedding_chunks_list = [doc.get("entity") for doc in embedding_chunks]
-        hyde_embedding_chunks_list = [doc.get("entity") for doc in hyde_embedding_chunks]
+        embedding_chunks_list = [doc.get("entity") for doc in embedding_chunks if doc.get("entity")]
+        hyde_embedding_chunks_list = [doc.get("entity") for doc in hyde_embedding_chunks if doc.get("entity")]
 
         # 2 封装要融合的数据
         rrf_inputs = [

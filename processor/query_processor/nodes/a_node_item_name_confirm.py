@@ -51,7 +51,7 @@ class NodeItemNameConfirm(NodeBase):
 
         # 5，6 向量搜索(搜索知识库)，搜索结果对齐(整理)
         align_result = {}
-        if len(item_names) >= 0:
+        if item_names:
             query_results = self._step_5_vectorize_and_query(item_names)
             # print(f"milvus根据提取到的item_names的匹配结果：")
             # for query_result in query_results:
@@ -140,6 +140,9 @@ class NodeItemNameConfirm(NodeBase):
         collection_name = milvus_config.item_name_collection
 
         # 条件向量化
+        if not item_names:
+            return []
+
         embeddings = generate_embeddings(item_names)
 
         # 相似性匹配

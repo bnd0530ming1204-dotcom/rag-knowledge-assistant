@@ -53,7 +53,7 @@ uv pip install -U "mineru[all]" -i https://mirrors.aliyun.com/pypi/simple
 """
     mineru模型
 """
-模型缓存：$env:MODELSCOPE_CACHE="D:\ai_models\modelscope_cache"
+模型缓存：$env:MODELSCOPE_CACHE="./data/models/modelscope_cache"
 下模型：mineru-models-download
 桌面客户端：https://mineru.net/
 测试：mineru -p xxx.pdf -o output --backend pipeline
@@ -75,7 +75,7 @@ pip install modelscope
 """
     from modelscope.hub.snapshot_download import snapshot_download
     # 下载模型到当前目录下的 models/bge-m3 文件夹
-    model_dir = snapshot_download('BAAI/bge-m3', cache_dir='D:/ai_models/modelscope_cache/models')
+    model_dir = snapshot_download('BAAI/bge-m3', cache_dir='./data/models/modelscope_cache')
     print(f"模型已下载到: {model_dir}")
 """
 测试：python -c "import torch; print('CUDA可用:', torch.cuda.is_available())"

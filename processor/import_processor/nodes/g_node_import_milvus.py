@@ -3,8 +3,6 @@ import logging
 from typing import List, Dict, Any
 
 from pymilvus import DataType
-from sympy.interactive.session import enable_automatic_symbols
-
 from config.milvus_config import milvus_config
 from processor.import_processor.base import BaseNode, setup_logging
 from processor.import_processor.exceptions import StateFieldError, MilvusError
@@ -163,7 +161,7 @@ class NodeImportMilvus(BaseNode):
 if __name__ == "__main__":
     # setup_logging()
 
-    json_path = r"E:\output\B530\hybrid_auto\B530_new_new_new_chunks.json"
+    json_path = "./output/example/example_chunks_with_embeddings.json"
     with open(json_path, "r", encoding="utf-8") as f:
         state_json = f.read()
 

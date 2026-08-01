@@ -249,7 +249,7 @@ class NodeItemNameRecognition(BaseNode):
 if __name__ == '__main__':
     node = NodeItemNameRecognition()
 
-    path = "E:\output\B530\hybrid_auto\B530_new_chunks.json"
+    path = "./output/example/example_chunks.json"
 
     with open(path, "r", encoding="utf-8") as f:
         chunks_json_data = f.read()

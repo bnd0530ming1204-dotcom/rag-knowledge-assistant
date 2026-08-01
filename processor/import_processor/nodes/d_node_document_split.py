@@ -4,8 +4,6 @@ from pathlib import Path
 from typing import List, Dict
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from sympy.polys.subresultants_qq_zz import final_touches
-
 from processor.import_processor.base import BaseNode
 from processor.import_processor.exceptions import StateFieldError
 from processor.import_processor.import_config import get_config
@@ -272,11 +270,11 @@ class NodeDocumentSplit(BaseNode):
 if __name__ == "__main__":
     node = NodeDocumentSplit()
 
-    with open("E:\output\B530\hybrid_auto\B530_new.md", "r", encoding="utf-8") as f:
+    with open("./output/example/example.md", "r", encoding="utf-8") as f:
         md_content = f.read()
 
     init_state = {
-        "md_path": "E:\output\B530\hybrid_auto\B530_new.md",
+        "md_path": "./output/example/example.md",
         "md_content": md_content,
         "file_title": "B530_new",
     }

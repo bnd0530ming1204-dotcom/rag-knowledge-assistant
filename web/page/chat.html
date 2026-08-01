@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -690,7 +690,7 @@
 
     async function submitQuery(text){
       const isStream = streamToggle.checked;
-      const res = await fetch(`${API_BASE}/query`, {
+      const res = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({

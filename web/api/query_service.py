@@ -1,9 +1,13 @@
+import os
+import shutil
+import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, BackgroundTasks,Request
+from fastapi import FastAPI, BackgroundTasks, File, HTTPException, Request, UploadFile
 from pydantic import BaseModel
 from starlette.responses import FileResponse, StreamingResponse
 
+from processor.import_processor.main_graph import KBImportWorkflow
 from processor.query_processor.main_graph import KBQueryWorkflow
 from utils.mongo_history_utils import get_recent_messages
 from utils.sse_utils import create_sse_queue, sse_generator
@@ -11,11 +15,13 @@ from utils.task_utils import update_task_status, TASK_STATUS_PROCESSING, get_tas
 
 app = FastAPI()
 
+UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", "./data/uploads"))
+
 
 class QueryRequest(BaseModel):
     query: str
     session_id: str
-    is_stream: bool
+    is_stream: bool = False
 
 
 @app.get("/chat.html")
@@ -25,7 +31,8 @@ async def chat():
     return FileResponse(chat_html_path)
 
 
-@app.post("/query")
+@app.post("/chat")
+@app.post("/query", deprecated=True)
 async def query(backgroundTasks: BackgroundTasks, query: QueryRequest):
     user_query = query.query
     session_id = query.session_id
@@ -49,6 +56,42 @@ async def query(backgroundTasks: BackgroundTasks, query: QueryRequest):
         }
 
 
+@app.post("/upload")
+def upload_pdf(file: UploadFile = File(...)):
+    original_name = Path(file.filename or "").name
+    if not original_name or Path(original_name).suffix.lower() != ".pdf":
+        raise HTTPException(status_code=400, detail="仅支持上传 PDF 文件")
+
+    task_id = uuid.uuid4().hex
+    task_dir = UPLOAD_DIR / task_id
+    task_dir.mkdir(parents=True, exist_ok=True)
+    saved_path = task_dir / original_name
+
+    try:
+        with saved_path.open("wb") as destination:
+            shutil.copyfileobj(file.file, destination)
+
+        final_state = KBImportWorkflow().run(
+            {"task_id": task_id, "import_file_path": str(saved_path)},
+            stream=False,
+        )
+        chunks = final_state.get("chunks") or []
+        return {
+            "status": "completed",
+            "task_id": task_id,
+            "file_name": original_name,
+            "saved_path": str(saved_path),
+            "markdown_path": final_state.get("md_path", ""),
+            "chunks_count": len(chunks),
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"PDF 处理失败: {exc}") from exc
+    finally:
+        file.file.close()
+
+
 def run_query_graph(session_id: str, user_query: str, is_stream: bool):
     print("调用搜索工作流")
 
@@ -59,8 +102,11 @@ def run_query_graph(session_id: str, user_query: str, is_stream: bool):
     }
 
     workflow = KBQueryWorkflow()
-    for chunk in workflow.run(init_state, stream=is_stream):
-        pass
+    result = workflow.run(init_state, stream=is_stream)
+    if is_stream:
+        for _ in result:
+            pass
+    return result
 
 
 @app.get("/stream/{session_id}")

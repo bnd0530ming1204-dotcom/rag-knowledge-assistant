@@ -6,7 +6,7 @@ env = os.environ.copy()
 env["MINERU_MODEL_SOURCE"] = "local"
 
 # cmd
-cmd = "mineru -p e:/B3显示器.pdf -o output --backend pipeline"
+cmd = "mineru -p ./data/example.pdf -o ./output --backend pipeline"
 
 # 子进程
 proc = subprocess.Popen(

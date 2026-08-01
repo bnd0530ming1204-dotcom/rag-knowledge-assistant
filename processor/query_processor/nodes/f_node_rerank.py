@@ -29,6 +29,10 @@ class NodeRerank(NodeBase):
         merged_multi_docs: List[Dict[str, Any]] = self._step_1_merge_multi_source_docs(state)
         print(merged_multi_docs)
 
+        if not merged_multi_docs:
+            state["reranked_docs"] = []
+            return state
+
         # 2 调用排序模型对合并后结果进行排序
         reranked_docs: List[Dict[str, Any]] = self._step_2_rerank_merged_docs(state, merged_multi_docs)
 
@@ -45,8 +49,8 @@ class NodeRerank(NodeBase):
     def _step_1_merge_multi_source_docs(self, state):
         print("步骤1：将web_doc和rrf_chunks节点的数据合并")
         final_docs = []
-        rrf_chunks = state.get("rrf_chunks")
-        web_docs = state.get("web_search_docs")
+        rrf_chunks = state.get("rrf_chunks") or []
+        web_docs = state.get("web_search_docs") or []
         for rrf_doc in rrf_chunks:
             format_rrf_doc = {
                 "content": rrf_doc.get("content"),

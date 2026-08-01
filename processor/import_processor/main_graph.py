@@ -9,7 +9,6 @@ from processor.import_processor.nodes.a_node_entry import NodeEntry
 from processor.import_processor.nodes.b_node_pdf_to_md import NodePDFToMD
 from processor.import_processor.nodes.c_node_md_img import NodeMDImg
 from processor.import_processor.nodes.d_node_document_split import NodeDocumentSplit
-from processor.import_processor.nodes.e_node_item_name_recognition import NodeItemNameRecognition
 from processor.import_processor.nodes.f_node_bge_embedding import NodeBGEEmbedding
 from processor.import_processor.nodes.g_node_import_milvus import NodeImportMilvus
 from processor.import_processor.state import ImportGraphState
@@ -53,7 +52,6 @@ class KBImportWorkflow:
         graph.add_node("b_node_pdf_to_md", NodePDFToMD())
         graph.add_node("c_node_md_img", NodeMDImg())
         graph.add_node("d_node_document_split", NodeDocumentSplit())
-        graph.add_node("e_node_item_name_recognition", NodeItemNameRecognition())
         graph.add_node("f_node_bge_embedding", NodeBGEEmbedding())
         graph.add_node("g_node_import_milvus", NodeImportMilvus())
 
@@ -72,8 +70,8 @@ class KBImportWorkflow:
 
         graph.add_edge("b_node_pdf_to_md", "c_node_md_img")
         graph.add_edge("c_node_md_img", "d_node_document_split")
-        graph.add_edge("d_node_document_split", "e_node_item_name_recognition")
-        graph.add_edge("e_node_item_name_recognition", "f_node_bge_embedding")
+        # MVP 知识库不依赖商品实体识别，切分后直接生成向量。
+        graph.add_edge("d_node_document_split", "f_node_bge_embedding")
         graph.add_edge("f_node_bge_embedding", "g_node_import_milvus")
 
         # 3 编译图
@@ -95,12 +93,14 @@ if __name__ == "__main__":
 
     workflow = KBImportWorkflow()
     # workflow_graph = workflow.graph
-    init_state = {"import_file_path": r"E:\华为显示器 B3-211H 用户指南-(NSN-21BZ,02,zh-cn).pdf"}
+    init_state = {
+        "import_file_path": "./苹果产品用户指南.pdf"
+    }
 
-    # for event in workflow.run(init_state, stream=True):
-    #     print(f"state: {event}")
+    for event in workflow.run(init_state, stream=True):
+         print(f"state: {event}")
 
-    # final_state = workflow.run(init_state, stream=False)
-    # print(json.dumps(final_state, ensure_ascii=False, indent=4))
+    final_state = workflow.run(init_state, stream=False)
+    print(json.dumps(final_state, ensure_ascii=False, indent=4))
 
 

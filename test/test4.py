@@ -4,7 +4,7 @@ from config.lm_config import lm_config
 from utils.llm_utils import get_llm_client
 
 base_str = None
-with open("e:/a.png","rb") as img:
+with open("./data/a.png", "rb") as img:
     base_str = base64.b64encode(img.read()).decode("utf-8")
 
 
