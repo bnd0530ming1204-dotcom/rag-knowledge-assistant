@@ -168,3 +168,15 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# RAG project runtime files
+data/
+output/
+volumes/
+
+# Uploaded documents
+*.pdf
+
+# Model cache
+*.bin
+*.pt
+*.pth
