@@ -23,6 +23,8 @@ class QueryGraphState(TypedDict):
     # 生成过程中的数据
     prompt: str  # 组装好的 Prompt
     answer: str  # 最终生成的答案
+    image_urls: list  # 回答关联图片
+    sources: list  # 回答关联的结构化引用来源
 
     # 辅助信息
     item_names: List[str]  # 提取出的商品名称

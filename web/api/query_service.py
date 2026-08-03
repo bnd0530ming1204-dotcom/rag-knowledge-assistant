@@ -9,7 +9,7 @@ from starlette.responses import FileResponse, StreamingResponse
 
 from processor.import_processor.main_graph import KBImportWorkflow
 from processor.query_processor.main_graph import KBQueryWorkflow
-from utils.mongo_history_utils import get_recent_messages
+from utils.mongo_history_utils import get_recent_messages, get_recent_sessions
 from utils.sse_utils import create_sse_queue, sse_generator
 from utils.task_utils import update_task_status, TASK_STATUS_PROCESSING, get_task_result
 
@@ -47,12 +47,14 @@ async def query(backgroundTasks: BackgroundTasks, query: QueryRequest):
         backgroundTasks.add_task(run_query_graph, session_id, user_query, is_stream)  # run_query_graph调用工作流
         return {"message": "任务已经开始，请耐心等待", "session_id": session_id}
     else:
-        run_query_graph(session_id, user_query, is_stream)
+        result = run_query_graph(session_id, user_query, is_stream)
         answer = get_task_result(session_id, "answer", "")
         return {
             "message": "处理完成",
             "session_id": session_id,
-            "answer": answer
+            "answer": answer,
+            "sources": result.get("sources", []) if isinstance(result, dict) else [],
+            "image_urls": result.get("image_urls", []) if isinstance(result, dict) else []
         }
 
 
@@ -135,9 +137,22 @@ async def history(session_id: str, limit: int = 50):
             "text": r.get("text", ""),
             "rewritten_query": r.get("rewritten_query", ""),
             "item_names": r.get("item_names", []),
+            "image_urls": r.get("image_urls", []),
+            "sources": r.get("sources", []),
             "ts": r.get("ts")
         })
     return {"session_id": session_id, "items": items}
+
+
+@app.get("/history")
+async def history_sessions(limit: int = 50):
+    sessions = get_recent_sessions(limit=limit)
+    return {"items": [{
+        "session_id": r.get("_id", ""),
+        "updated_at": r.get("updated_at"),
+        "preview": r.get("preview", ""),
+        "message_count": r.get("message_count", 0),
+    } for r in sessions]}
 
 if __name__ == "__main__":
     import uvicorn

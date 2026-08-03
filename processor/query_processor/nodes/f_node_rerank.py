@@ -57,8 +57,12 @@ class NodeRerank(NodeBase):
                 "title": rrf_doc.get("title"),
                 "chunk_id": rrf_doc.get("chunk_id"),
                 "url": None,
-                "source": "local"
+                "source": "local",
+                "file_title": rrf_doc.get("file_title"),
             }
+            for page_key in ("page", "page_num", "page_number", "page_no"):
+                if rrf_doc.get(page_key) is not None:
+                    format_rrf_doc[page_key] = rrf_doc.get(page_key)
             final_docs.append(format_rrf_doc)
 
         for web_doc in web_docs:

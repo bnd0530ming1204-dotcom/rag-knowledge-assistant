@@ -51,11 +51,14 @@ class NodeAnswerOutput(NodeBase):
 
         # 阶段四： 提取图片URL（用于历史记录和前端展示）
         image_urls = self._extract_images_from_docs(state.get("reranked_docs") or [])
+        state["image_urls"] = image_urls
+        sources = self._extract_sources_from_docs(state.get("reranked_docs") or [])
+        state["sources"] = sources
 
         # 阶段五：把答案写入到mongodb的history中
         if state.get("answer"):
             print("---写入MongoDB历史记录---")
-            self._step_4_write_history(state, image_urls=image_urls)
+            self._step_4_write_history(state, image_urls=image_urls, sources=sources)
 
         add_done_task(state['session_id'], self.name, state.get("is_stream"))
 
@@ -68,7 +71,8 @@ class NodeAnswerOutput(NodeBase):
                 {
                     "answer": state["answer"],
                     "status": "completed",
-                    "image_urls": image_urls  # 发送图片URL给前端
+                    "image_urls": image_urls,  # 发送图片URL给前端
+                    "sources": sources
                 }
             )
 
@@ -312,7 +316,29 @@ class NodeAnswerOutput(NodeBase):
         print(f"图片提取完成，共找到 {len(images)} 张唯一图片: {images}")
         return images
 
-    def _step_4_write_history(seld, state: QueryGraphState, image_urls=None) -> QueryGraphState:
+    def _extract_sources_from_docs(self, docs):
+        """从最终 rerank 结果提取可展示的来源，不推断不存在的页码。"""
+        sources = []
+        seen = set()
+        for doc in docs or []:
+            file_name = (doc.get("file_title") or doc.get("title") or "").strip()
+            document_source = (doc.get("url") or doc.get("source") or "").strip()
+            page = None
+            for page_key in ("page", "page_num", "page_number", "page_no"):
+                if doc.get(page_key) is not None:
+                    page = doc.get(page_key)
+                    break
+            key = (file_name, document_source, str(page) if page is not None else "")
+            if key in seen or not any(key):
+                continue
+            seen.add(key)
+            item = {"file_name": file_name, "document_source": document_source}
+            if page is not None:
+                item["page"] = page
+            sources.append(item)
+        return sources
+
+    def _step_4_write_history(seld, state: QueryGraphState, image_urls=None, sources=None) -> QueryGraphState:
         """
         阶段四：把本轮答案写入 MongoDB history。
         利用 utils/mongo_history_utils.py 中的 save_chat_messages 方法。
@@ -330,7 +356,8 @@ class NodeAnswerOutput(NodeBase):
                     rewritten_query="",
                     item_names=item_names,
                     image_urls=image_urls,
-                    message_id=None
+                    message_id=None,
+                    sources=sources
                 )
         except Exception as e:
             # 写历史失败不应影响主链路

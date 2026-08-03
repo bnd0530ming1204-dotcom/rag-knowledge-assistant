@@ -102,7 +102,8 @@ def save_chat_message(
         rewritten_query: str = "",
         item_names: List[str] = None,
         image_urls: List[str] = None,
-        message_id: str = None
+        message_id: str = None,
+        sources: List[Dict[str, Any]] = None
 ) -> str:
     """
     写入/更新单条会话记录到MongoDB
@@ -127,6 +128,7 @@ def save_chat_message(
         "rewritten_query": rewritten_query or "",  # 问题优化后的改写，空值处理为空字符串
         "item_names": item_names,  # 关联商品名称列表
         "image_urls": image_urls,  # 关联图片URL列表
+        "sources": sources or [],  # 本轮回答使用的结构化引用来源
         "ts": ts  # 时间戳，排序和时间筛选维度
     }
 
@@ -206,6 +208,27 @@ def get_recent_messages(session_id: str, limit: int = 10) -> List[Dict[str, Any]
         # 捕获查询异常，记录错误日志
         logging.error(f"Error getting recent messages: {e}")
         # 异常时返回空列表，避免上层处理None报错
+        return []
+
+
+def get_recent_sessions(limit: int = 50) -> List[Dict[str, Any]]:
+    """按最后消息时间倒序返回会话摘要。"""
+    mongo_tool = get_history_mongo_tool()
+    try:
+        pipeline = [
+            {"$sort": {"ts": -1}},
+            {"$group": {
+                "_id": "$session_id",
+                "updated_at": {"$first": "$ts"},
+                "preview": {"$first": "$text"},
+                "message_count": {"$sum": 1},
+            }},
+            {"$sort": {"updated_at": -1}},
+            {"$limit": max(1, min(limit, 200))},
+        ]
+        return list(mongo_tool.chat_message.aggregate(pipeline))
+    except Exception as e:
+        logging.error(f"Error getting recent sessions: {e}")
         return []
 
 
