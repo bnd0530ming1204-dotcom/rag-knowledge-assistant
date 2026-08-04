@@ -27,20 +27,27 @@
 
 ```mermaid
 flowchart LR
-    U[浏览器 chat.html] -->|上传 PDF| API[FastAPI]
-    API --> IG[文档导入工作流]
-    IG --> MINERU[MinerU 解析]
-    MINERU --> MD[Markdown 与文本切片]
-    MD --> BGE[BGE-M3 Dense / Sparse]
-    Markdown --> BGE-M3 Embedding --> Dense Vector + Sparse Vector --> MILVUS[(Milvus)]
+    A[浏览器 chat.html] --> B[FastAPI服务]
 
-    U -->|问题与 session_id| API
-    API --> QG[RAG 查询工作流]
-    QG --> MILVUS
-    QG --> RERANK[DashScope TextReRank]
-    RERANK --> LLM[LLM 回答生成]
-    LLM -->|SSE 或 JSON| U
-    QG <--> MONGO[(MongoDB 会话历史)]
+    B --> C[PDF文档上传]
+    C --> D[MinerU文档解析]
+    D --> E[Markdown文本处理]
+    E --> F[BGE-M3向量化]
+
+    F --> G[Dense Vector]
+    F --> H[Sparse Vector]
+
+    G --> I[Milvus混合检索]
+    H --> I
+
+    J[用户问题] --> K[RAG查询流程]
+    K --> L[Hybrid Search]
+    L --> M[RRF融合]
+    M --> N[TextReRank排序]
+    N --> O[LLM生成回答]
+
+    O --> P[SSE流式返回]
+    O --> Q[MongoDB保存历史]
 ```
 
 核心组件：
