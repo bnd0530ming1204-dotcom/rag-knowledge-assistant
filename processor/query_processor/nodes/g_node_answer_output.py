@@ -50,9 +50,10 @@ class NodeAnswerOutput(NodeBase):
             self._step_3_generate_response(state, prompt)
 
         # 阶段四： 提取图片URL（用于历史记录和前端展示）
-        image_urls = self._extract_images_from_docs(state.get("reranked_docs") or [])
+        used_context_docs = state.get("used_context_docs") or []
+        image_urls = self._extract_images_from_docs(used_context_docs)
         state["image_urls"] = image_urls
-        sources = self._extract_sources_from_docs(state.get("reranked_docs") or [])
+        sources = self._extract_sources_from_docs(used_context_docs)
         state["sources"] = sources
 
         # 阶段五：把答案写入到mongodb的history中
@@ -111,9 +112,10 @@ class NodeAnswerOutput(NodeBase):
         item_names = state.get("item_names") or []
 
         # 2. 格式化上下文文档
-        context_str, char_budget = self._format_reranked_docs(
+        context_str, char_budget, used_context_docs = self._format_reranked_docs(
             state.get("reranked_docs") or [], char_budget
         )
+        state["used_context_docs"] = used_context_docs
 
         # 3. 格式化历史对话
         history_str, char_budget = self._format_chat_history(
@@ -133,9 +135,10 @@ class NodeAnswerOutput(NodeBase):
         print(f"组装后的提示词为：{prompt}")
         return prompt
 
-    def _format_reranked_docs(self, reranked_docs: List[Dict], char_budget: int) -> Tuple[str, int]:
+    def _format_reranked_docs(self, reranked_docs: List[Dict], char_budget: int) -> Tuple[str, int, List[Dict]]:
         """格式化重排序文档，带字符预算控制"""
         formatted_lines = []
+        used_context_docs = []
         used_chars = 0
 
         # 从重排内容中，提取为资料字符串，不可超过限额
@@ -173,9 +176,10 @@ class NodeAnswerOutput(NodeBase):
                 break
 
             formatted_lines.append(doc_entry)
+            used_context_docs.append(doc)
             used_chars += len(doc_entry) + 2
 
-        return "\n\n".join(formatted_lines), char_budget - used_chars
+        return "\n\n".join(formatted_lines), char_budget - used_chars, used_context_docs
 
     def _format_chat_history(self, chat_history: List[Dict], char_budget: int) -> Tuple[str, int]:
         """格式化历史对话"""

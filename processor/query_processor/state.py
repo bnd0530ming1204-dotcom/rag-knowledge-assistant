@@ -19,6 +19,7 @@ class QueryGraphState(TypedDict):
     # 排序过程中的数据
     rrf_chunks: list  # RRF 融合排序后的切片
     reranked_docs: list  # 重排序后的最终 Top-K 文档
+    used_context_docs: list  # 实际加入 LLM Prompt 的文档
 
     # 生成过程中的数据
     prompt: str  # 组装好的 Prompt

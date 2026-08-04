@@ -1,238 +1,345 @@
-# RAG Knowledge Assistant｜智能知识库问答系统
+# RAG Knowledge Assistant
 
-一个面向技术文档问答场景的 RAG（Retrieval-Augmented Generation）项目。系统将 PDF 解析、切分并写入向量数据库，在查询阶段通过 BGE-M3 混合检索、HyDE 双路召回、RRF 融合与模型重排，为 LLM 生成答案提供检索上下文。项目提供多轮会话、SSE 流式输出和简单的 Web 交互页面。
+## 1. 项目介绍
 
-## 功能特性
+这是一个基于 RAG（Retrieval-Augmented Generation）技术构建的知识库问答系统。系统支持 PDF 文档上传、知识库构建、文档检索增强问答以及基于会话历史的多轮对话。
 
-- **文档导入**：支持通过 API 上传 PDF，调用 MinerU 获取 Markdown 解析结果，并完成切片、向量化和入库。
-- **Dense + Sparse 混合检索**：使用 BGE-M3 同时生成稠密向量与稀疏向量，通过 Milvus Hybrid Search 兼顾语义相关性和关键词匹配。
-- **双路召回与排序优化**：并行执行原问题检索和 HyDE 假设文档检索，使用 RRF 去重融合，再调用 DashScope TextReRank 精排并按分数断崖动态截断。
-- **多轮对话增强**：通过 `session_id` 从 MongoDB 读取最近对话，利用 LLM 将追问改写为可独立检索的问题，并持久化用户与助手消息。
-- **LangGraph 工作流编排**：将导入与查询拆分为状态驱动的节点工作流。
-- **同步与流式问答**：FastAPI 提供同步问答和 SSE 增量输出，内置页面支持 PDF 上传、问答及历史记录查看。
-- **图片资源处理**：当 MinerU 解析结果包含 `images` 目录时，扫描 Markdown 已引用的图片，为图片生成简短标题，上传至 MinIO 并替换 Markdown 中的本地链接；目录或有效引用不存在时跳过该节点的后续处理。
-- **幂等文档更新**：以文件标题定位 Milvus 中的既有切片，重新导入同名文档时先删除旧数据再写入新数据。
+后端使用 FastAPI 提供上传、问答、SSE 流式输出和历史会话接口；文档导入与查询流程基于 LangGraph 工作流组织；BGE-M3 为文本生成稠密和稀疏向量，Milvus 负责向量存储与混合检索，MongoDB 保存会话消息，LLM 根据重排后的参考内容生成回答。
 
-## 系统流程
+## 2. 项目展示
 
-### 文档导入
+### 文档上传与知识库构建
 
-```text
-PDF 上传
-  → MinerU API 解析为 Markdown
-  → 可选：处理 Markdown 引用的图片并上传 MinIO
-  → 按 Markdown 标题切分
-  → 长块递归切分、短块合并
-  → BGE-M3 生成 Dense / Sparse 向量
-  → 创建或复用 Milvus Collection
-  → 删除同名旧文档并批量入库
+<img alt="upload" height="450" src="docs/images/upload.png" width="300"/>
+
+### RAG 智能问答
+
+<img alt="chat" height="700" src="docs/images/chat.png" width="900"/>
+
+<img alt="chat-result" height="800" src="docs/images/chatresult.png" width="950"/>
+
+### 历史会话管理
+
+<img alt="history" height="400" src="docs/images/history.png" width="350"/>
+
+
+## 3. 架构流程
+
+```mermaid
+flowchart LR
+    U[浏览器 chat.html] -->|上传 PDF| API[FastAPI]
+    API --> IG[文档导入工作流]
+    IG --> MINERU[MinerU 解析]
+    MINERU --> MD[Markdown 与文本切片]
+    MD --> BGE[BGE-M3 Dense / Sparse]
+    Markdown --> BGE-M3 Embedding --> Dense Vector + Sparse Vector --> MILVUS[(Milvus)]
+
+    U -->|问题与 session_id| API
+    API --> QG[RAG 查询工作流]
+    QG --> MILVUS
+    QG --> RERANK[DashScope TextReRank]
+    RERANK --> LLM[LLM 回答生成]
+    LLM -->|SSE 或 JSON| U
+    QG <--> MONGO[(MongoDB 会话历史)]
 ```
 
-### RAG 问答
+核心组件：
 
-```text
-用户问题 + session_id
-  → 读取 MongoDB 最近 10 条会话
-  → 多轮问题改写
-  ├─ 原问题 Dense / Sparse 混合检索 ─┐
-  └─ HyDE 生成假设文档并混合检索 ───┤
-                                      → RRF 融合（Top 5）
-                                      → DashScope TextReRank
-                                      → 分数断崖动态截断（3～10 条）
-                                      → 拼装知识片段与会话历史
-                                      → LLM 生成答案
-                                      → MongoDB 持久化 / SSE 流式推送
-```
+- **FastAPI**：HTTP API、静态聊天页面和 SSE 响应入口。
+- **LangGraph**：组织文档导入图和 RAG 查询图。
+- **MinerU**：通过远程 API 将 PDF 解析为 Markdown 及相关资源。
+- **BGE-M3 / FlagEmbedding**：一次编码同时生成 Dense Vector 和 Sparse Vector。
+- **Milvus**：保存知识切片及向量，并执行 Dense/Sparse 混合检索。
+- **DashScope TextReRank**：对 RRF 结果进行相关性重排。
+- **MongoDB**：按 `session_id` 保存用户消息、助手回答、引用来源等历史数据。
+- **MinIO**：文档解析结果包含有效图片时，用于保存处理后的图片资源。
 
-## 技术栈
-
-| 模块 | 技术 |
-| --- | --- |
-| API 与交互 | FastAPI、Uvicorn、Pydantic、SSE、HTML/JavaScript |
-| 工作流编排 | LangGraph |
-| 文档解析 | MinerU API、Markdown、LangChain Text Splitters |
-| Embedding | BGE-M3、FlagEmbedding（Dense + Sparse） |
-| 检索与排序 | Milvus Hybrid Search、Weighted Ranker、HyDE、RRF、DashScope TextReRank |
-| 模型调用 | LangChain、OpenAI 兼容接口、DashScope SDK |
-| 数据存储 | Milvus、MongoDB、MinIO |
-| 基础设施 | Docker Compose、etcd |
-
-## 核心实现
-
-### 1. 结构化文档切片
-
-导入流程优先按 Markdown 一至六级标题组织章节；没有标题时使用文件名作为兜底标题。随后通过 `RecursiveCharacterTextSplitter` 处理超长章节，并合并过短内容，减少无语义碎片。默认参数如下：
-
-- 最大切片长度：`2000` 字符
-- 短块合并阈值：`500` 字符
-- 句子级切分重叠：`1` 句
-
-### 2. 图片资源处理
-
-MinerU 解析结果包含 `images` 目录时，导入节点仅处理同时满足以下条件的资源：图片扩展名在支持列表中，并且图片文件已被 Markdown 正文引用。节点结合图片前后文调用 `VL_MODEL` 生成简短标题，将图片上传至 MinIO，再把 Markdown 中原有的本地图片引用替换为 MinIO URL。处理后的 Markdown 另存为 `_new.md` 文件；若图片目录或有效引用不存在，则直接沿用原 Markdown。
-
-### 3. 混合检索与多路融合
-
-每个知识切片同时保存 BGE-M3 的 Dense 和 Sparse 表示。查询时，Milvus 分别对 `dense_vector` 和 `sparse_vector` 执行 ANN 检索，并使用加权排序器合并结果。主查询图同时启动两条召回路径：
-
-- **Query Retrieval**：直接对改写后的问题进行混合检索；
-- **HyDE Retrieval**：先由 LLM 生成假设性答案文档，再将“问题 + 假设文档”向量化检索。
-
-两路结果通过 RRF 按 `chunk_id` 融合，降低单一召回策略带来的偏差。
-
-### 4. 精排与上下文控制
-
-RRF 候选交给 DashScope TextReRank 重新打分。系统在排序结果的第 3～10 条之间查找最大相邻分差，以“分数断崖”确定最终上下文数量；答案节点还设置字符预算，控制知识片段与历史消息的 Prompt 长度。
-
-### 5. 会话与流式响应
-
-`POST /chat` 支持两种响应方式：
-
-- `is_stream=false`：同步执行工作流并直接返回完整答案；
-- `is_stream=true`：后台执行工作流，客户端通过 `GET /stream/{session_id}` 接收进度、增量文本、图片地址和完成事件。
-
-MongoDB 按 `session_id` 保存会话，使“它怎么安装？”等上下文相关追问能够先被改写为完整问题再检索。
-
-## API
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `POST` | `/upload` | 上传 PDF，同步执行解析、切片、Embedding 与 Milvus 入库 |
-| `POST` | `/chat` | RAG 问答；通过 `is_stream` 选择同步或 SSE 模式 |
-| `POST` | `/query` | 已弃用的兼容问答入口 |
-| `GET` | `/stream/{session_id}` | 订阅指定会话的 SSE 事件 |
-| `GET` | `/history/{session_id}` | 查询会话历史，支持 `limit` 参数 |
-| `GET` | `/chat.html` | 打开内置聊天页面 |
-
-服务启动后可访问 Swagger：`http://127.0.0.1:8001/docs`。
-
-## 项目结构
+## 4. 项目结构
 
 ```text
 knowledge_base_0525/
-├─ config/                         # LLM、Embedding、Milvus、MinerU 等配置
-├─ processor/
-│  ├─ import_processor/            # 文档导入 LangGraph 工作流
-│  │  ├─ main_graph.py
-│  │  ├─ state.py
-│  │  └─ nodes/                    # 解析、图片处理、切片、Embedding、入库
-│  └─ query_processor/             # RAG 查询 LangGraph 工作流
-│     ├─ main_graph.py
-│     ├─ state.py
-│     ├─ prompt/                   # HyDE 与回答 Prompt
-│     └─ nodes/                    # 问题改写、检索、RRF、重排、生成
-├─ utils/                          # Milvus、MongoDB、MinIO、LLM、SSE 工具
-├─ web/
-│  ├─ api/query_service.py         # FastAPI 服务入口
-│  └─ page/chat.html               # 内置聊天页面
-├─ test/                           # 实验与接口验证脚本
-├─ docker-compose.yml              # etcd、MinIO、Milvus Standalone
-├─ requirements.txt
-└─ .env.example
+├── config/                         # LLM、Embedding、Milvus、MinerU、MinIO、Rerank 配置
+├── processor/
+│   ├── import_processor/           # 文档导入 LangGraph、状态和节点
+│   │   └── nodes/                  # 入口、PDF 解析、Markdown 处理、切分、向量化、入库
+│   └── query_processor/            # RAG 查询 LangGraph、状态、提示词和节点
+│       ├── nodes/                  # 改写、双路召回、RRF、Rerank、回答输出
+│       └── prompt/                 # HyDE 与回答生成提示词
+├── utils/                          # Milvus、MongoDB、Embedding、LLM、Rerank、SSE、MinIO 工具
+├── web/
+│   ├── api/query_service.py        # FastAPI 服务入口
+│   └── page/chat.html              # 单页聊天前端
+├── test/                           # 独立测试与实验脚本
+├── data/                           # 上传文件、模型等本地数据目录
+├── output/                         # MinerU 解析和中间结果目录
+├── volumes/                        # Docker Compose 持久化目录
+├── docker-compose.yml              # Milvus Standalone、etcd、MinIO
+├── requirements.txt
+└── .env.example                    # 环境变量示例
 ```
 
-## 本地运行
+`processor` 中的节点通过共享的 TypedDict 状态传递数据。`import_processor` 负责把文件转换为可检索切片，`query_processor` 负责从用户问题构建检索上下文并生成回答。仓库中存在部分实验或未接入主图的节点文件；README 只描述当前主工作流实际注册的节点。
 
-### 1. 环境要求
+## 5. 后端服务与 API
 
-- Python 3.11
-- Docker Desktop / Docker Compose
-- MongoDB（默认 `localhost:27017`，当前 Compose 不包含该服务）
-- MinerU API Token
-- OpenAI 兼容的 LLM API Key
-- DashScope TextReRank 模型配置
-- 本地 BGE-M3 模型，或可下载模型的网络环境
+FastAPI 入口为 `web/api/query_service.py`，直接运行时监听 `127.0.0.1:8001`。
 
-### 2. 安装依赖
+| 方法 | 路径 | 作用 |
+| --- | --- | --- |
+| `GET` | `/chat.html` | 返回聊天页面 |
+| `POST` | `/upload` | 上传 PDF，并同步执行解析、切分、向量化和 Milvus 入库 |
+| `POST` | `/chat` | 提交问题；支持普通 JSON 响应或启动流式任务 |
+| `POST` | `/query` | `/chat` 的兼容接口，当前已标记为 deprecated |
+| `GET` | `/stream/{session_id}` | 建立 SSE 连接并接收任务进度、回答增量和最终结果 |
+| `GET` | `/history/{session_id}` | 获取指定会话的消息记录 |
+| `GET` | `/history` | 获取最近会话列表、预览和消息数量 |
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-Copy-Item .env.example .env
-```
+### PDF 上传
 
-根据实际环境选择 BGE-M3 的 CPU 或 CUDA 设备。使用 GPU 时需安装与本机 CUDA 匹配的 PyTorch。
+`POST /upload` 使用 `multipart/form-data`，字段名为 `file`。服务仅接受 `.pdf` 文件，为每次上传创建独立任务目录，然后同步调用文档导入工作流。响应包含任务 ID、文件名、保存路径、Markdown 路径和切片数量。
 
-### 3. 配置环境变量
+### 问答与 SSE
 
-重点检查 `.env` 中的以下配置；不要提交真实密钥：
-
-```dotenv
-MINERU_API_TOKEN=your-mineru-token
-MINERU_BASE_URL=https://mineru.net/api/v4
-
-OPENAI_API_KEY=your-api-key
-OPENAI_API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1
-LLM_DEFAULT_MODEL=qwen-flash
-LLM_DEFAULT_TEMPERATURE=0.1
-VL_MODEL=qwen3-vl-flash
-
-BGE_M3_PATH=./data/models/bge-m3
-BGE_M3=BAAI/bge-m3
-BGE_DEVICE=cpu
-BGE_FP16=False
-
-TEXT_RERANK_MODEL=your-rerank-model
-TEXT_RERANK_INSTRUCT=
-
-MILVUS_URL=http://localhost:19530
-CHUNKS_COLLECTION=kb_chunks
-
-MONGO_URL=mongodb://localhost:27017
-MONGO_DB_NAME=kb001
-
-MINIO_ENDPOINT=localhost:9000
-MINIO_ACCESS_KEY=minioadmin
-MINIO_SECRET_KEY=minioadmin
-MINIO_BUCKET_NAME=knowledge-base
-MINIO_IMG_DIR=upload-images
-
-UPLOAD_DIR=./data/uploads
-OUTPUT_DIR=./output
-```
-
-### 4. 启动依赖与 API
-
-```powershell
-docker compose up -d
-docker compose ps
-python -m uvicorn web.api.query_service:app --host 127.0.0.1 --port 8001
-```
-
-请同时确认 MongoDB 已启动并监听 `.env` 中配置的地址。
-
-## 快速体验
-
-1. 打开 `http://127.0.0.1:8001/chat.html` 或 Swagger 页面。
-2. 调用 `POST /upload` 上传 PDF，等待返回 `chunks_count`。
-3. 调用 `POST /chat`：
+`POST /chat` 请求体：
 
 ```json
 {
-  "query": "这份文档主要介绍了什么？",
-  "session_id": "demo-session-001",
-  "is_stream": false
+  "query": "文档的主要内容是什么？",
+  "session_id": "sess-example",
+  "is_stream": true
 }
 ```
 
-4. 使用相同 `session_id` 继续提问，验证多轮问题改写与上下文记忆。
-5. 访问 `GET /history/demo-session-001` 查看持久化的会话记录。
+非流式模式在工作流完成后直接返回 `answer`、`sources` 和 `image_urls`。流式模式先创建当前 `session_id` 对应的内存队列，再通过后台任务运行查询图；浏览器随后连接 `/stream/{session_id}`。
 
-> 当前 `/upload` 为同步接口，大型 PDF 的耗时取决于 MinerU 解析、图片处理、Embedding 和文档长度。
+SSE 使用的事件包括：
 
-## 当前限制
+- `ready`：连接建立。
+- `progress`：工作流节点执行进度。
+- `delta`：LLM 生成的文本增量。
+- `final`：完整答案、引用来源和图片 URL。
+- `error`：流式处理错误。
 
-- 当前主查询工作流仅使用本地知识库检索；仓库中的 Web Search 节点尚未注册到主图。
-- `/upload` 会在请求内同步执行完整导入工作流，处理大型 PDF 时请求耗时较长。
-- 当前 API 未提供文档列表、删除或知识库空间管理接口。
-- 当前切片数据未记录页码、段落坐标等细粒度引用位置。
+SSE 队列保存在服务进程内存中，并按 `session_id` 隔离；连接结束后对应队列会被移除。
 
-## 未来优化方向
+## 6. 文档处理流程
 
-- 将文档导入改造成可持久化的异步任务，并提供任务状态查询。
-- 增加文档列表、删除和知识库隔离等管理能力。
-- 补充页码、段落坐标等引用元数据，提升答案可追溯性。
-- 建立离线评测集，评估召回、重排和回答质量。
-- 完善结构化日志、健康检查、单元测试与集成测试。
-- 评估将联网检索或 Agent/MCP 工具调用作为可选查询分支接入主工作流。
+```mermaid
+flowchart LR
+    A[PDF 上传] --> B[文件校验与任务目录]
+    B --> C[MinerU 上传与解析]
+    C --> D[下载并解压结果 ZIP]
+    D --> E[读取 Markdown]
+    E --> F[Markdown 资源处理]
+    F --> G[按标题切分]
+    G --> H[长块切分 / 短块合并]
+    H --> I[BGE-M3 编码]
+    I --> J[Dense + Sparse Vector]
+    J --> K[Milvus kb_chunks]
+```
+
+导入图由 `KBImportWorkflow` 构建，当前节点如下：
+
+1. **`a_node_entry`**：校验输入路径，识别 PDF 或 Markdown，生成 `file_title`，设置输出目录。Web 上传接口当前只允许 PDF。
+2. **`b_node_pdf_to_md`**：向 MinerU 申请上传 URL、上传 PDF、轮询解析状态，下载并解压结果 ZIP，将 `full.md` 重命名为与源文件对应的 Markdown 文件。
+3. **`c_node_md_img`**：读取 Markdown；没有 `images` 目录或有效图片引用时直接透传。存在有效图片时，代码会生成简短图片说明、上传图片到 MinIO，并替换 Markdown 中的图片引用。
+4. **`d_node_document_split`**：优先按 Markdown 标题形成 section；无标题时使用兜底标题。超长 section 使用 `RecursiveCharacterTextSplitter` 继续切分，同一父标题下的短 section 会合并。
+5. **`f_node_bge_embedding`**：分批拼接切片标题与正文，调用 BGE-M3 生成 Dense 和 Sparse 两类向量。
+6. **`g_node_import_milvus`**：创建或复用 `kb_chunks`，按 `file_title` 删除同名旧切片，然后批量插入新切片并回写自动生成的 `chunk_id`。
+
+`kb_chunks` 保存的主要字段包括 `chunk_id`、`content`、`title`、`parent_title`、`part`、`file_title`、`item_name`、`dense_vector` 和 `sparse_vector`。Dense 索引使用 `AUTOINDEX + COSINE`，Sparse 索引使用 `SPARSE_INVERTED_INDEX + IP`。
+
+## 7. RAG 查询流程
+
+```mermaid
+flowchart TD
+    A[用户问题 + session_id] --> B[加载最近历史并保存用户消息]
+    B --> C[结合历史改写问题]
+    C --> D1[改写问题 Hybrid Search]
+    C --> D2[HyDE 假设文档生成]
+    D2 --> D3[问题 + 假设文档 Hybrid Search]
+    D1 --> E[RRF 融合]
+    D3 --> E
+    E --> F[TextReRank 重排与截断]
+    F --> G[构造参考上下文与历史上下文]
+    G --> H[LLM 生成回答]
+    H --> I[保存助手消息与引用来源]
+    H --> J[JSON 或 SSE 输出]
+```
+
+### 7.1 查询预处理与历史上下文
+
+`node_prepare_query` 校验 `session_id` 和问题文本，从 MongoDB 获取最近 10 条消息，并立即保存本轮用户消息。存在历史记录时，节点调用 LLM 将当前问题改写为语义完整、可独立检索的一句话；改写失败则继续使用原问题。
+
+### 7.2 双路混合召回
+
+查询图从预处理节点并行进入两条召回路径：
+
+- **直接检索**：对改写问题生成 Dense/Sparse 向量，在 `kb_chunks` 上执行 Hybrid Search。
+- **HyDE 检索**：先让 LLM 根据改写问题生成假设性文档，再对“改写问题 + 假设文档”编码并执行 Hybrid Search。
+
+每条路径内部均包含：
+
+- `dense_vector` 上的 COSINE ANN 检索；
+- `sparse_vector` 上的 IP 检索；
+- Milvus `WeightedRanker` 对 Dense/Sparse 结果进行合并。
+
+直接路径当前使用 Dense/Sparse 权重 `0.8/0.2`；HyDE 路径使用工具函数默认权重 `0.5/0.5`。单路默认召回 5 条结果。
+
+### 7.3 RRF 融合
+
+`node_rrf` 对直接检索和 HyDE 检索的结果执行 Reciprocal Rank Fusion。两路权重均为 `1.0`，常数 `k=60`，以 `chunk_id` 去重并累加排名贡献，最终保留前 5 条。
+
+### 7.4 Rerank
+
+Milvus 混合检索和 RRF 主要解决多路候选召回与融合问题；Rerank 则使用查询与候选正文重新计算相关性，使进入回答上下文的内容更贴近当前问题。
+
+`node_rerank` 将 RRF 结果规范化为本地文档结构，调用 DashScope `TextReRank` 获取每条候选的 `relevance_score`，按分数降序排列。随后执行分数“断崖”截断：至少考虑前 3 条、最多 10 条，当相邻结果绝对分差不小于 `0.5` 或相对分差不小于 `0.25` 时截断后续结果。
+
+### 7.5 回答生成
+
+`node_answer_output` 将重排后的文档、历史对话和改写问题组装为回答 Prompt，参考内容与历史内容共享 12000 字符预算。LLM 支持普通调用和流式调用；节点同时提取最终使用文档中的引用来源与图片 URL，并将助手回答写入 MongoDB。
+
+当前查询图没有注册 Web Search 节点，因此现行主流程的检索来源是本地 Milvus 知识库。
+
+## 8. LangGraph 工作流
+
+项目使用 `langgraph.graph.StateGraph` 管理两个独立工作流，不包含自主决策型 Agent。
+
+### 文档导入图
+
+```text
+a_node_entry
+  ├─ PDF → b_node_pdf_to_md ─┐
+  └─ MD  ────────────────────┤
+                             ↓
+c_node_md_img → d_node_document_split
+→ f_node_bge_embedding → g_node_import_milvus
+```
+
+入口节点根据文件后缀进行条件路由。FastAPI 上传接口限制为 PDF，但工作流本身也保留从本地 Markdown 文件开始处理的路径。
+
+### RAG 查询图
+
+```text
+node_prepare_query
+  ├─ node_search_embedding ───────┐
+  └─ node_search_embedding_hyde ──┤
+                                  ↓
+node_rrf → node_rerank → node_answer_output → END
+```
+
+两个检索节点共享工作流状态并行执行，随后在 RRF 节点汇合。最终节点负责 Prompt 构造、LLM 调用、SSE 增量推送、引用整理及历史写入。
+
+## 9. 历史会话
+
+MongoDB 中的 `chat_message` collection 保存消息，主要字段包括：
+
+- `session_id`：会话标识；
+- `role`、`text`：消息角色和内容；
+- `rewritten_query`、`item_names`：检索相关元数据；
+- `image_urls`、`sources`：回答关联的图片与结构化引用；
+- `ts`：消息时间。
+
+代码为 `(session_id, ts)` 创建复合索引。查询准备节点读取指定会话最近 10 条消息用于问题改写；回答节点保存助手结果。API 可以读取单个会话的消息，也可以通过聚合查询返回最近会话、最后更新时间、预览文本和消息数量。
+
+前端将当前 `session_id` 保存在 `localStorage`。历史面板调用 `/history` 展示会话列表，点击后切换 session 并调用 `/history/{session_id}` 恢复用户消息、AI 消息、图片和引用来源；“新建会话”会生成新的本地会话 ID。
+
+## 10. 前端页面
+
+前端位于 `web/page/chat.html`，使用原生 HTML、CSS 和 JavaScript 实现，当前包括：
+
+- PDF 点击选择和拖拽上传区域；
+- 文件名、文件大小、上传状态和生成切片数展示；
+- 用户消息与 AI 消息气泡；
+- 普通回答与 SSE 流式回答切换；
+- 工作流进度和回答增量显示；
+- 最近历史会话列表与会话切换；
+- 结构化引用来源展示，本地来源显示文件名，HTTP 来源可点击跳转；
+- 回答关联图片展示；
+- 响应式布局。
+
+## 11. 配置与运行
+
+### 11.1 环境要求
+
+- Python 3.10+
+- Docker 与 Docker Compose
+- MongoDB：用于保存历史会话数据，需要单独部署
+- 可用的 MinerU API、OpenAI 兼容 LLM API及 DashScope TextReRank 配置
+- BGE-M3 本地模型目录，或可解析的模型名称
+
+### 11.2 安装依赖
+
+```bash
+python -m venv .venv
+```
+
+Windows PowerShell：
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+### 11.3 环境变量
+
+复制示例文件并填写实际配置：
+
+```powershell
+Copy-Item .env.example .env
+```
+
+主要变量：
+
+| 变量 | 作用 |
+| --- | --- |
+| `MINERU_API_TOKEN`、`MINERU_BASE_URL` | MinerU 文档解析 |
+| `OPENAI_API_KEY`、`OPENAI_API_BASE` | LLM 与 DashScope 相关调用 |
+| `LLM_DEFAULT_MODEL`、`LLM_DEFAULT_TEMPERATURE` | 回答和查询改写模型 |
+| `VL_MODEL` | Markdown 图片处理使用的模型 |
+| `BGE_M3_PATH`、`BGE_M3` | BGE-M3 本地路径或模型名 |
+| `BGE_DEVICE`、`BGE_FP16` | Embedding 运行设备与精度 |
+| `MILVUS_URL` | Milvus 地址 |
+| `CHUNKS_COLLECTION` | 知识切片 collection，示例为 `kb_chunks` |
+| `MONGO_URL`、`MONGO_DB_NAME` | MongoDB 地址与数据库名 |
+| `MINIO_ENDPOINT`、`MINIO_ACCESS_KEY`、`MINIO_SECRET_KEY` | MinIO 连接配置 |
+| `MINIO_BUCKET_NAME` | MinIO bucket |
+| `TEXT_RERANK_MODEL`、`TEXT_RERANK_INSTRUCT` | TextReRank 配置 |
+
+### 11.4 启动基础服务
+
+启动 Milvus Standalone、etcd 和 MinIO：
+
+```bash
+docker compose up -d
+```
+
+MongoDB 需要单独启动，并确保 `.env` 中的 `MONGO_URL` 可访问。
+
+### 11.5 启动 FastAPI
+
+```powershell
+.\.venv\Scripts\python.exe -m web.api.query_service
+```
+
+也可以使用 Uvicorn：
+
+```powershell
+.\.venv\Scripts\uvicorn.exe web.api.query_service:app --host 127.0.0.1 --port 8001
+```
+
+启动后访问：
+
+```text
+http://127.0.0.1:8001/chat.html
+```
+
+## 12. 数据存储说明
+
+- 上传的 PDF 按任务 ID 保存到 `data/uploads/<task_id>/`。
+- MinerU 下载与解压结果、Markdown 和处理中间文件保存在 `output/`。
+- 知识切片默认写入 Milvus `kb_chunks` collection。
+- 同名文档再次导入时，系统按 `file_title` 删除旧切片后写入新切片。
+- 会话消息保存在 MongoDB，独立于 Milvus 文档切片。
+- Docker Compose 的 Milvus、etcd 和 MinIO 数据映射到 `volumes/`。
