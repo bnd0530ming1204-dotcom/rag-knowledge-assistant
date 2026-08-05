@@ -22,6 +22,12 @@
 
 <img alt="history" height="400" src="docs/images/history.png" width="350"/>
 
+## Demo Video
+
+A complete running demonstration of the RAG Knowledge Assistant:
+
+[View Demo Video](https://github.com/bnd0530ming1204-dotcom/rag-knowledge-assistant/releases/tag/v1.0.0)
+
 
 ## 3. 架构流程
 
