@@ -1,6 +1,7 @@
 import json
 from typing import List, Tuple
 
+from config.retrieval_config import retrieval_config
 from processor.query_processor.base import NodeBase
 from processor.query_processor.state import QueryGraphState
 from tool.logger import logger
@@ -39,7 +40,10 @@ class NodeRrf(NodeBase):
         ]
 
         # 3 使用rrf算法公式对要融合的数据进行融合
-        rrf_merge_results = self._rrf_merge(rrf_inputs)
+        rrf_merge_results = self._rrf_merge(
+            rrf_inputs,
+            max_results=retrieval_config.rrf_candidate_limit,
+        )
 
         # 4 返回结果处理
         rrf_chunks = [doc for doc, _ in rrf_merge_results]  # 只要文档不要分
@@ -47,7 +51,12 @@ class NodeRrf(NodeBase):
         # print(f"rrf_chunks：{rrf_chunks}")
         return state
 
-    def _rrf_merge(self, rrf_inputs: List[Tuple], k: int = 60, max_results: int = 5):
+    def _rrf_merge(
+        self,
+        rrf_inputs: List[Tuple],
+        k: int = 60,
+        max_results: int = retrieval_config.rrf_candidate_limit,
+    ):
         print("向量搜索和假设性搜索的融合函数")
         chunk_scores = {}
         chunk_data = {}

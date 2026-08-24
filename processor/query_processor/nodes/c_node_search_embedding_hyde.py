@@ -1,6 +1,7 @@
 import json
 
 from config.milvus_config import milvus_config
+from config.retrieval_config import retrieval_config
 from processor.query_processor.base import NodeBase
 from processor.query_processor.prompt.search_embedding_hyde import HYDE_PROMPT
 from processor.query_processor.state import QueryGraphState
@@ -62,7 +63,13 @@ class NodeSearchEmbeddingHyde(NodeBase):
 
         return hyde_doc
 
-    def _setp_2_search_embedding_hyde(self, rewritten_query: str, hyde_doc: str, item_names: list):
+    def _setp_2_search_embedding_hyde(
+        self,
+        rewritten_query: str,
+        hyde_doc: str,
+        item_names: list,
+        collection_name: str | None = None,
+    ):
         print("步骤2：根据假设性文档向量搜索")
 
         # 1 拼接上下文
@@ -75,17 +82,18 @@ class NodeSearchEmbeddingHyde(NodeBase):
 
         # 3 向量搜索
         milvus_client = get_milvus_client()
-        collection_name = milvus_config.chunks_collection
+        collection_name = collection_name or milvus_config.chunks_collection
         reqs = create_hybrid_search_requests(
             dense_vector=dense_vector,
             sparse_vector=sparse_vector,
-            expr=None
+            expr=None,
+            limit=retrieval_config.initial_candidate_limit,
         )
         response = hybrid_search(
             client=milvus_client,
             collection_name=collection_name,
             reqs=reqs,
-            limit=5,
+            limit=retrieval_config.initial_candidate_limit,
             output_fields=["chunk_id", "content", "title", "file_title"]
         )
 

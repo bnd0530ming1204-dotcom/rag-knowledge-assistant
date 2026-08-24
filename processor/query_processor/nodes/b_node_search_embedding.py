@@ -1,6 +1,7 @@
 import json
 
 from config.milvus_config import milvus_config
+from config.retrieval_config import retrieval_config
 from processor.query_processor.base import NodeBase
 from processor.query_processor.state import QueryGraphState
 from tool.logger import logger
@@ -40,7 +41,8 @@ class NodeSearchEmbedding(NodeBase):
         reqs = create_hybrid_search_requests(
             dense_vector=dense_vector,
             sparse_vector=sparse_vector,
-            expr=None
+            expr=None,
+            limit=retrieval_config.initial_candidate_limit,
         )
 
         # 4 发送请求
@@ -49,6 +51,7 @@ class NodeSearchEmbedding(NodeBase):
             collection_name=chunks_collection,
             reqs=reqs,
             ranker_weights=(0.8, 0.2),
+            limit=retrieval_config.initial_candidate_limit,
             output_fields=["chunk_id", "content", "title", "file_title"]
         )
 

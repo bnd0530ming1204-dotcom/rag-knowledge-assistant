@@ -1,6 +1,7 @@
 import json
 from typing import List, Dict, Any
 
+from config.retrieval_config import retrieval_config
 from processor.query_processor.base import NodeBase
 from processor.query_processor.state import QueryGraphState
 from tool.logger import logger
@@ -36,6 +37,9 @@ class NodeRerank(NodeBase):
         # 2 调用排序模型对合并后结果进行排序
         reranked_docs: List[Dict[str, Any]] = self._step_2_rerank_merged_docs(state, merged_multi_docs)
 
+        # Keep the answer/context budget unchanged after reranking the wider pool.
+        reranked_docs = reranked_docs[:retrieval_config.final_output_limit]
+
         # 3 断崖测试(分数差距，分数比率)去掉过低的匹配结果
         cutoff_docs = self._step_3_cliff_cutoff(reranked_docs)
 
@@ -49,7 +53,7 @@ class NodeRerank(NodeBase):
     def _step_1_merge_multi_source_docs(self, state):
         print("步骤1：将web_doc和rrf_chunks节点的数据合并")
         final_docs = []
-        rrf_chunks = state.get("rrf_chunks") or []
+        rrf_chunks = (state.get("rrf_chunks") or [])[:retrieval_config.rerank_candidate_limit]
         web_docs = state.get("web_search_docs") or []
         for rrf_doc in rrf_chunks:
             format_rrf_doc = {
