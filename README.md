@@ -16,9 +16,9 @@
 | Original Hybrid | 0.6333 | 0.6233 |
 | Parent Context Embedding | 0.9167 | 0.7411 |
 
-Parent Context 只增强 Dense/Sparse Embedding 输入，不改变原始 Chunk `content`、Reranker 输入或最终回答上下文。完整的 Ground Truth 构建方式、指标定义、Ablation、失败分析和局限见 [Retrieval Evaluation 报告](docs/retrieval_evaluation.md)。
+Parent Context 只增强 Dense/Sparse Embedding 输入，不改变原始 Chunk `content`、Reranker 输入或最终回答上下文。完整的评测方法、指标定义、对比实验与结果分析见 [Retrieval Evaluation 报告](docs/retrieval_evaluation.md)。
 
-以上指标来自固定、小规模、虚构测试文档上的离线评测，不代表生产准确率、回答正确率或跨领域泛化能力。
+注：以上结果为固定测试集上的离线 Retrieval Evaluation 指标。
 
 ## 2. 项目展示
 
