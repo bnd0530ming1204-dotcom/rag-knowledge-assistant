@@ -7,6 +7,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from processor.import_processor.base import BaseNode
 from processor.import_processor.exceptions import StateFieldError
 from processor.import_processor.import_config import get_config
+from processor.import_processor.parent_context import assign_parent_titles
 from processor.import_processor.state import ImportGraphState
 
 
@@ -42,6 +43,9 @@ class NodeDocumentSplit(BaseNode):
 
         # 4 块精细化处理(长切短合)
         sections = self._step_4_refine_chunks(sections)
+
+        # 5 根据真实 Markdown/章节结构补充父级语境，不改变 Chunk content
+        sections = assign_parent_titles(sections)
         for section in sections:
             print(f"{section['title']}")
             print(f"{section['content']}")
@@ -50,10 +54,10 @@ class NodeDocumentSplit(BaseNode):
         print(f"标题数量: {title_count}")
         print(f"行数: {lines_count}")
 
-        # 5 打印日志
+        # 6 打印日志
         self._step_5_print_stats(lines_count, sections)
 
-        # 6 备份
+        # 7 备份
         self._step_6_backup(state, sections)
 
         state["chunks"] = sections
@@ -145,10 +149,6 @@ class NodeDocumentSplit(BaseNode):
 
         # 短合列表
         final_sections = self.merge_short_sections(refined_split)  # 短合操作
-
-        for sec in final_sections:
-            if not sec.get("parent_title"):
-                sec["parent_title"] = sec.get("title") or ""
 
         return final_sections
 

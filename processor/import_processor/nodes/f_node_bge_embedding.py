@@ -4,6 +4,7 @@ from typing import List, Dict
 
 from processor.import_processor.base import BaseNode
 from processor.import_processor.exceptions import StateFieldError
+from processor.import_processor.parent_context import build_embedding_text
 from processor.import_processor.state import ImportGraphState
 from utils.embedding_utils import generate_embeddings
 
@@ -58,7 +59,7 @@ class NodeBGEEmbedding(BaseNode):
     # 步骤2
     def _step_generate_embeddings(self, chunks: List[Dict[str, str]]) -> List[Dict[str, str]]:
         """
-        将item_name和content转化为向量数据(稀疏和稠密)
+        使用父级章节语境增强向量输入，同时保持原始content不变。
         """
         print("node_bge_embedding: 步骤2：数据向量化")
         output_data = []
@@ -67,10 +68,8 @@ class NodeBGEEmbedding(BaseNode):
             five_ready_xlh_texts = []
             five_texts = chunks[i:i + batch_size]  # 第一次从0块取到4块，一共取5块
             for doc in five_texts:
-                item_name = doc.get("item_name", "")
-                content = doc["content"]
                 doc.setdefault("item_name", "")
-                five_ready_xlh_texts.append(f"{item_name}\n{content}" if item_name else content)
+                five_ready_xlh_texts.append(build_embedding_text(doc))
 
             embeddings = generate_embeddings(five_ready_xlh_texts)  # 向量化结果
 
