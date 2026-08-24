@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "dataset_status": "annotated",
+  "description": "Candidate human-auditable Ground Truth set built from all 126 Milvus chunks of 澄云智控平台用户手册_RAG评测版. Labels were selected from source content without consulting retrieval results; a second annotator should review at least 20% before treating them as final.",
+  "cases": [
+    {
+      "id": "q001",
+      "query": "产品边界配置发布五分钟还卡着没下发，应该先排查什么？",
+      "relevant_chunks": [{"chunk_id": "468591845809028330", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 1.1.3 参数规则与验证", "content_contains": "若发布停留在“等待下发”超过 5 分钟，先检查站点心跳与 TCP 7443"}],
+      "notes": "类型：语义改写、故障排查。原文的“等待下发”被改写为“卡着没下发”。"
+    },
+    {
+      "id": "q002",
+      "query": "第一次建站时要从哪里进入、选哪个站点并填什么配置名？该对象最多能保存多少个？",
+      "relevant_chunks": [
+        {"chunk_id": "468591845809028341", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 2.2 创建首个站点", "content_contains": "选择站点 SITE-N37，单击“新建”，将配置名称设为 CFG-02-02"}
+      ],
+      "notes": "类型：操作步骤、参数限制。入口、站点、配置名和每站点最多保存47个对象均由同一主体 Chunk 完整回答。最终审计删除了不能回答本题的参数 Chunk 468591845809028342。"
+    },
+    {
+      "id": "q003",
+      "query": "许可证离线激活连续三次超时会产生哪个事件？超时值和重试次数分别是多少？",
+      "relevant_chunks": [{"chunk_id": "468591845809028346", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 2.4.3 参数规则与验证", "content_contains": "超时</td><td>60秒;连续3次超时触发事件EVT-0204"}],
+      "notes": "类型：精确关键词、参数限制。答案同一 Chunk 内含 EVT-0204、60秒、2次。"
+    },
+    {
+      "id": "q004",
+      "query": "要给组织空间建立可审计配置，控制台菜单怎么走，使用哪个站点和配置名称？",
+      "relevant_chunks": [{"chunk_id": "468591845809028349", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 3.1 组织树与空间", "content_contains": "选择站点 SITE-N41，单击“新建”，将配置名称设为 CFG-03-01"}],
+      "notes": "类型：操作步骤、跨表述。"
+    },
+    {
+      "id": "q005",
+      "query": "如何配置单点登录，并确认发布成功？如果参数连续超时会触发什么事件？",
+      "relevant_chunks": [
+        {"chunk_id": "468591845809028355", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 3.4 单点登录配置", "content_contains": "页面显示校验编号 VAL-0304 且结果为“通过”后，再单击“发布”"},
+        {"chunk_id": "468591845809028356", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 3.4.3 参数规则与验证", "content_contains": "连续3次超时触发事件EVT-0304"}
+      ],
+      "notes": "类型：操作步骤、精确关键词、多 Chunk。两个子问分别由主体与参数 Chunk 回答。"
+    },
+    {
+      "id": "q006",
+      "query": "注册并认领 CG-120 网关前，需要放通哪个 TCP 端口，配置完成后去哪里确认任务？",
+      "relevant_chunks": [{"chunk_id": "468591845809028359", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 4.1 网关注册与认领", "content_contains": "保证 TCP 9443 端口可达"}],
+      "notes": "类型：精确关键词、操作步骤。端口与任务确认均在同一 Chunk。"
+    },
+    {
+      "id": "q007",
+      "query": "批量导入设备时发布一直等待，检查哪个端口？E0402-02 又代表什么、该怎么处理？",
+      "relevant_chunks": [{"chunk_id": "468591845809028362", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 4.2.3 参数规则与验证", "content_contains": "E0402-02 表示目标对象被锁定，应在“任务中心 > 锁记录”释放锁"}],
+      "notes": "类型：故障排查、错误码、端口关键词。"
+    },
+    {
+      "id": "q008",
+      "query": "配置双网口时应进入哪个菜单，SITE-N31 对应的配置名和验证编号是什么？",
+      "relevant_chunks": [{"chunk_id": "468591845809028369", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 5.1 以太网与双网口", "content_contains": "将配置名称设为 CFG-05-01"}],
+      "notes": "类型：操作步骤、精确标识。"
+    },
+    {
+      "id": "q009",
+      "query": "代理服务器配置的超时、重试和保留期分别是多少？发布卡住时先查哪个端口？",
+      "relevant_chunks": [{"chunk_id": "468591845809028374", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 5.3.3 参数规则与验证", "content_contains": "超时</td><td>50秒;连续3次超时触发事件EVT-0503"}],
+      "notes": "类型：参数限制、故障排查。答案同一 Chunk 内含重试4次、保留60天、TCP 15020。"
+    },
+    {
+      "id": "q010",
+      "query": "配置 MQTT 主题映射的具体发布流程是什么？失败重试采用什么次数和退避间隔？",
+      "relevant_chunks": [
+        {"chunk_id": "468591845809028383", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 6.3 MQTT主题映射", "content_contains": "将配置名称设为 CFG-06-03"},
+        {"chunk_id": "468591845809028384", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 6.3.3 参数规则与验证", "content_contains": "重试</td><td>1次;间隔采用2、4、8、16秒指数退避"}
+      ],
+      "notes": "类型：操作步骤、参数限制、多 Chunk。"
+    },
+    {
+      "id": "q011",
+      "query": "点位模板要在哪个站点新建？发布前看到哪个校验号才算验证通过？",
+      "relevant_chunks": [{"chunk_id": "468591845809028379", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 6.1 点位模板", "content_contains": "页面显示校验编号 VAL-0601 且结果为“通过”"}],
+      "notes": "类型：操作步骤、精确标识。"
+    },
+    {
+      "id": "q012",
+      "query": "数据质量状态的配置入口在哪里，CX-Edge R5 至少要满足哪些站点和网络前提？",
+      "relevant_chunks": [{"chunk_id": "468591845809028387", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 6.5 数据质量标记", "content_contains": "保证 TCP 17001 端口可达"}],
+      "notes": "类型：跨表述、参数前提。‘数据质量状态’是对‘数据质量标记’的自然改写。"
+    },
+    {
+      "id": "q013",
+      "query": "历史趋势查询配置多久同步一次、保存多久？过期后是否立即彻底删除？",
+      "relevant_chunks": [{"chunk_id": "468591845809028392", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 7.2.3 参数规则与验证", "content_contains": "保留期</td><td>90天;到期后先进入7天回收区"}],
+      "notes": "类型：参数限制、语义改写。答案还包含同步周期15秒。"
+    },
+    {
+      "id": "q014",
+      "query": "从监控报表里导出数据时，SITE-N44 应创建什么名称的配置，优先级填多少？",
+      "relevant_chunks": [{"chunk_id": "468591845809028395", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 7.4 数据导出", "content_contains": "优先级填写 134"}],
+      "notes": "类型：操作步骤、精确参数。答案同一 Chunk 内含 CFG-07-04。"
+    },
+    {
+      "id": "q015",
+      "query": "怎样新建告警通知渠道并验证发布？如果对象被锁住，对应错误码和解锁位置是什么？",
+      "relevant_chunks": [
+        {"chunk_id": "468591845809028403", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 8.3 通知渠道", "content_contains": "将配置名称设为 CFG-08-03"},
+        {"chunk_id": "468591845809028404", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 8.3.3 参数规则与验证", "content_contains": "E0803-02 表示目标对象被锁定"}
+      ],
+      "notes": "类型：操作步骤、故障排查、多 Chunk。"
+    },
+    {
+      "id": "q016",
+      "query": "告警规则的采集同步间隔能设到 5 秒吗？普通 CG-120 和增强版有什么限制？",
+      "relevant_chunks": [{"chunk_id": "468591845809028400", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 8.1.3 参数规则与验证", "content_contains": "同步周期</td><td>5秒;低于10秒时仅CG-120增强版可用"}],
+      "notes": "类型：型号、参数限制。"
+    },
+    {
+      "id": "q017",
+      "query": "做告警静默和抑制时，目标被占用无法发布，要到哪个页面解除占用？",
+      "relevant_chunks": [{"chunk_id": "468591845809028406", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 8.4.3 参数规则与验证", "content_contains": "应在“任务中心 > 锁记录”释放锁"}],
+      "notes": "类型：跨表述、故障排查。‘目标被占用’对应原文‘目标对象被锁定’。"
+    },
+    {
+      "id": "q018",
+      "query": "联动规则配置应在什么站点建立，验证号和最终发布任务号各是什么？",
+      "relevant_chunks": [{"chunk_id": "468591845809028409", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 9.1 联动规则", "content_contains": "校验编号 VAL-0901"}],
+      "notes": "类型：操作步骤、精确标识。"
+    },
+    {
+      "id": "q019",
+      "query": "条件表达式配置发生三次超时后记录哪个事件？它的重试次数和数据保留期是多少？",
+      "relevant_chunks": [{"chunk_id": "468591845809028414", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 9.3.3 参数规则与验证", "content_contains": "连续3次超时触发事件EVT-0903"}],
+      "notes": "类型：精确事件码、参数限制。答案同一 Chunk 内含重试4次、保留45天。"
+    },
+    {
+      "id": "q020",
+      "query": "安全联锁发布一直处于待下发状态，网络侧首先看什么？若仍失败要导出哪个诊断包？",
+      "relevant_chunks": [{"chunk_id": "468591845809028418", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 9.5.3 参数规则与验证", "content_contains": "导出诊断包 DIAG-CC-0905"}],
+      "notes": "类型：故障排查、跨表述、精确标识。答案同一 Chunk 内含站点心跳与 TCP 8883。"
+    },
+    {
+      "id": "q021",
+      "query": "在线升级和离线升级分别从哪个菜单进入、使用什么配置名？",
+      "relevant_chunks": [
+        {"chunk_id": "468591845809028423", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 10.3 在线升级", "content_contains": "将配置名称设为 CFG-10-03"},
+        {"chunk_id": "468591845809028425", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 10.4 离线升级", "content_contains": "将配置名称设为 CFG-10-04"}
+      ],
+      "notes": "类型：比较、操作步骤、多 Chunk。两个升级方式分别由独立主题 Chunk 回答。"
+    },
+    {
+      "id": "q022",
+      "query": "收集日志包时在 SITE-N37 要填哪个配置名，验证成功后到哪里查发布任务？",
+      "relevant_chunks": [{"chunk_id": "468591845809028421", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 10.2 日志包采集", "content_contains": "将配置名称设为 CFG-10-02"}],
+      "notes": "类型：操作步骤、精确标识。"
+    },
+    {
+      "id": "q023",
+      "query": "备份恢复配置的超时和保留周期是多少？回退动作一天内最多能做几次？",
+      "relevant_chunks": [{"chunk_id": "468591845809028428", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 10.5.3 参数规则与验证", "content_contains": "恢复动作不会删除审计日志，且24 小时内最多执行 3 次"}],
+      "notes": "类型：参数限制。答案同一 Chunk 内含超时20秒、保留45天。"
+    },
+    {
+      "id": "q024",
+      "query": "密码策略在控制台哪里设置，发布前对应的校验编号是什么？",
+      "relevant_chunks": [{"chunk_id": "468591845809028429", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 11.1 密码策略", "content_contains": "页面显示校验编号 VAL-1101"}],
+      "notes": "类型：操作步骤、精确标识。"
+    },
+    {
+      "id": "q025",
+      "query": "安全维护时，密码策略和证书轮换分别从哪个菜单进入、对应哪个配置名？",
+      "relevant_chunks": [
+        {"chunk_id": "468591845809028429", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 11.1 密码策略", "content_contains": "将配置名称设为 CFG-11-01"},
+        {"chunk_id": "468591845809028431", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 11.2 证书轮换", "content_contains": "将配置名称设为 CFG-11-02"}
+      ],
+      "notes": "类型：比较、操作步骤、多 Chunk。两个安全主题缺一不可。"
+    },
+    {
+      "id": "q026",
+      "query": "密钥管理发布时提示 E1103-03，原因是什么，应该如何处置？",
+      "relevant_chunks": [{"chunk_id": "468591845809028434", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 11.3.3 参数规则与验证", "content_contains": "E1103-03 表示网关版本不兼容，应升级 CG-420 或关闭增量同步"}],
+      "notes": "类型：错误码、故障排查。"
+    },
+    {
+      "id": "q027",
+      "query": "审计日志数据默认留存多久，到期后还有多长的回收窗口？",
+      "relevant_chunks": [{"chunk_id": "468591845809028436", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 11.4.3 参数规则与验证", "content_contains": "保留期</td><td>105天;到期后先进入7天回收区"}],
+      "notes": "类型：参数限制、跨表述。"
+    },
+    {
+      "id": "q028",
+      "query": "设备离线排障发布失败后，如何回退以及提交服务请求时要带哪些信息？",
+      "relevant_chunks": [{"chunk_id": "468591845809028440", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 12.1.3 参数规则与验证", "content_contains": "并附上站点标识、发生时间和最近一次成功任务号"}],
+      "notes": "类型：故障排查、操作步骤。回退与工单信息均在同一 Chunk。"
+    },
+    {
+      "id": "q029",
+      "query": "E4206 表示什么？首选怎么处理？另外网关心跳超时 E2007 应检查哪个端口？",
+      "relevant_chunks": [{"chunk_id": "468591845809028450", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 附录 B 网络端口速查", "content_contains": "E4206</td><td>通知通道限流</td><td>等待60秒或降低频率"}],
+      "notes": "类型：精确错误码、故障排查。E2007 与 E4206 均位于同一个附录 Chunk。"
+    },
+    {
+      "id": "q030",
+      "query": "高密站点选 CG-420 时，最多能接多少设备、本地缓存多大？机柜过热时有什么通风建议？",
+      "relevant_chunks": [{"chunk_id": "468591845809028449", "file_title": "澄云智控平台用户手册_RAG评测版", "title": "## 附录 A 型号与容量速查", "content_contains": "CG-420</td><td>高密站点</td><td>2,000台</td><td>256 GB"}],
+      "notes": "类型：型号、容量与环境限制。答案同一 Chunk 内含机柜超过45℃时开启强制通风。"
+    }
+  ]
+}
