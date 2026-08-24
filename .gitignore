@@ -180,3 +180,12 @@ volumes/
 *.bin
 *.pt
 *.pth
+
+# Local Docker daemon configuration
+/daemon.json
+
+# Retrieval evaluation transient output
+/evaluation/results/latest.json
+/evaluation/results/*_debug.json
+/evaluation/results/*_tmp.json
+/evaluation/results/*.log
