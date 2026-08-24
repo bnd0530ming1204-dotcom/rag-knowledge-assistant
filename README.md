@@ -6,6 +6,20 @@
 
 后端使用 FastAPI 提供上传、问答、SSE 流式输出和历史会话接口；文档导入与查询流程基于 LangGraph 工作流组织；BGE-M3 为文本生成稠密和稀疏向量，Milvus 负责向量存储与混合检索，MongoDB 保存会话消息，LLM 根据重排后的参考内容生成回答。
 
+### Retrieval Quality
+
+项目使用 30 条人工审计 Query 和 126 个真实 Chunk 构建了固定离线 Retrieval Evaluation：
+
+| Retrieval | Recall@5 | MRR@5 |
+| --- | ---: | ---: |
+| Dense Only | 0.6000 | 0.5611 |
+| Original Hybrid | 0.6333 | 0.6233 |
+| Parent Context Embedding | 0.9167 | 0.7411 |
+
+Parent Context 只增强 Dense/Sparse Embedding 输入，不改变原始 Chunk `content`、Reranker 输入或最终回答上下文。完整的 Ground Truth 构建方式、指标定义、Ablation、失败分析和局限见 [Retrieval Evaluation 报告](docs/retrieval_evaluation.md)。
+
+以上指标来自固定、小规模、虚构测试文档上的离线评测，不代表生产准确率、回答正确率或跨领域泛化能力。
+
 ## 2. 项目展示
 
 ### 文档上传与知识库构建
@@ -32,10 +46,12 @@ flowchart LR
     B --> C[PDF文档上传]
     C --> D[MinerU文档解析]
     D --> E[Markdown文本处理]
-    E --> F[BGE-M3向量化]
+    E --> F[Chunk切分]
+    F --> PC[Parent Context]
+    PC --> V[BGE-M3向量化]
 
-    F --> G[Dense Vector]
-    F --> H[Sparse Vector]
+    V --> G[Dense Vector]
+    V --> H[Sparse Vector]
 
     G --> I[Milvus混合检索]
     H --> I
@@ -140,9 +156,10 @@ flowchart LR
     E --> F[Markdown 资源处理]
     F --> G[按标题切分]
     G --> H[长块切分 / 短块合并]
-    H --> I[BGE-M3 编码]
-    I --> J[Dense + Sparse Vector]
-    J --> K[Milvus kb_chunks]
+    H --> I[Parent Context]
+    I --> J[BGE-M3 编码]
+    J --> K[Dense + Sparse Vector]
+    K --> L[Milvus kb_chunks]
 ```
 
 导入图由 `KBImportWorkflow` 构建，当前节点如下：
@@ -150,8 +167,8 @@ flowchart LR
 1. **`a_node_entry`**：校验输入路径，识别 PDF 或 Markdown，生成 `file_title`，设置输出目录。Web 上传接口当前只允许 PDF。
 2. **`b_node_pdf_to_md`**：向 MinerU 申请上传 URL、上传 PDF、轮询解析状态，下载并解压结果 ZIP，将 `full.md` 重命名为与源文件对应的 Markdown 文件。
 3. **`c_node_md_img`**：读取 Markdown；没有 `images` 目录或有效图片引用时直接透传。存在有效图片时，代码会生成简短图片说明、上传图片到 MinIO，并替换 Markdown 中的图片引用。
-4. **`d_node_document_split`**：优先按 Markdown 标题形成 section；无标题时使用兜底标题。超长 section 使用 `RecursiveCharacterTextSplitter` 继续切分，同一父标题下的短 section 会合并。
-5. **`f_node_bge_embedding`**：分批拼接切片标题与正文，调用 BGE-M3 生成 Dense 和 Sparse 两类向量。
+4. **`d_node_document_split`**：优先按 Markdown 标题形成 section；无标题时使用兜底标题。超长 section 使用 `RecursiveCharacterTextSplitter` 继续切分，同一父标题下的短 section 会合并；切分完成后根据真实 Markdown 层级及已有编号标题推导 `parent_title`。
+5. **`f_node_bge_embedding`**：仅在向量输入中补充 Parent Context，调用 BGE-M3 生成 Dense 和 Sparse 两类向量；原始 `content` 保持不变。
 6. **`g_node_import_milvus`**：创建或复用 `kb_chunks`，按 `file_title` 删除同名旧切片，然后批量插入新切片并回写自动生成的 `chunk_id`。
 
 `kb_chunks` 保存的主要字段包括 `chunk_id`、`content`、`title`、`parent_title`、`part`、`file_title`、`item_name`、`dense_vector` 和 `sparse_vector`。Dense 索引使用 `AUTOINDEX + COSINE`，Sparse 索引使用 `SPARSE_INVERTED_INDEX + IP`。

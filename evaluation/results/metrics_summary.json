@@ -1,0 +1,83 @@
+{
+  "evaluation_scope": {
+    "dataset_size": 30,
+    "chunk_count": 126,
+    "file_title": "澄云智控平台用户手册_RAG评测版",
+    "evaluation_type": "offline retrieval evaluation",
+    "disclaimer": "Results are from a fixed, small-scale, fictional test document. They are not production accuracy, answer correctness, or cross-domain generalization metrics."
+  },
+  "metric_stage": "after rerank ordering and before dynamic cutoff for Current Retrieval",
+  "experiments": [
+    {
+      "id": "dense_only_baseline",
+      "name": "Dense Only baseline",
+      "metrics": {
+        "recall@1": 0.4500,
+        "recall@3": 0.5333,
+        "recall@5": 0.6000,
+        "mrr@5": 0.5611
+      },
+      "full_per_query_artifact_preserved": false,
+      "artifact_note": "The aggregate metrics were confirmed, but a separately named original baseline per-query artifact was not preserved."
+    },
+    {
+      "id": "original_hybrid_baseline",
+      "name": "Original Hybrid baseline",
+      "metrics": {
+        "recall@1": 0.5167,
+        "recall@3": 0.6000,
+        "recall@5": 0.6333,
+        "mrr@5": 0.6233
+      },
+      "full_per_query_artifact_preserved": false,
+      "artifact_note": "The aggregate metrics were confirmed, but a separately named original baseline per-query artifact was not preserved."
+    },
+    {
+      "id": "round1_candidate_pool_10",
+      "name": "Round 1 - expanded ordinary, HyDE and RRF candidate pools",
+      "metrics": {
+        "recall@1": 0.5167,
+        "recall@3": 0.6167,
+        "recall@5": 0.6167,
+        "mrr@5": 0.6333
+      },
+      "outcome": "failed: Recall@5 decreased from 0.6333 to 0.6167",
+      "full_per_query_artifact_preserved": false,
+      "artifact_note": "Only the confirmed aggregate metrics are archived here; no separately named full per-query artifact is claimed."
+    },
+    {
+      "id": "round2_rrf_10_rerank_5",
+      "name": "Round 2 - RRF pool 10 with rerank candidates 5",
+      "metrics": {
+        "recall@1": 0.5500,
+        "recall@3": 0.6167,
+        "recall@5": 0.6333,
+        "mrr@5": 0.6500
+      },
+      "outcome": "limited: Recall@5 matched the original baseline and did not improve the target metric",
+      "full_per_query_artifact_preserved": true,
+      "artifact": "round2_rrf10_rerank5.json",
+      "artifact_note": "Historical full per-query artifact retained under a stable experiment-specific name."
+    },
+    {
+      "id": "parent_context_embedding_v1",
+      "name": "Parent Context Embedding",
+      "metrics": {
+        "recall@1": 0.5500,
+        "recall@3": 0.7833,
+        "recall@5": 0.9167,
+        "mrr@5": 0.7411
+      },
+      "outcome": "successful on the fixed offline evaluation set",
+      "original_top5_failures": 10,
+      "rescued_original_top5_failures": 8,
+      "remaining_failures": [
+        "q001",
+        "q017"
+      ],
+      "full_per_query_artifact_preserved": true,
+      "artifact": "parent_context_v1.json",
+      "audit_samples_artifact": "parent_context_samples.json"
+    }
+  ]
+}
