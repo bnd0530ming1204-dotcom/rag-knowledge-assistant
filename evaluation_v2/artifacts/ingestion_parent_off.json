@@ -1,0 +1,53 @@
+{
+  "status": "COMPLETED",
+  "collection": "rag_eval_v2_parent_off_chunks",
+  "document_count": 10,
+  "chunk_count": 39,
+  "row_count": 39,
+  "insert_count": 39,
+  "parent_heading_in_embedding": false,
+  "chunk_boundaries_and_locators": "identical to Parent ON; Milvus auto-generated physical chunk_id differs by schema design",
+  "total_latency_ms": 45004.706,
+  "documents": [
+    {
+      "document_id": "EVAL-A100-V1",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-A100-V2",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-A200",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-ACCOUNT",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-DEPLOY",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-FAQ",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-NETWORK",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-OPS",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-SECURITY",
+      "chunk_count": 4
+    },
+    {
+      "document_id": "EVAL-WARRANTY",
+      "chunk_count": 3
+    }
+  ]
+}

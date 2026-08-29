@@ -1,4 +1,6 @@
-# Retrieval Evaluation
+# Retrieval Evaluation — Legacy Development Experiment
+
+> This 30-query, single-document evaluation is retained for historical development evidence only. It helped identify missing parent-heading context, but it is **not** the RAG Evaluation V2 Frozen Benchmark and must not be presented as one.
 
 本目录提供与在线问答流程隔离的离线 Retrieval Evaluation 工具。评测不会调用最终回答生成节点，也不会把评测 Query 写入聊天历史。当前固定评测集包含 30 条人工审计 Query，Ground Truth 来自文档 `澄云智控平台用户手册_RAG评测版` 在 Milvus 中的 126 个真实 Chunk。
 

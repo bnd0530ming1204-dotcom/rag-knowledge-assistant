@@ -1,0 +1,174 @@
+{
+  "status": "PASS",
+  "dataset_status": "READY_FOR_HUMAN_REVIEW",
+  "dataset_sha256": "e4aa24ec7e00cd560c9455871873082d6fff72ad277836ee87cb53637a9fb655",
+  "query_count": 110,
+  "answerable_count": 90,
+  "no_answer_count": 20,
+  "no_answer_ratio": 0.1818,
+  "category_distribution": {
+    "exact_fact": 30,
+    "multi_document": 10,
+    "no_answer": 20,
+    "paraphrase_colloquial": 18,
+    "parent_context": 12,
+    "table": 8,
+    "version_confusion": 12
+  },
+  "tag_distribution": {
+    "multi_document": 22,
+    "no_answer": 20,
+    "paraphrase": 18,
+    "parent_context": 12,
+    "similar_document": 12,
+    "table": 12,
+    "version_confusion": 12
+  },
+  "document_count": 10,
+  "locator_count": 60,
+  "documents_with_query_coverage": 10,
+  "locators_with_query_coverage": 54,
+  "document_coverage": {
+    "EVAL-A100-V1": 13,
+    "EVAL-A100-V2": 19,
+    "EVAL-A200": 14,
+    "EVAL-ACCOUNT": 8,
+    "EVAL-DEPLOY": 14,
+    "EVAL-FAQ": 4,
+    "EVAL-NETWORK": 9,
+    "EVAL-OPS": 12,
+    "EVAL-SECURITY": 11,
+    "EVAL-WARRANTY": 9
+  },
+  "uncovered_documents": [],
+  "uncovered_locators": [
+    "ACC-ROLES",
+    "FAQ-FACTORY",
+    "FAQ-PROXY",
+    "FAQ-RECORD",
+    "FAQ-U103",
+    "SEC-CLASS"
+  ],
+  "locator_coverage_ratio": 0.9,
+  "special_coverage": {
+    "version_confusion": 12,
+    "parent_context": 12,
+    "multi_document": 10,
+    "table": 8
+  },
+  "near_duplicate_diagnostics": [],
+  "lexical_overlap": {
+    "method": "Chinese/alphanumeric character-set recall plus normalized character-trigram Jaccard; diagnostic only",
+    "high_overlap_diagnostic_count": 0,
+    "top_20": [
+      {
+        "query_id": "v2q009",
+        "character_set_recall": 0.8824,
+        "trigram_jaccard": 0.1579
+      },
+      {
+        "query_id": "v2q015",
+        "character_set_recall": 0.8889,
+        "trigram_jaccard": 0.129
+      },
+      {
+        "query_id": "v2q016",
+        "character_set_recall": 0.7857,
+        "trigram_jaccard": 0.1167
+      },
+      {
+        "query_id": "v2q021",
+        "character_set_recall": 0.8667,
+        "trigram_jaccard": 0.1154
+      },
+      {
+        "query_id": "v2q006",
+        "character_set_recall": 0.8125,
+        "trigram_jaccard": 0.1148
+      },
+      {
+        "query_id": "v2q018",
+        "character_set_recall": 0.8333,
+        "trigram_jaccard": 0.1127
+      },
+      {
+        "query_id": "v2q019",
+        "character_set_recall": 0.8333,
+        "trigram_jaccard": 0.1127
+      },
+      {
+        "query_id": "v2q085",
+        "character_set_recall": 0.85,
+        "trigram_jaccard": 0.1075
+      },
+      {
+        "query_id": "v2q078",
+        "character_set_recall": 0.8,
+        "trigram_jaccard": 0.1053
+      },
+      {
+        "query_id": "v2q026",
+        "character_set_recall": 0.7857,
+        "trigram_jaccard": 0.1034
+      },
+      {
+        "query_id": "v2q022",
+        "character_set_recall": 0.6111,
+        "trigram_jaccard": 0.1017
+      },
+      {
+        "query_id": "v2q049",
+        "character_set_recall": 0.5,
+        "trigram_jaccard": 0.0968
+      },
+      {
+        "query_id": "v2q080",
+        "character_set_recall": 0.6207,
+        "trigram_jaccard": 0.0877
+      },
+      {
+        "query_id": "v2q042",
+        "character_set_recall": 0.35,
+        "trigram_jaccard": 0.087
+      },
+      {
+        "query_id": "v2q001",
+        "character_set_recall": 0.625,
+        "trigram_jaccard": 0.0833
+      },
+      {
+        "query_id": "v2q064",
+        "character_set_recall": 0.875,
+        "trigram_jaccard": 0.0794
+      },
+      {
+        "query_id": "v2q017",
+        "character_set_recall": 0.8462,
+        "trigram_jaccard": 0.0794
+      },
+      {
+        "query_id": "v2q012",
+        "character_set_recall": 0.7,
+        "trigram_jaccard": 0.0794
+      },
+      {
+        "query_id": "v2q002",
+        "character_set_recall": 0.7333,
+        "trigram_jaccard": 0.0779
+      },
+      {
+        "query_id": "v2q058",
+        "character_set_recall": 0.5789,
+        "trigram_jaccard": 0.0758
+      }
+    ]
+  },
+  "errors": [],
+  "warnings": [],
+  "leakage_audit": {
+    "validator_imports_production_retrieval": false,
+    "builder_imports_production_retrieval": false,
+    "labels_resolved_from": "Markdown locator blocks",
+    "retriever_output_used_for_labels": false
+  }
+}

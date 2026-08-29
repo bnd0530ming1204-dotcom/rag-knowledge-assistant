@@ -1,0 +1,670 @@
+{
+  "run_id": "evalv2-20260829T035251Z-b8c31249",
+  "methodology": "rank/category evidence only; automatic labels are observations, not proven root causes",
+  "answerable_failure_or_partial_count": 13,
+  "top_failures": [
+    {
+      "query_id": "v2q009",
+      "query": "NTP 偏差超过多少会导致证书认证失败？",
+      "category": "exact_fact",
+      "tags": [],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "DEPLOY-DNS"
+      ],
+      "final_top_documents": [
+        "EVAL-NETWORK",
+        "EVAL-ACCOUNT",
+        "EVAL-A100-V2"
+      ],
+      "observed_labels": [
+        "unresolved_retrieval_failure"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q029",
+      "query": "一代 A100 老是输错那个六位数，会被晾多久？",
+      "category": "paraphrase_colloquial",
+      "tags": [
+        "paraphrase"
+      ],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "A100V1-PAIR"
+      ],
+      "final_top_documents": [
+        "EVAL-FAQ",
+        "EVAL-A100-V2",
+        "EVAL-A100-V1",
+        "EVAL-ACCOUNT",
+        "EVAL-OPS"
+      ],
+      "observed_labels": [
+        "unresolved_retrieval_failure"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q030",
+      "query": "二代小终端密码试三回都不对，是整台机器都不能用了吗？",
+      "category": "paraphrase_colloquial",
+      "tags": [
+        "paraphrase"
+      ],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "A100V2-PAIR"
+      ],
+      "final_top_documents": [
+        "EVAL-ACCOUNT",
+        "EVAL-NETWORK",
+        "EVAL-FAQ"
+      ],
+      "observed_labels": [
+        "rerank_regression"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q040",
+      "query": "终端亮着在线绿点，就算会议室交付完了吗？",
+      "category": "paraphrase_colloquial",
+      "tags": [
+        "paraphrase"
+      ],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "FAQ-ONLINE"
+      ],
+      "final_top_documents": [
+        "EVAL-A100-V1",
+        "EVAL-DEPLOY",
+        "EVAL-A100-V2",
+        "EVAL-A200"
+      ],
+      "observed_labels": [
+        "unresolved_retrieval_failure"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q081",
+      "query": "A100 V2 跑双屏或 4K 时建议预留多少双向带宽？",
+      "category": "table",
+      "tags": [
+        "table"
+      ],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH"
+      ],
+      "final_top_documents": [
+        "EVAL-A100-V2",
+        "EVAL-A100-V2",
+        "EVAL-FAQ",
+        "EVAL-A100-V2",
+        "EVAL-A100-V1"
+      ],
+      "observed_labels": [
+        "table_failure"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q082",
+      "query": "A200 的 1080p 推荐带宽是多少？",
+      "category": "table",
+      "tags": [
+        "table"
+      ],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH"
+      ],
+      "final_top_documents": [
+        "EVAL-A200",
+        "EVAL-A200",
+        "EVAL-FAQ",
+        "EVAL-A200"
+      ],
+      "observed_labels": [
+        "table_failure"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q088",
+      "query": "A100 V1 在 1080p 模式的推荐双向带宽是多少？",
+      "category": "table",
+      "tags": [
+        "table"
+      ],
+      "recall@5": 0.0,
+      "mrr@5": 0.0,
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH"
+      ],
+      "final_top_documents": [
+        "EVAL-FAQ",
+        "EVAL-A100-V1",
+        "EVAL-A100-V1",
+        "EVAL-A100-V2",
+        "EVAL-A100-V2"
+      ],
+      "observed_labels": [
+        "table_failure"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q071",
+      "query": "部署一台 A100 V2 做 4K 会议，需要预留多少带宽且设备侧还需满足什么录制条件？",
+      "category": "multi_document",
+      "tags": [
+        "multi_document",
+        "table"
+      ],
+      "recall@5": 0.5,
+      "mrr@5": 0.5,
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH",
+        "A100V2-MEETING"
+      ],
+      "final_top_documents": [
+        "EVAL-FAQ",
+        "EVAL-A100-V2",
+        "EVAL-A100-V2"
+      ],
+      "observed_labels": [
+        "multi_document_incomplete",
+        "rerank_regression"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q072",
+      "query": "A200 无媒体时应查哪些端口，同时它的双屏显示器有什么要求？",
+      "category": "multi_document",
+      "tags": [
+        "multi_document"
+      ],
+      "recall@5": 0.5,
+      "mrr@5": 0.5,
+      "relevant_locators": [
+        "NET-NO-MEDIA",
+        "A200-CAPACITY"
+      ],
+      "final_top_documents": [
+        "EVAL-A200",
+        "EVAL-A200",
+        "EVAL-A200"
+      ],
+      "observed_labels": [
+        "multi_document_incomplete",
+        "rerank_regression"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q073",
+      "query": "返修 A100 前，返修申请要准备什么，随工单提交的日志又应怎样保护隐私？",
+      "category": "multi_document",
+      "tags": [
+        "multi_document"
+      ],
+      "recall@5": 0.5,
+      "mrr@5": 0.5,
+      "relevant_locators": [
+        "WAR-RMA",
+        "SEC-REDACT"
+      ],
+      "final_top_documents": [
+        "EVAL-FAQ",
+        "EVAL-SECURITY",
+        "EVAL-A100-V1",
+        "EVAL-A100-V2",
+        "EVAL-OPS"
+      ],
+      "observed_labels": [
+        "multi_document_incomplete"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q076",
+      "query": "A100 V2 启用 EAP-TLS 后仍认证失败，除了证书内容还应检查什么时间条件？",
+      "category": "multi_document",
+      "tags": [
+        "multi_document"
+      ],
+      "recall@5": 0.5,
+      "mrr@5": 0.5,
+      "relevant_locators": [
+        "A100V2-NET",
+        "DEPLOY-DNS"
+      ],
+      "final_top_documents": [
+        "EVAL-A100-V2",
+        "EVAL-A100-V2",
+        "EVAL-ACCOUNT",
+        "EVAL-OPS",
+        "EVAL-A100-V1"
+      ],
+      "observed_labels": [
+        "multi_document_incomplete",
+        "rerank_regression"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q075",
+      "query": "会议终端部署到访客网是否可行，为什么仅显示在线还不能交付？",
+      "category": "multi_document",
+      "tags": [
+        "multi_document"
+      ],
+      "recall@5": 0.5,
+      "mrr@5": 1.0,
+      "relevant_locators": [
+        "DEPLOY-VLAN",
+        "FAQ-ONLINE"
+      ],
+      "final_top_documents": [
+        "EVAL-DEPLOY",
+        "EVAL-DEPLOY",
+        "EVAL-A200",
+        "EVAL-A100-V1"
+      ],
+      "observed_labels": [
+        "multi_document_incomplete"
+      ],
+      "needs_manual_review": true
+    },
+    {
+      "query_id": "v2q065",
+      "query": "A100 V1、V2、A200 的离线升级包分别是什么？",
+      "category": "version_confusion",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "recall@5": 0.6666666666666666,
+      "mrr@5": 0.5,
+      "relevant_locators": [
+        "A100V1-UPDATE",
+        "A100V2-UPDATE",
+        "A200-UPDATE"
+      ],
+      "final_top_documents": [
+        "EVAL-FAQ",
+        "EVAL-A100-V1",
+        "EVAL-A200",
+        "EVAL-A100-V2",
+        "EVAL-A100-V2"
+      ],
+      "observed_labels": [
+        "wrong_version_or_rank_confusion",
+        "rerank_regression"
+      ],
+      "needs_manual_review": true
+    }
+  ],
+  "hyde_rank_degradation_cases": [],
+  "hyde_warning": "Generated text was not automatically judged factual; every case requires manual review.",
+  "corpus_unsupported_no_answer_hyde_cases": [
+    {
+      "query_id": "v2q089",
+      "query": "A300 会议终端最多支持多少路视频？",
+      "hyde_text": "A300会议终端最多支持4路视频。作为专业级音视频通信设备，A300采用高性能编解码引擎与多路视频处理架构，可同时接入并显示4路独立视频流，适用于多方远程协作场景。该能力基于其内置的H.264/H.265双编码支持及硬件加速处理能力，确保各路视频在高分辨率（最高支持1080p）下稳定传输与流畅渲染。实际应用中，4路视频可灵活布局为画廊模式或主辅流模式，满足大型会议、跨区域协同等复杂需求。",
+      "ordinary_top_document": "EVAL-A200",
+      "hyde_top_document": "EVAL-A200",
+      "rrf_top_document": "EVAL-A200",
+      "final_top_document": "EVAL-A200",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q090",
+      "query": "A100 V2 的摄像头传感器尺寸是多少？",
+      "hyde_text": "A100 V2 采用1/1.8英寸CMOS图像传感器，有效像素约1200万。该传感器尺寸在同级别设备中属于较大规格，具备优异的低光成像能力与动态范围表现。其大尺寸感光单元可提升进光量，降低噪点，尤其适用于复杂光照环境下的高清视频录制与静态图像捕捉。传感器支持4K超高清输出，配合先进的图像处理算法，确保画面细节丰富、色彩还原准确。该配置专为专业级影像需求设计，广泛应用于安防监控、智能交通及工业视觉等领域。",
+      "ordinary_top_document": "EVAL-A100-V2",
+      "hyde_top_document": "EVAL-A100-V2",
+      "rrf_top_document": "EVAL-A100-V2",
+      "final_top_document": "EVAL-A100-V2",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q091",
+      "query": "A200 的整机重量是多少公斤？",
+      "hyde_text": "A200整机重量为41,500公斤。该数据为飞机制造商空客官方公布的结构空重（OEW，Operating Empty Weight），包含机体、发动机、系统设备及不可用燃油等固定配置，不包含乘客、货物及可用燃油。此重量是飞机设计与运营性能评估的关键参数，直接影响起飞性能、航程能力及燃油效率。作为专业航空工程师，需在飞行计划中严格依据此数值进行载重平衡与性能计算，确保符合适航标准。",
+      "ordinary_top_document": "EVAL-A200",
+      "hyde_top_document": "EVAL-A200",
+      "rrf_top_document": "EVAL-A200",
+      "final_top_document": "EVAL-A200",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q092",
+      "query": "公司是否报销家庭宽带用于远程会议？",
+      "hyde_text": "公司通常不报销家庭宽带费用用于远程会议。根据现行企业财务与税务规范，个人家庭网络支出属于生活性消费，不具备可抵扣的公务性质。远程会议所用网络应视为员工个人工作条件的一部分，其成本由员工自行承担。若企业确需支持远程办公网络，应通过专项补贴或统一采购企业级通信服务（如企业专线、云会议套餐）等方式实现，此类支出方可合规入账并享受税前扣除。因此，直接报销家庭宽带费用不符合财税政策要求，建议公司采用标准化、可审计的数字化基础设施方案以保障合规性与管理效率。",
+      "ordinary_top_document": "EVAL-DEPLOY",
+      "hyde_top_document": "EVAL-DEPLOY",
+      "rrf_top_document": "EVAL-DEPLOY",
+      "final_top_document": "EVAL-DEPLOY",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q093",
+      "query": "主机保修期内是否承诺直接换新而不是维修？",
+      "hyde_text": "在主机保修期内，是否承诺直接换新取决于品牌及具体型号的保修政策。根据行业标准，多数主流厂商在保修期内提供“以换代修”服务，即若主机出现非人为损坏的严重故障（如主板、CPU、电源等核心部件失效），且维修成本过高或无法修复，将直接更换全新或等同性能的整机。此政策通常适用于首次重大故障，且需经官方售后检测确认。但轻微故障或可修复问题仍以维修为主。建议用户查阅产品说明书或官网保修条款，明确“换新”条件与流程。总体而言，高端主机或企业级设备更倾向换新，而消费级机型则视情况而定。",
+      "ordinary_top_document": "EVAL-WARRANTY",
+      "hyde_top_document": "EVAL-WARRANTY",
+      "rrf_top_document": "EVAL-WARRANTY",
+      "final_top_document": "EVAL-WARRANTY",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q094",
+      "query": "S1 故障一定会在两小时内彻底解决吗？",
+      "hyde_text": "S1故障不会在两小时内必然解决。根据系统故障分级标准，S1为最高优先级故障，要求响应时间不超过30分钟，但彻底解决时间取决于故障根源复杂度、资源调配效率及修复流程执行情况。实际处理时长可能超过两小时，尤其涉及硬件更换、跨系统协同或第三方依赖时。因此，虽有严格SLA约束，但“两小时内彻底解决”并非绝对承诺。",
+      "ordinary_top_document": "EVAL-OPS",
+      "hyde_top_document": "EVAL-WARRANTY",
+      "rrf_top_document": "EVAL-OPS",
+      "final_top_document": "EVAL-WARRANTY",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q095",
+      "query": "A100 V2 为什么在某个房间每天早上九点断网？",
+      "hyde_text": "A100 V2在每日早上九点断网，系因网络设备定时任务触发了流量限速策略。经排查，该设备所在交换机配置了基于时间的QoS规则，9:00整执行带宽限制脚本，导致A100 V2连接中断。此行为由管理平台预设的运维策略引发，非硬件故障或信号干扰。建议调整或禁用该时段策略，或通过ACL规则单独豁免A100 V2流量，即可恢复稳定连接。",
+      "ordinary_top_document": "EVAL-A100-V2",
+      "hyde_top_document": "EVAL-A100-V2",
+      "rrf_top_document": "EVAL-A100-V2",
+      "final_top_document": "EVAL-FAQ",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q096",
+      "query": "会议录制是否可以永久保留且永不删除？",
+      "hyde_text": "会议录制通常不可永久保留且不会自动永不删除。根据多数云服务协议，录制文件默认保存期限为30天至90天，到期后将被系统自动清除。即使用户手动延长存储，也受限于平台的存储策略与合规要求。永久保留需通过主动配置长期归档方案（如导出至本地或企业级云存储），并遵守数据隐私法规（如GDPR）。未经明确授权的长期留存可能违反法律或企业政策。因此，会议录制无法默认或自动实现永久保留，必须由用户主动管理并符合相关规范。",
+      "ordinary_top_document": "EVAL-SECURITY",
+      "hyde_top_document": "EVAL-SECURITY",
+      "rrf_top_document": "EVAL-SECURITY",
+      "final_top_document": "EVAL-SECURITY",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q097",
+      "query": "审计日志导出包的加密密码是什么？",
+      "hyde_text": "审计日志导出包的加密密码由系统自动生成并基于安全策略动态配置，通常为随机生成的高强度密钥（如256位AES密钥），仅在导出时临时提供。该密码通过安全通道传输，且不可逆向追溯。用户需在导出操作时通过授权认证获取，系统不存储明文密码。此设计符合等保2.0及GDPR数据保护要求，确保日志完整性与机密性。",
+      "ordinary_top_document": "EVAL-SECURITY",
+      "hyde_top_document": "EVAL-SECURITY",
+      "rrf_top_document": "EVAL-SECURITY",
+      "final_top_document": "EVAL-SECURITY",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q098",
+      "query": "A100 V1 支持蓝牙 5.3 吗？",
+      "hyde_text": "A100 V1 不支持蓝牙 5.3。该设备搭载的是蓝牙 5.0 协议版本，具备低功耗、稳定连接和较远传输距离等特性，但未升级至蓝牙 5.3 所引入的增强功能，如更优的抗干扰能力、更低延迟及更精准的定位服务。蓝牙 5.3 的新特性需硬件与固件双重支持，而 A100 V1 的芯片平台不兼容该版本协议。因此，其蓝牙功能仅限于蓝牙 5.0 标准。若需使用蓝牙 5.3 功能，建议选择支持该版本的新型号设备。",
+      "ordinary_top_document": "EVAL-A100-V1",
+      "hyde_top_document": "EVAL-A100-V1",
+      "rrf_top_document": "EVAL-A100-V1",
+      "final_top_document": "EVAL-A100-V1",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q100",
+      "query": "网络团队应该购买哪个品牌的交换机？",
+      "hyde_text": "推荐选择华为S系列交换机。该系列具备高可靠性、低延迟和强大的网络管理能力，支持SDN与AI智能运维，适用于企业级核心与汇聚层部署。华为交换机在多业务融合、安全防护及可扩展性方面表现优异，且提供全生命周期服务支持，符合现代网络架构对性能与稳定性的严苛要求。",
+      "ordinary_top_document": "EVAL-A100-V1",
+      "hyde_top_document": "EVAL-A100-V2",
+      "rrf_top_document": "EVAL-A100-V2",
+      "final_top_document": "EVAL-A100-V1",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q101",
+      "query": "EAP-TLS 证书应由哪一家 CA 签发？",
+      "hyde_text": "EAP-TLS 证书应由受信任的公有或私有证书颁发机构（CA）签发，且该CA必须在客户端和服务器端均被信任。在企业环境中，通常使用内部私有CA（如Microsoft AD CS、OpenSSL CA）签发证书，前提是其根证书已预置并信任于所有终端设备。对于公共网络环境，建议使用知名公有CA（如DigiCert、Let's Encrypt、GlobalSign）签发，以确保跨平台兼容性和信任链完整性。关键在于：证书链必须完整，且根CA证书需在认证端预先安装并标记为可信。EAP-TLS依赖双向证书验证，因此CA的权威性与信任配置直接影响安全性和连接成功率。",
+      "ordinary_top_document": "EVAL-A100-V2",
+      "hyde_top_document": "EVAL-A100-V2",
+      "rrf_top_document": "EVAL-A100-V2",
+      "final_top_document": "EVAL-A100-V2",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q102",
+      "query": "云端高级录制服务每月多少钱？",
+      "hyde_text": "云端高级录制服务按月计费，标准价格为每月1,200元起。该费用包含100小时高清视频存储、自动转码、多分辨率输出（支持4K/1080p/720p）及API接口调用权限。超出部分按每小时10元计费。服务采用弹性扩容机制，支持按需扩展存储与带宽资源，适用于企业级直播回放、在线教育、远程会议等场景。所有数据加密存储于阿里云合规数据中心，具备99.99%可用性保障。用户可通过控制台实时监控使用量并生成账单报表。",
+      "ordinary_top_document": "EVAL-A200",
+      "hyde_top_document": "EVAL-A200",
+      "rrf_top_document": "EVAL-A200",
+      "final_top_document": "EVAL-A200",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q103",
+      "query": "P1 事件的根因分析必须在几天内完成？",
+      "hyde_text": "P1事件的根因分析必须在24小时内完成。作为高优先级事件，P1级别故障直接影响核心业务运行或系统可用性，根据IT服务管理标准（如ITIL），必须在第一时间启动根本原因分析（RCA），确保问题定位与修复的时效性。延迟分析将导致故障影响扩大、恢复周期延长，并可能引发合规风险。因此，24小时是行业公认的响应上限，确保组织具备快速响应与持续改进的能力。",
+      "ordinary_top_document": "EVAL-OPS",
+      "hyde_top_document": "EVAL-OPS",
+      "rrf_top_document": "EVAL-OPS",
+      "final_top_document": "EVAL-OPS",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q104",
+      "query": "离职员工的个人网盘文件由谁继承？",
+      "hyde_text": "离职员工的个人网盘文件不属于公司资产，其所有权归属于员工本人。根据数据隐私与知识产权相关法规，企业无权自动继承或访问离职员工的个人网盘内容。若员工在入职时签署过明确协议，约定工作相关文件需移交至公司指定存储系统，则仅限于该部分文件可由公司依法接管。否则，个人网盘中的文件应由员工自行处理，企业不得擅自访问、复制或保留。建议企业在员工离职前通过合同或内部制度明确数据交接流程，以规避法律风险。",
+      "ordinary_top_document": "EVAL-ACCOUNT",
+      "hyde_top_document": "EVAL-ACCOUNT",
+      "rrf_top_document": "EVAL-ACCOUNT",
+      "final_top_document": "EVAL-ACCOUNT",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q106",
+      "query": "设备发生雷击后维修中心收费多少？",
+      "hyde_text": "设备雷击后维修中心收费根据损坏程度和部件更换情况确定，通常包含检测费、维修工时费及配件成本。雷击导致的电路板、电源模块等关键部件损坏，维修费用一般在500元至3000元之间，若需更换整机或定制组件，费用可超过5000元。维修中心依据原厂标准定价，不收取额外服务费。建议立即断电并联系授权服务中心进行专业评估，避免二次损伤。",
+      "ordinary_top_document": "EVAL-WARRANTY",
+      "hyde_top_document": "EVAL-WARRANTY",
+      "rrf_top_document": "EVAL-WARRANTY",
+      "final_top_document": "EVAL-WARRANTY",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q107",
+      "query": "会议室模板能否自动同步到个人日历？",
+      "hyde_text": "会议室模板可自动同步至个人日历，前提是系统配置支持双向集成。在企业级协作平台（如Microsoft Outlook与Teams、Google Workspace等）中，当会议室资源被预设为共享日历并启用自动邀请功能时，创建会议并选择模板后，系统会自动生成日历事件并推送至参与人个人日历。该过程依赖于统一的身份认证与权限管理机制，确保事件数据实时同步。若使用第三方工具，需确认其API支持日历同步且已正确授权。因此，只要配置合规，会议室模板即可实现无缝自动同步，提升日程管理效率。",
+      "ordinary_top_document": "EVAL-A100-V2",
+      "hyde_top_document": "EVAL-A100-V2",
+      "rrf_top_document": "EVAL-A100-V2",
+      "final_top_document": "EVAL-A100-V2",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q108",
+      "query": "A100 V2 在线升级平均需要几分钟？",
+      "hyde_text": "A100 V2 在线升级平均耗时约8至12分钟。该时间包含固件校验、数据传输及系统重启等关键步骤，具体时长受网络稳定性、设备负载及版本差异影响。根据实际部署测试，升级过程在标准网络环境下（带宽≥100Mbps）可稳定控制在10分钟内完成。升级期间设备将进入临时不可用状态，建议在业务低峰期执行。此时间范围已通过多批次生产环境验证，具备高度可靠性。",
+      "ordinary_top_document": "EVAL-A100-V2",
+      "hyde_top_document": "EVAL-OPS",
+      "rrf_top_document": "EVAL-A100-V2",
+      "final_top_document": "EVAL-A100-V2",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q109",
+      "query": "N305 是否由某个特定运营商网络导致？",
+      "hyde_text": "N305频段并非由特定运营商专属，而是3GPP标准定义的全球通用频段，中心频率为3.5 GHz，主要用于5G网络部署。该频段在多个国家和地区被不同运营商采用，如中国、欧洲、东南亚等地的主流运营商均使用N305进行5G覆盖。其归属取决于各国家或地区的频谱分配政策，而非技术特性决定。因此，N305本身不指向某一特定运营商，而是由各国监管机构根据实际需求分配给相应运营商使用。在实际网络中，是否启用N305取决于运营商的网络规划与频谱资源配置。",
+      "ordinary_top_document": "EVAL-NETWORK",
+      "hyde_top_document": "EVAL-NETWORK",
+      "rrf_top_document": "EVAL-NETWORK",
+      "final_top_document": "EVAL-NETWORK",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    },
+    {
+      "query_id": "v2q110",
+      "query": "公司允许员工用私人手机录制会议吗？",
+      "hyde_text": "公司通常不允许员工使用私人手机录制会议，除非有明确的书面授权。根据信息安全与数据保护规范，会议内容可能涉及敏感商业信息或个人隐私，使用私人设备录音存在数据泄露风险。私人手机缺乏企业级加密、访问控制及审计追踪机制，不符合合规要求。此外，未经授权的录音可能违反《个人信息保护法》及公司内部政策，导致法律责任。如确需录音，应使用公司指定的加密会议系统，并经主管审批。建议员工优先使用公司提供的专业录音设备或平台功能，确保数据安全与合规性。",
+      "ordinary_top_document": "EVAL-A200",
+      "hyde_top_document": "EVAL-SECURITY",
+      "rrf_top_document": "EVAL-SECURITY",
+      "final_top_document": "EVAL-A200",
+      "assessment": "HyDE supplied an assertive answer for a corpus-wide reviewed no-answer query; the assertion is unsupported by the frozen corpus. Retrieval causality is not asserted because no relevant rank exists."
+    }
+  ],
+  "rerank_regression_cases": [
+    {
+      "query_id": "v2q030",
+      "query": "二代小终端密码试三回都不对，是整台机器都不能用了吗？",
+      "pre_rerank_relevant_rank": 2,
+      "post_rerank_relevant_rank": 4,
+      "final_relevant_rank": null,
+      "relevant_locators": [
+        "A100V2-PAIR"
+      ]
+    },
+    {
+      "query_id": "v2q032",
+      "query": "网页门户没问题，盒子死活认证不上，别急着重置的话先看什么？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "NET-NO-REGISTER"
+      ]
+    },
+    {
+      "query_id": "v2q043",
+      "query": "线上升级后好多房间突然注册不了，运维第一步该怎么收手？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "OPS-ROLLBACK"
+      ]
+    },
+    {
+      "query_id": "v2q044",
+      "query": "故障原因还没查明，关单时能先猜一个填上吗？",
+      "pre_rerank_relevant_rank": 3,
+      "post_rerank_relevant_rank": 4,
+      "final_relevant_rank": 4,
+      "relevant_locators": [
+        "OPS-CLOSE"
+      ]
+    },
+    {
+      "query_id": "v2q056",
+      "query": "运维手册的证据采集章节要求故障前后各覆盖多久？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "OPS-LOGS"
+      ]
+    },
+    {
+      "query_id": "v2q063",
+      "query": "A100 V1 与 V2 恢复出厂的按键流程相同吗？",
+      "pre_rerank_relevant_rank": 2,
+      "post_rerank_relevant_rank": 3,
+      "final_relevant_rank": 3,
+      "relevant_locators": [
+        "A100V1-RESET",
+        "A100V2-RESET"
+      ]
+    },
+    {
+      "query_id": "v2q065",
+      "query": "A100 V1、V2、A200 的离线升级包分别是什么？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "A100V1-UPDATE",
+        "A100V2-UPDATE",
+        "A200-UPDATE"
+      ]
+    },
+    {
+      "query_id": "v2q071",
+      "query": "部署一台 A100 V2 做 4K 会议，需要预留多少带宽且设备侧还需满足什么录制条件？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "A100V2-MEETING",
+        "DEPLOY-BANDWIDTH"
+      ]
+    },
+    {
+      "query_id": "v2q072",
+      "query": "A200 无媒体时应查哪些端口，同时它的双屏显示器有什么要求？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "A200-CAPACITY",
+        "NET-NO-MEDIA"
+      ]
+    },
+    {
+      "query_id": "v2q076",
+      "query": "A100 V2 启用 EAP-TLS 后仍认证失败，除了证书内容还应检查什么时间条件？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "A100V2-NET",
+        "DEPLOY-DNS"
+      ]
+    },
+    {
+      "query_id": "v2q099",
+      "query": "A200 能否连接 8 个 M20 阵列？",
+      "pre_rerank_relevant_rank": 1,
+      "post_rerank_relevant_rank": 2,
+      "final_relevant_rank": 2,
+      "relevant_locators": [
+        "A200-AUDIO"
+      ]
+    }
+  ],
+  "observed_failure_distribution": {
+    "multi_document_incomplete": 5,
+    "rerank_regression": 5,
+    "table_failure": 3,
+    "unresolved_retrieval_failure": 3,
+    "wrong_version_or_rank_confusion": 1
+  },
+  "no_answer_observations": {
+    "query_count": 20,
+    "returned_candidate_count_distribution": {
+      "3": 8,
+      "4": 2,
+      "5": 10
+    },
+    "top_document_distribution": {
+      "EVAL-A100-V1": 2,
+      "EVAL-A100-V2": 4,
+      "EVAL-A200": 4,
+      "EVAL-ACCOUNT": 1,
+      "EVAL-DEPLOY": 1,
+      "EVAL-FAQ": 1,
+      "EVAL-NETWORK": 1,
+      "EVAL-OPS": 1,
+      "EVAL-SECURITY": 2,
+      "EVAL-WARRANTY": 3
+    },
+    "interpretation": "All are retrieval observations only; no-answer detection is not implemented and no accuracy is claimed."
+  }
+}

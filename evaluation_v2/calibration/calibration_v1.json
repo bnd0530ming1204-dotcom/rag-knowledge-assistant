@@ -1,0 +1,547 @@
+{
+  "status": "DEVELOPMENT CALIBRATION ONLY",
+  "purpose": "Evidence Gate calibration; not benchmark or resume metric",
+  "separation": "Never use Frozen Test outcomes to tune this set or its rule",
+  "cases": [
+    {
+      "query_id": "cal001",
+      "query": "设备柜只给 A100 V1 左右各留 6 厘米，散热空间合规吗？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1"
+      ],
+      "relevant_locators": [
+        "A100V1-POWER"
+      ]
+    },
+    {
+      "query_id": "cal002",
+      "query": "A100 V2 想走证书接入办公网，证书里必须带什么设备信息？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-NET"
+      ]
+    },
+    {
+      "query_id": "cal003",
+      "query": "A100 V2 进入恢复菜单以后，怎样才会真正擦除配置？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-RESET"
+      ]
+    },
+    {
+      "query_id": "cal004",
+      "query": "A200 机柜进风达到 36℃ 时是否符合安装要求？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-POWER"
+      ]
+    },
+    {
+      "query_id": "cal005",
+      "query": "A200 的第二块屏幕需要兼容哪个 HDCP 版本？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-CAPACITY"
+      ]
+    },
+    {
+      "query_id": "cal006",
+      "query": "M20 级联链路做到了 40 米，文档要求增加什么模块？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-AUDIO"
+      ]
+    },
+    {
+      "query_id": "cal007",
+      "query": "会议运营员能不能调整网络设置并导出全量审计日志？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-ROLES"
+      ]
+    },
+    {
+      "query_id": "cal008",
+      "query": "员工离职后，其自动化任务最迟何时应完成移交？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-OFFBOARD"
+      ]
+    },
+    {
+      "query_id": "cal009",
+      "query": "站点管理员能导出整个组织的完整成员名单吗？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-EXPORT"
+      ]
+    },
+    {
+      "query_id": "cal010",
+      "query": "访客无线和会议终端可以放在同一个二层广播域吗？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-VLAN"
+      ]
+    },
+    {
+      "query_id": "cal011",
+      "query": "如果出口设备改写了媒体 DSCP，应该在哪一侧重新标记？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-QOS"
+      ]
+    },
+    {
+      "query_id": "cal012",
+      "query": "验收测试是否必须包含断网后的重连？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-ACCEPTANCE"
+      ]
+    },
+    {
+      "query_id": "cal013",
+      "query": "终端已注册但双向没有声音画面，应检查哪段 UDP 范围？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-NO-MEDIA"
+      ]
+    },
+    {
+      "query_id": "cal014",
+      "query": "无线同信道利用率到 75% 时，手册建议先加大发射功率吗？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-WIFI"
+      ]
+    },
+    {
+      "query_id": "cal015",
+      "query": "三个会议室同时中断且没有绕行方案，在运维分级里算什么？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-SEVERITY"
+      ]
+    },
+    {
+      "query_id": "cal016",
+      "query": "普通故障工单里的公网 IP 和邮箱应怎样处理？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-REDACT"
+      ]
+    },
+    {
+      "query_id": "cal017",
+      "query": "会议共享屏幕截图在数据分类中属于哪一级？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-CLASS"
+      ]
+    },
+    {
+      "query_id": "cal018",
+      "query": "A100 V2 顶部的散热孔可以被装饰面板盖住吗？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-POWER"
+      ]
+    },
+    {
+      "query_id": "cal019",
+      "query": "设备因错误电压适配器损坏，能否免费保修？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-EXCLUDE"
+      ]
+    },
+    {
+      "query_id": "cal020",
+      "query": "把设备直接寄到维修中心但没有 RMA 编号，会被接收吗？",
+      "category": "calibration_answerable",
+      "tags": [
+        "development_calibration"
+      ],
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-RMA"
+      ]
+    },
+    {
+      "query_id": "cal021",
+      "query": "A100 V2 摄像头支持多少倍光学变焦？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal022",
+      "query": "A200 是否内置锂电池以及续航多久？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal023",
+      "query": "公司为每个会议室提供多少云存储配额？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal024",
+      "query": "S2 服务事件保证几小时内彻底修复？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal025",
+      "query": "会议模板是否支持与 Salesforce 自动同步？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal026",
+      "query": "A100 V1 的蓝牙芯片生产厂商是谁？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal027",
+      "query": "设备是否支持日语语音唤醒？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal028",
+      "query": "维修中心位于哪个城市？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal029",
+      "query": "A200 主机的噪声分贝是多少？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal030",
+      "query": "企业账号密码最少必须包含几个特殊字符？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal031",
+      "query": "日志导出压缩包默认密码是什么？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal032",
+      "query": "会议录制是否支持自动生成英文字幕？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal033",
+      "query": "A100 V2 的摄像头水平视场角是多少度？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal034",
+      "query": "哪家运营商被公司指定为会议专线供应商？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal035",
+      "query": "设备采购超过多少台可以获得折扣？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal036",
+      "query": "P2 事件必须在几天内提交根因报告？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal037",
+      "query": "云端高级录制服务的年度价格是多少？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal038",
+      "query": "公司是否允许把会议数据备份到个人 Dropbox？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal039",
+      "query": "A200 的 HDMI 线最长允许多少米？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    },
+    {
+      "query_id": "cal040",
+      "query": "终端固件下一次发布时间是哪一天？",
+      "category": "calibration_no_answer",
+      "tags": [
+        "development_calibration",
+        "no_answer"
+      ],
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": []
+    }
+  ]
+}

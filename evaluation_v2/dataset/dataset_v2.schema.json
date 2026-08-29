@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RAG Evaluation V2 draft dataset",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset_id", "status", "synthetic", "created_at", "cases"],
+  "properties": {
+    "schema_version": {"const": 2},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["DRAFT", "READY_FOR_HUMAN_REVIEW", "FROZEN"]},
+    "synthetic": {"const": true},
+    "created_at": {"type": "string", "minLength": 1},
+    "frozen_at": {"type": "string", "minLength": 1},
+    "ground_truth_policy": {"type": "string"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query_id", "query", "category", "answerable", "relevant_documents", "relevant_locators", "reference_answer", "evidence", "notes", "difficulty", "requires_parent_context", "requires_multi_document", "expected_version", "review_status"],
+        "properties": {
+          "query_id": {"type": "string", "pattern": "^v2q[0-9]{3}$"},
+          "query": {"type": "string", "minLength": 4},
+          "category": {"enum": ["exact_fact", "paraphrase_colloquial", "parent_context", "version_confusion", "multi_document", "table", "no_answer"]},
+          "answerable": {"type": "boolean"},
+          "relevant_documents": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "relevant_locators": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "reference_answer": {"type": "string"},
+          "evidence": {"type": "array", "items": {"type": "string"}},
+          "notes": {"type": "string"},
+          "tags": {
+            "type": "array",
+            "items": {
+              "enum": ["version_confusion", "parent_context", "table", "multi_document", "paraphrase", "no_answer", "similar_document"]
+            },
+            "uniqueItems": true
+          },
+          "difficulty": {"enum": ["easy", "medium", "hard"]},
+          "requires_parent_context": {"type": "boolean"},
+          "requires_multi_document": {"type": "boolean"},
+          "expected_version": {"type": ["string", "null"]},
+          "review_status": {"enum": ["generated", "self_reviewed", "approved"]}
+        }
+      }
+    }
+  }
+}

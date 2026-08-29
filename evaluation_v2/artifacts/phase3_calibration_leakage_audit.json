@@ -1,0 +1,207 @@
+{
+  "exact_duplicates": 0,
+  "max_similarity": 0.7442,
+  "pairs": [
+    {
+      "calibration_query_id": "cal001",
+      "max_character_similarity": 0.4706,
+      "closest_frozen_query_id": "v2q098"
+    },
+    {
+      "calibration_query_id": "cal002",
+      "max_character_similarity": 0.5818,
+      "closest_frozen_query_id": "v2q048"
+    },
+    {
+      "calibration_query_id": "cal003",
+      "max_character_similarity": 0.44,
+      "closest_frozen_query_id": "v2q022"
+    },
+    {
+      "calibration_query_id": "cal004",
+      "max_character_similarity": 0.5116,
+      "closest_frozen_query_id": "v2q003"
+    },
+    {
+      "calibration_query_id": "cal005",
+      "max_character_similarity": 0.4091,
+      "closest_frozen_query_id": "v2q007"
+    },
+    {
+      "calibration_query_id": "cal006",
+      "max_character_similarity": 0.5385,
+      "closest_frozen_query_id": "v2q049"
+    },
+    {
+      "calibration_query_id": "cal007",
+      "max_character_similarity": 0.3704,
+      "closest_frozen_query_id": "v2q078"
+    },
+    {
+      "calibration_query_id": "cal008",
+      "max_character_similarity": 0.3333,
+      "closest_frozen_query_id": "v2q017"
+    },
+    {
+      "calibration_query_id": "cal009",
+      "max_character_similarity": 0.2353,
+      "closest_frozen_query_id": "v2q078"
+    },
+    {
+      "calibration_query_id": "cal010",
+      "max_character_similarity": 0.449,
+      "closest_frozen_query_id": "v2q046"
+    },
+    {
+      "calibration_query_id": "cal011",
+      "max_character_similarity": 0.3478,
+      "closest_frozen_query_id": "v2q008"
+    },
+    {
+      "calibration_query_id": "cal012",
+      "max_character_similarity": 0.2162,
+      "closest_frozen_query_id": "v2q109"
+    },
+    {
+      "calibration_query_id": "cal013",
+      "max_character_similarity": 0.3913,
+      "closest_frozen_query_id": "v2q007"
+    },
+    {
+      "calibration_query_id": "cal014",
+      "max_character_similarity": 0.2642,
+      "closest_frozen_query_id": "v2q038"
+    },
+    {
+      "calibration_query_id": "cal015",
+      "max_character_similarity": 0.25,
+      "closest_frozen_query_id": "v2q083"
+    },
+    {
+      "calibration_query_id": "cal016",
+      "max_character_similarity": 0.4,
+      "closest_frozen_query_id": "v2q074"
+    },
+    {
+      "calibration_query_id": "cal017",
+      "max_character_similarity": 0.2439,
+      "closest_frozen_query_id": "v2q085"
+    },
+    {
+      "calibration_query_id": "cal018",
+      "max_character_similarity": 0.4348,
+      "closest_frozen_query_id": "v2q090"
+    },
+    {
+      "calibration_query_id": "cal019",
+      "max_character_similarity": 0.3684,
+      "closest_frozen_query_id": "v2q035"
+    },
+    {
+      "calibration_query_id": "cal020",
+      "max_character_similarity": 0.3636,
+      "closest_frozen_query_id": "v2q106"
+    },
+    {
+      "calibration_query_id": "cal021",
+      "max_character_similarity": 0.6667,
+      "closest_frozen_query_id": "v2q090"
+    },
+    {
+      "calibration_query_id": "cal022",
+      "max_character_similarity": 0.4571,
+      "closest_frozen_query_id": "v2q091"
+    },
+    {
+      "calibration_query_id": "cal023",
+      "max_character_similarity": 0.2857,
+      "closest_frozen_query_id": "v2q110"
+    },
+    {
+      "calibration_query_id": "cal024",
+      "max_character_similarity": 0.4324,
+      "closest_frozen_query_id": "v2q094"
+    },
+    {
+      "calibration_query_id": "cal025",
+      "max_character_similarity": 0.4651,
+      "closest_frozen_query_id": "v2q107"
+    },
+    {
+      "calibration_query_id": "cal026",
+      "max_character_similarity": 0.5641,
+      "closest_frozen_query_id": "v2q098"
+    },
+    {
+      "calibration_query_id": "cal027",
+      "max_character_similarity": 0.3077,
+      "closest_frozen_query_id": "v2q019"
+    },
+    {
+      "calibration_query_id": "cal028",
+      "max_character_similarity": 0.3704,
+      "closest_frozen_query_id": "v2q106"
+    },
+    {
+      "calibration_query_id": "cal029",
+      "max_character_similarity": 0.625,
+      "closest_frozen_query_id": "v2q091"
+    },
+    {
+      "calibration_query_id": "cal030",
+      "max_character_similarity": 0.3529,
+      "closest_frozen_query_id": "v2q016"
+    },
+    {
+      "calibration_query_id": "cal031",
+      "max_character_similarity": 0.7097,
+      "closest_frozen_query_id": "v2q097"
+    },
+    {
+      "calibration_query_id": "cal032",
+      "max_character_similarity": 0.4,
+      "closest_frozen_query_id": "v2q096"
+    },
+    {
+      "calibration_query_id": "cal033",
+      "max_character_similarity": 0.7442,
+      "closest_frozen_query_id": "v2q090"
+    },
+    {
+      "calibration_query_id": "cal034",
+      "max_character_similarity": 0.2778,
+      "closest_frozen_query_id": "v2q110"
+    },
+    {
+      "calibration_query_id": "cal035",
+      "max_character_similarity": 0.3125,
+      "closest_frozen_query_id": "v2q106"
+    },
+    {
+      "calibration_query_id": "cal036",
+      "max_character_similarity": 0.5946,
+      "closest_frozen_query_id": "v2q103"
+    },
+    {
+      "calibration_query_id": "cal037",
+      "max_character_similarity": 0.7097,
+      "closest_frozen_query_id": "v2q102"
+    },
+    {
+      "calibration_query_id": "cal038",
+      "max_character_similarity": 0.3333,
+      "closest_frozen_query_id": "v2q110"
+    },
+    {
+      "calibration_query_id": "cal039",
+      "max_character_similarity": 0.5238,
+      "closest_frozen_query_id": "v2q082"
+    },
+    {
+      "calibration_query_id": "cal040",
+      "max_character_similarity": 0.2667,
+      "closest_frozen_query_id": "v2q023"
+    }
+  ],
+  "manual_design_note": "Calibration questions target distinct facts or unsupported attributes and were created without retrieval outputs."
+}

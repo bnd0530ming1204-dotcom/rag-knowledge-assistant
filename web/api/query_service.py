@@ -11,7 +11,9 @@ from processor.import_processor.main_graph import KBImportWorkflow
 from processor.query_processor.main_graph import KBQueryWorkflow
 from utils.mongo_history_utils import get_recent_messages, get_recent_sessions
 from utils.sse_utils import create_sse_queue, sse_generator
-from utils.task_utils import update_task_status, TASK_STATUS_PROCESSING, get_task_result
+from utils.sse_utils import push_to_session, SSEEvent
+from utils.task_utils import update_task_status, TASK_STATUS_PROCESSING, TASK_STATUS_FAILED, get_task_result
+from utils.retrieval_errors import RetrievalError
 
 app = FastAPI()
 
@@ -47,7 +49,10 @@ async def query(backgroundTasks: BackgroundTasks, query: QueryRequest):
         backgroundTasks.add_task(run_query_graph, session_id, user_query, is_stream)  # run_query_graph调用工作流
         return {"message": "任务已经开始，请耐心等待", "session_id": session_id}
     else:
-        result = run_query_graph(session_id, user_query, is_stream)
+        try:
+            result = run_query_graph(session_id, user_query, is_stream)
+        except RetrievalError as exc:
+            raise HTTPException(status_code=503, detail={"code": exc.code, "message": "Retrieval service is temporarily unavailable"}) from exc
         answer = get_task_result(session_id, "answer", "")
         return {
             "message": "处理完成",
@@ -103,12 +108,31 @@ def run_query_graph(session_id: str, user_query: str, is_stream: bool):
         "is_stream": is_stream
     }
 
-    workflow = KBQueryWorkflow()
-    result = workflow.run(init_state, stream=is_stream)
-    if is_stream:
-        for _ in result:
-            pass
-    return result
+    try:
+        workflow = KBQueryWorkflow()
+        result = workflow.run(init_state, stream=is_stream)
+        if is_stream:
+            for _ in result:
+                pass
+        return result
+    except RetrievalError as exc:
+        update_task_status(session_id, TASK_STATUS_FAILED, is_stream)
+        if is_stream:
+            push_to_session(session_id, SSEEvent.ERROR, {
+                "code": exc.code,
+                "message": "Retrieval service is temporarily unavailable",
+            })
+            push_to_session(session_id, SSEEvent.CLOSE, {})
+        raise
+    except Exception as exc:
+        update_task_status(session_id, TASK_STATUS_FAILED, is_stream)
+        if is_stream:
+            push_to_session(session_id, SSEEvent.ERROR, {
+                "code": "QUERY_PROCESSING_FAILED",
+                "message": "Query processing failed",
+            })
+            push_to_session(session_id, SSEEvent.CLOSE, {})
+        raise
 
 
 @app.get("/stream/{session_id}")

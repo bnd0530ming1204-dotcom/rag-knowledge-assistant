@@ -1,0 +1,11 @@
+{
+  "status": "COMPLETED",
+  "collection": "rag_eval_v2_table_normalized_chunks",
+  "documents": 10,
+  "chunks": 39,
+  "table_chunks_normalized": 3,
+  "rows": 0,
+  "stored_content_changed": false,
+  "embedding_representation_change": "generic Markdown header:value row serialization",
+  "latency_ms": 57699.14
+}

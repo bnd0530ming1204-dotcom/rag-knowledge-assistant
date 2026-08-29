@@ -1,0 +1,121 @@
+{
+  "status": "DRAFT_MANIFEST_NOT_FROZEN",
+  "created_at": "2026-08-29T00:00:00Z",
+  "dataset_path": "dataset/dataset_v2_draft.json",
+  "dataset_sha256": "e4aa24ec7e00cd560c9455871873082d6fff72ad277836ee87cb53637a9fb655",
+  "document_manifest_sha256": "aaf18cc771131a83049156526df28d4f8d76f3be2f5003418b6a841d2fcf4cc0",
+  "query_count": 110,
+  "category_distribution": {
+    "exact_fact": 30,
+    "multi_document": 10,
+    "no_answer": 20,
+    "paraphrase_colloquial": 18,
+    "parent_context": 12,
+    "table": 8,
+    "version_confusion": 12
+  },
+  "tag_distribution": {
+    "multi_document": 22,
+    "no_answer": 20,
+    "paraphrase": 18,
+    "parent_context": 12,
+    "similar_document": 12,
+    "table": 12,
+    "version_confusion": 12
+  },
+  "answerable_count": 90,
+  "no_answer_count": 20,
+  "documents": [
+    {
+      "document_id": "EVAL-A100-V1",
+      "title": "智能会议终端 A100 用户手册",
+      "version": "1.0",
+      "document_type": "user_manual",
+      "synthetic": true,
+      "path": "documents/eval-a100-v1.md",
+      "sha256": "776be49403aa12ee4942bdea6b8e0b9385a677b638ab0f5638d8a6eecad28dc4"
+    },
+    {
+      "document_id": "EVAL-A100-V2",
+      "title": "智能会议终端 A100 用户手册",
+      "version": "2.0",
+      "document_type": "user_manual",
+      "synthetic": true,
+      "path": "documents/eval-a100-v2.md",
+      "sha256": "a356d5c28010c16c3cf9cd9b5ba620ce5fd9208574a868f0a77f0b94913d69f2"
+    },
+    {
+      "document_id": "EVAL-A200",
+      "title": "智能会议终端 A200 用户手册",
+      "version": "1.3",
+      "document_type": "user_manual",
+      "synthetic": true,
+      "path": "documents/eval-a200.md",
+      "sha256": "407da0d4bec8d9622cf13ca76cc4170ab5d8433eae014f4af9ff6ed5a4b59159"
+    },
+    {
+      "document_id": "EVAL-DEPLOY",
+      "title": "视频会议系统部署指南",
+      "version": "3.0",
+      "document_type": "deployment_guide",
+      "synthetic": true,
+      "path": "documents/eval-deploy.md",
+      "sha256": "d76d24c5ad0b2286f91ecd910a72b7dd235982444212c87bc9e72a61dee02a2a"
+    },
+    {
+      "document_id": "EVAL-NETWORK",
+      "title": "网络与连接故障排查手册",
+      "version": "2.2",
+      "document_type": "troubleshooting",
+      "synthetic": true,
+      "path": "documents/eval-network.md",
+      "sha256": "322aa405fb9d50057d51425c73998bd15eb70057e0dcf02f845a38acb7d810f6"
+    },
+    {
+      "document_id": "EVAL-WARRANTY",
+      "title": "售后服务与保修政策",
+      "version": "2026.1",
+      "document_type": "policy",
+      "synthetic": true,
+      "path": "documents/eval-warranty.md",
+      "sha256": "03a44c427418a3b8eb15fb5d191d7aa49d6c302c9b625f97eadf026fa6fd7751"
+    },
+    {
+      "document_id": "EVAL-ACCOUNT",
+      "title": "企业账号与权限管理规范",
+      "version": "4.1",
+      "document_type": "governance",
+      "synthetic": true,
+      "path": "documents/eval-account.md",
+      "sha256": "afa0d120c6b1de649fe29c4aed1c25643731eaf6724558d063b63c3059fa9eac"
+    },
+    {
+      "document_id": "EVAL-SECURITY",
+      "title": "数据安全与日志管理规范",
+      "version": "5.0",
+      "document_type": "security_policy",
+      "synthetic": true,
+      "path": "documents/eval-security.md",
+      "sha256": "799294d82e0ad95c818781e0d465e2e6b75073b93db58bdddeed5c506097fd2f"
+    },
+    {
+      "document_id": "EVAL-FAQ",
+      "title": "企业会议设备常见问题 FAQ",
+      "version": "2026.08",
+      "document_type": "faq",
+      "synthetic": true,
+      "path": "documents/eval-faq.md",
+      "sha256": "7c2dd9ed7df4addf668d1673672eaf2405251bcb2fa8f2d1736793c307e95776"
+    },
+    {
+      "document_id": "EVAL-OPS",
+      "title": "运维故障处理手册",
+      "version": "3.4",
+      "document_type": "operations_runbook",
+      "synthetic": true,
+      "path": "documents/eval-ops.md",
+      "sha256": "9391dac57d62a8effbeed74e18560dde7f00696a733e162bd4186d32332cb6d8"
+    }
+  ],
+  "freeze_warning": "This hash records the review draft only. It is not a FROZEN EVALUATION SET."
+}

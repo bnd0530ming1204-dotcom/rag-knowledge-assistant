@@ -1,0 +1,2679 @@
+{
+  "schema_version": 2,
+  "dataset_id": "rag-evaluation-v2-enterprise-smart-office-draft",
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "synthetic": true,
+  "created_at": "2026-08-29T00:00:00Z",
+  "ground_truth_policy": "Labels are authored only from source Markdown locators; no retrieval or reranker output was consulted.",
+  "cases": [
+    {
+      "query_id": "v2q001",
+      "query": "A100 V1 使用什么规格的电源适配器？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1"
+      ],
+      "relevant_locators": [
+        "A100V1-POWER"
+      ],
+      "reference_answer": "12 V/3 A 圆口适配器。",
+      "evidence": [
+        "A100 V1 使用 12 V/3 A 圆口适配器。通电后状态灯先呈白色约 40 秒，完成启动后转为绿色。安装时应在设备两侧各保留至少 8 cm 散热空间，不得放入封闭抽屉。"
+      ],
+      "notes": "明确硬件事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q002",
+      "query": "A100 V2 正常启动大约需要多久？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-POWER"
+      ],
+      "reference_answer": "约 25 秒。",
+      "evidence": [
+        "A100 V2 使用 USB-C PD 45 W 供电。正常启动约需 25 秒，指示灯由紫色呼吸转为绿色常亮。设备两侧各保留 5 cm 即可，但顶部散热孔不得覆盖。"
+      ],
+      "notes": "版本明确的启动参数。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q003",
+      "query": "A200 机柜进风温度上限是多少？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-POWER"
+      ],
+      "reference_answer": "应低于 35℃。",
+      "evidence": [
+        "A200 主机使用 24 V/5 A 适配器，摄像机通过 PoE+ 交换机供电。机柜前后至少各留 15 cm，并保持进风温度低于 35℃。"
+      ],
+      "notes": "环境约束。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q004",
+      "query": "A100 V1 的配对码有效几分钟？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1"
+      ],
+      "relevant_locators": [
+        "A100V1-PAIR"
+      ],
+      "reference_answer": "10 分钟。",
+      "evidence": [
+        "管理员在终端输入六位配对码，配对码有效期 10 分钟。连续输入错误 5 次后，配对入口暂停 15 分钟，但设备本身不会退出已加入的会议。"
+      ],
+      "notes": "短事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q005",
+      "query": "A100 V2 配对连续错误几次会锁定？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-PAIR"
+      ],
+      "reference_answer": "连续 3 次。",
+      "evidence": [
+        "六位配对码有效期缩短为 5 分钟。连续输入错误 3 次后，当前管理员账号锁定 20 分钟；其他已授权管理员仍可登录。"
+      ],
+      "notes": "版本特定阈值。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q006",
+      "query": "A200 最多能级联多少个 M20 麦克风阵列？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-AUDIO"
+      ],
+      "reference_answer": "4 个。",
+      "evidence": [
+        "主机最多级联 4 个 M20 麦克风阵列。链路超过 30 米时必须使用光电转换模块；普通网线延长器不在支持范围内。"
+      ],
+      "notes": "容量事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q007",
+      "query": "终端注册需要放通哪个 TCP 端口？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-PORTS"
+      ],
+      "reference_answer": "TCP 443 出站。",
+      "evidence": [
+        "| 用途 | 协议 | 端口 | 方向 | |---|---|---:|---| | 设备注册 | TCP | 443 | 出站 | | 会议信令 | TCP | 8443 | 出站 | | 实时媒体 | UDP | 30000-31999 | 双向 | | 时间同步 | UDP | 123 | 出站 |"
+      ],
+      "notes": "端口表事实。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q008",
+      "query": "视频媒体应该使用哪个 DSCP 值？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-QOS"
+      ],
+      "reference_answer": "DSCP 34。",
+      "evidence": [
+        "音频媒体标记为 DSCP 46，视频媒体标记为 DSCP 34，信令标记为 DSCP 24。若网络设备会重写 DSCP，应在出口策略中重新标记，而不是在终端上反复保存配置。"
+      ],
+      "notes": "网络配置事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q009",
+      "query": "NTP 偏差超过多少会导致证书认证失败？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-DNS"
+      ],
+      "reference_answer": "90 秒。",
+      "evidence": [
+        "终端必须解析 `meet.synthetic.example` 与 `update.synthetic.example`。NTP 偏差超过 90 秒会导致证书认证失败；推荐配置两个独立时间源。"
+      ],
+      "notes": "通用部署事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q010",
+      "query": "N201 错误码是什么意思？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-CODE-N201"
+      ],
+      "reference_answer": "DHCP 在 60 秒内未分配地址。",
+      "evidence": [
+        "N201 表示 DHCP 在 60 秒内未分配地址。检查 VLAN、地址池余量和 DHCP Relay。它不表示 DNS 故障。"
+      ],
+      "notes": "错误码事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q011",
+      "query": "N305 应重点检查哪段端口？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-CODE-N305"
+      ],
+      "reference_answer": "UDP 30000-31999。",
+      "evidence": [
+        "N305 表示媒体 UDP 建链超时。若只开放 TCP 8443，设备可以入会但不会获得实时媒体。"
+      ],
+      "notes": "错误码与端口。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q012",
+      "query": "主机标准保修期是多久？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-TERM"
+      ],
+      "reference_answer": "自签收日起 24 个月。",
+      "evidence": [
+        "主机标准保修期为自签收日起 24 个月；原装适配器、遥控器和麦克风阵列为 12 个月。单独购买的延保必须在主机签收后 90 天内激活。"
+      ],
+      "notes": "政策事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q013",
+      "query": "延保最晚应在签收后多久激活？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-TERM"
+      ],
+      "reference_answer": "90 天内。",
+      "evidence": [
+        "主机标准保修期为自签收日起 24 个月；原装适配器、遥控器和麦克风阵列为 12 个月。单独购买的延保必须在主机签收后 90 天内激活。"
+      ],
+      "notes": "政策期限。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q014",
+      "query": "S1 售后事件首次响应目标是多少？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-SLA"
+      ],
+      "reference_answer": "30 分钟。",
+      "evidence": [
+        "| 级别 | 示例 | 首次响应目标 | 更新频率 | |---|---|---:|---:| | S1 | 大面积会议中断 | 30 分钟 | 每 2 小时 | | S2 | 单会议室核心功能不可用 | 4 小时 | 每工作日 | | S3 | 咨询或非阻断缺陷 | 1 工作日 | 每 3 工作日 |"
+      ],
+      "notes": "服务表事实。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q015",
+      "query": "组织管理员首次登录后有多久绑定 MFA？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-MFA"
+      ],
+      "reference_answer": "24 小时宽限期。",
+      "evidence": [
+        "组织管理员和审计员必须启用 MFA。新账号首次登录后有 24 小时宽限期；宽限期结束仍未绑定验证器的账号会被暂停登录。"
+      ],
+      "notes": "账号安全事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q016",
+      "query": "服务账号密钥最长有效期是多少？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-SERVICE"
+      ],
+      "reference_answer": "90 天。",
+      "evidence": [
+        "服务账号不得用于交互登录，密钥最长有效期 90 天。每个服务账号必须登记负责人和用途；负责人离职时应在 24 小时内轮换密钥。"
+      ],
+      "notes": "密钥规则。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q017",
+      "query": "人员离职后多久内应禁用账号？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-OFFBOARD"
+      ],
+      "reference_answer": "4 小时内。",
+      "evidence": [
+        "人员离职后 4 小时内禁用账号，24 小时内移交其自动化任务。审计日志中应保留原账号标识，不得用删除账号的方式清除历史责任链。"
+      ],
+      "notes": "权限回收。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q018",
+      "query": "管理操作审计日志保留多久？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-RETENTION"
+      ],
+      "reference_answer": "365 天。",
+      "evidence": [
+        "管理操作审计日志保留 365 天，会议质量指标保留 180 天，普通设备运行日志保留 30 天。安全事件相关日志进入调查后可依法延长，但必须记录批准人和原因。"
+      ],
+      "notes": "保留期。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q019",
+      "query": "普通设备运行日志保留多久？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-RETENTION"
+      ],
+      "reference_answer": "30 天。",
+      "evidence": [
+        "管理操作审计日志保留 365 天，会议质量指标保留 180 天，普通设备运行日志保留 30 天。安全事件相关日志进入调查后可依法延长，但必须记录批准人和原因。"
+      ],
+      "notes": "同段不同数据。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q020",
+      "query": "云端录制删除后恢复区保留多久？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-RECORDING"
+      ],
+      "reference_answer": "7 天。",
+      "evidence": [
+        "云端录制默认保留 90 天。会议所有者可缩短期限，但不能超过组织设置的上限。删除后进入 7 天恢复区，恢复区到期后不可由用户恢复。"
+      ],
+      "notes": "恢复窗口。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q021",
+      "query": "审计日志导出链接最多可下载几次？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-EXPORT"
+      ],
+      "reference_answer": "3 次。",
+      "evidence": [
+        "全量审计日志导出需要组织管理员发起、审计员批准。导出包有效期 24 小时，下载链接最多使用 3 次。"
+      ],
+      "notes": "导出限制。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q022",
+      "query": "A100 V2 怎样同时关闭摄像头和麦克风？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-PRIVACY"
+      ],
+      "reference_answer": "长按遥控器静音键 2 秒进入隐私模式。",
+      "evidence": [
+        "长按遥控器静音键 2 秒可同时关闭麦克风与摄像头，屏幕显示橙色隐私图标。普通静音只关闭麦克风，不会关闭摄像头。"
+      ],
+      "notes": "设备操作。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q023",
+      "query": "P1 事件多久更新一次状态？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-P1"
+      ],
+      "reference_answer": "每 30 分钟。",
+      "evidence": [
+        "值班人员应在 10 分钟内确认事件，15 分钟内建立协同频道，并每 30 分钟更新一次状态。未经事件指挥批准不得批量恢复出厂。"
+      ],
+      "notes": "运维时限。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q024",
+      "query": "事件恢复后至少观察多久才能关闭？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-CLOSE"
+      ],
+      "reference_answer": "至少 60 分钟。",
+      "evidence": [
+        "恢复服务后至少观察 60 分钟。关闭记录必须包含影响范围、根因状态、临时措施、长期行动项和负责人；根因未知时应明确写“待分析”，不能推测填充。"
+      ],
+      "notes": "关闭条件。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q025",
+      "query": "A100 V1 离线升级包是什么扩展名？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1"
+      ],
+      "relevant_locators": [
+        "A100V1-UPDATE"
+      ],
+      "reference_answer": ".a1u。",
+      "evidence": [
+        "V1 的升级包必须使用 `.a1u` 格式，通过“维护 > 本地升级”导入。升级过程中不得断电；失败代码 U103 表示升级包签名不适用于 A100-G1。"
+      ],
+      "notes": "包格式。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q026",
+      "query": "A200 离线升级包扩展名是什么？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-UPDATE"
+      ],
+      "reference_answer": ".a2k。",
+      "evidence": [
+        "A200 离线包扩展名为 `.a2k`。错误 U103 表示主备节点版本不一致，应先升级备用节点，再升级主节点。"
+      ],
+      "notes": "包格式干扰。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q027",
+      "query": "A200 主备切换的心跳条件是什么？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-HA"
+      ],
+      "reference_answer": "连续丢失 6 次且累计超过 30 秒。",
+      "evidence": [
+        "两台 A200 可组成主备组。心跳连续丢失 6 次且累计超过 30 秒时触发切换；切换不会自动迁移正在写入的本地录制文件。"
+      ],
+      "notes": "复合阈值。",
+      "tags": [],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q028",
+      "query": "返修寄送前必须先获得什么编号？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-RMA"
+      ],
+      "reference_answer": "服务台发出的 RMA 编号。",
+      "evidence": [
+        "提交返修需提供序列号、购买凭证、故障时间、复现步骤和诊断包编号。服务台发出 RMA 编号后方可寄送；未经授权到付件会被拒收。"
+      ],
+      "notes": "流程事实。",
+      "tags": [],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q029",
+      "query": "一代 A100 老是输错那个六位数，会被晾多久？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1"
+      ],
+      "relevant_locators": [
+        "A100V1-PAIR"
+      ],
+      "reference_answer": "输错 5 次后暂停配对入口 15 分钟。",
+      "evidence": [
+        "管理员在终端输入六位配对码，配对码有效期 10 分钟。连续输入错误 5 次后，配对入口暂停 15 分钟，但设备本身不会退出已加入的会议。"
+      ],
+      "notes": "口语化且避免原句。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q030",
+      "query": "二代小终端密码试三回都不对，是整台机器都不能用了吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-PAIR"
+      ],
+      "reference_answer": "不是；锁定的是当前管理员账号 20 分钟，其他授权管理员仍可登录。",
+      "evidence": [
+        "六位配对码有效期缩短为 5 分钟。连续输入错误 3 次后，当前管理员账号锁定 20 分钟；其他已授权管理员仍可登录。"
+      ],
+      "notes": "区分账号与设备。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q031",
+      "query": "会议能进去，可大家互相都听不见也看不到，网络先查哪儿？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-NO-MEDIA"
+      ],
+      "reference_answer": "先查 UDP 30000-31999 和 NAT 会话回收。",
+      "evidence": [
+        "信令成功但双向无媒体时，检查 UDP 30000-31999 是否放通以及 NAT 会话是否过早回收。单向无声还应交换测试麦克风和扬声器，区分网络与外设问题。"
+      ],
+      "notes": "症状表达替代术语。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q032",
+      "query": "网页门户没问题，盒子死活认证不上，别急着重置的话先看什么？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-NO-REGISTER"
+      ],
+      "reference_answer": "先查 DNS、TCP 443 和终端时间偏差。",
+      "evidence": [
+        "先确认 DNS 能解析注册域名，再检查 TCP 443。若浏览器能访问门户但终端仍失败，应核对终端时间；偏差超过 90 秒会使 TLS 证书校验失败。不要首先恢复出厂设置。"
+      ],
+      "notes": "多步排障。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q033",
+      "query": "Wi-Fi 信号已经很差了，把每个 AP 功率都拉满是不是最快？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-WIFI"
+      ],
+      "reference_answer": "不是；优先调整 AP 位置和信道，不应把所有 AP 功率都提高。",
+      "evidence": [
+        "RSSI 低于 -70 dBm 或同信道利用率超过 70% 时容易断开。优先调整 AP 位置和信道；不要通过提高所有 AP 发射功率掩盖漫游设计问题。"
+      ],
+      "notes": "反事实问法。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q034",
+      "query": "给盒子配了网页代理，是不是媒体端口就不用开了？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-PROXY"
+      ],
+      "reference_answer": "不是；代理不转发 UDP 媒体，媒体端口仍需放通。",
+      "evidence": [
+        "HTTP 代理仅承载注册、配置和升级流量，不转发 UDP 媒体。代理白名单不能替代防火墙的媒体端口策略。"
+      ],
+      "notes": "常见误解。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q035",
+      "query": "机器进水了还在两年内，能不能免费修？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-EXCLUDE"
+      ],
+      "reference_answer": "不能；进液属于免费保修排除情形。",
+      "evidence": [
+        "进液、非授权拆机、使用错误电压适配器、雷击和超过工作温度造成的损坏不属于免费保修。正常外观磨损不影响功能时也不提供免费换新。"
+      ],
+      "notes": "自然政策提问。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q036",
+      "query": "管理员一直没绑验证器，过了一天账号会怎样？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-MFA"
+      ],
+      "reference_answer": "宽限期结束后暂停登录。",
+      "evidence": [
+        "组织管理员和审计员必须启用 MFA。新账号首次登录后有 24 小时宽限期；宽限期结束仍未绑定验证器的账号会被暂停登录。"
+      ],
+      "notes": "结果型提问。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q037",
+      "query": "员工走人以后，能不能直接把账号删了省事？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-OFFBOARD"
+      ],
+      "reference_answer": "不能；应禁用并保留原账号标识以维持审计责任链。",
+      "evidence": [
+        "人员离职后 4 小时内禁用账号，24 小时内移交其自动化任务。审计日志中应保留原账号标识，不得用删除账号的方式清除历史责任链。"
+      ],
+      "notes": "反向规则。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q038",
+      "query": "普通 U 盘插终端录会，系统会顺手把文件加密吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-ENCRYPT"
+      ],
+      "reference_answer": "不会；本地录制加密取决于 USB 自身能力。",
+      "evidence": [
+        "传输使用 TLS 1.2 或更高版本；云端录制静态存储使用 AES-256。客户自备 USB 设备上的本地录制是否加密取决于 USB 自身能力，系统不会自动加密普通 U 盘。"
+      ],
+      "notes": "口语化安全问题。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q039",
+      "query": "工单日志里带着同事邮箱和公网地址，可以原样上传吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-REDACT"
+      ],
+      "reference_answer": "一般故障工单不可以，必须掩码；安全调查需受限标记。",
+      "evidence": [
+        "用于一般故障工单的日志必须掩码用户邮箱和公网 IP。涉及安全调查时可保留原值，但工单需标记“受限”并限定安全响应人员访问。"
+      ],
+      "notes": "场景化规则。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q040",
+      "query": "终端亮着在线绿点，就算会议室交付完了吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-FAQ"
+      ],
+      "relevant_locators": [
+        "FAQ-ONLINE"
+      ],
+      "reference_answer": "不算，还需完成呼叫、共享、压力会议、断网重连和日志上传验收。",
+      "evidence": [
+        "不代表。在线只说明注册链路可用，还需要完成呼叫、共享、压力会议、断网重连和日志上传等验收项目。"
+      ],
+      "notes": "避免复述标题。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q041",
+      "query": "A100 二代按住复位八秒会不会直接全清？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-RESET"
+      ],
+      "reference_answer": "不会，只进入恢复菜单，还需二次确认。",
+      "evidence": [
+        "按住复位键 8 秒会进入恢复菜单，不会立即清空数据。只有在恢复菜单二次确认“擦除并恢复”后才执行出厂恢复。管理员可选择保留网络证书。"
+      ],
+      "notes": "版本恢复差异。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q042",
+      "query": "大会议室主机录一小时 1080p，大概得留多少盘？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-RECORD"
+      ],
+      "reference_answer": "约 2.5 GB。",
+      "evidence": [
+        "本地录制上限为 1080p，不支持本地 4K；如需 4K 录制必须启用云端高级录制服务。每小时 1080p 录制约占 2.5 GB。"
+      ],
+      "notes": "单位与口语。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q043",
+      "query": "线上升级后好多房间突然注册不了，运维第一步该怎么收手？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-ROLLBACK"
+      ],
+      "reference_answer": "暂停后续批次、保留故障样机，并按对应型号手册回退。",
+      "evidence": [
+        "升级后 30 分钟内出现批量注册失败，应暂停后续批次、保留一台故障样机，并按对应型号手册执行版本回退。不得拿 A100 V2 的 `.a2u` 包回退 A200。"
+      ],
+      "notes": "复合操作。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q044",
+      "query": "故障原因还没查明，关单时能先猜一个填上吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-CLOSE"
+      ],
+      "reference_answer": "不能，应明确写“待分析”。",
+      "evidence": [
+        "恢复服务后至少观察 60 分钟。关闭记录必须包含影响范围、根因状态、临时措施、长期行动项和负责人；根因未知时应明确写“待分析”，不能推测填充。"
+      ],
+      "notes": "流程约束。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q045",
+      "query": "公网出口把语音优先级标签洗掉了，终端反复保存有用吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-QOS"
+      ],
+      "reference_answer": "不应反复保存终端配置，应在出口策略重新标记 DSCP。",
+      "evidence": [
+        "音频媒体标记为 DSCP 46，视频媒体标记为 DSCP 34，信令标记为 DSCP 24。若网络设备会重写 DSCP，应在出口策略中重新标记，而不是在终端上反复保存配置。"
+      ],
+      "notes": "网络术语改写。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q046",
+      "query": "想把会议盒子塞在访客无线同一个二层网里，规范允许吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-VLAN"
+      ],
+      "reference_answer": "不允许，会议设备不得与访客 Wi-Fi 共用二层广播域。",
+      "evidence": [
+        "会议终端应放入独立的会议设备 VLAN。管理流量和媒体流量可以共享物理链路，但不得与访客 Wi-Fi 使用同一二层广播域。DHCP 租约建议不少于 24 小时。"
+      ],
+      "notes": "架构规则。",
+      "tags": [
+        "paraphrase"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q047",
+      "query": "A100 V1 的“配对”小节中，输错后暂停的是哪项入口？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1"
+      ],
+      "relevant_locators": [
+        "A100V1-PAIR"
+      ],
+      "reference_answer": "配对入口。",
+      "evidence": [
+        "管理员在终端输入六位配对码，配对码有效期 10 分钟。连续输入错误 5 次后，配对入口暂停 15 分钟，但设备本身不会退出已加入的会议。"
+      ],
+      "notes": "子标题需结合产品版本。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q048",
+      "query": "A100 V2 网络接入里的证书必须带什么标识？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V2-NET"
+      ],
+      "reference_answer": "设备序列号。",
+      "evidence": [
+        "有线网络支持 1 Gbps；无线支持 Wi-Fi 6。接入入口调整为“系统设置 > 连接 > 网络配置”。802.1X 支持 PEAP-MSCHAPv2 与 EAP-TLS，EAP-TLS 客户端证书必须包含设备序列号。"
+      ],
+      "notes": "父级产品与网络主题共同限定。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q049",
+      "query": "A200 音频扩展链路超过 30 米时要加什么？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-AUDIO"
+      ],
+      "reference_answer": "光电转换模块。",
+      "evidence": [
+        "主机最多级联 4 个 M20 麦克风阵列。链路超过 30 米时必须使用光电转换模块；普通网线延长器不在支持范围内。"
+      ],
+      "notes": "依赖上级音频语境。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q050",
+      "query": "部署指南的 DNS 与时间章节建议配置几个时间源？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-DNS"
+      ],
+      "reference_answer": "两个独立时间源。",
+      "evidence": [
+        "终端必须解析 `meet.synthetic.example` 与 `update.synthetic.example`。NTP 偏差超过 90 秒会导致证书认证失败；推荐配置两个独立时间源。"
+      ],
+      "notes": "章节路径限定。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q051",
+      "query": "无线故障章节中的 N201 不是哪类故障？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-CODE-N201"
+      ],
+      "reference_answer": "不是 DNS 故障。",
+      "evidence": [
+        "N201 表示 DHCP 在 60 秒内未分配地址。检查 VLAN、地址池余量和 DHCP Relay。它不表示 DNS 故障。"
+      ],
+      "notes": "相似错误码干扰。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q052",
+      "query": "保修政策的数据处理章节提醒返修前删除什么？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-DATA"
+      ],
+      "reference_answer": "本地录制。",
+      "evidence": [
+        "返修前客户应自行备份并删除本地录制。维修中心可能执行恢复出厂设置，且不承诺恢复设备中的会议记录。"
+      ],
+      "notes": "通用标题依赖父文档。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q053",
+      "query": "账号规范的登录锁定小节规定门户锁多久？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "ACC-LOCK"
+      ],
+      "reference_answer": "30 分钟。",
+      "evidence": [
+        "管理门户在连续 6 次密码失败后锁定账号 30 分钟。此规则与 A100 V2 设备端三次配对失败后的 20 分钟锁定无关。"
+      ],
+      "notes": "与设备端锁定相似。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q054",
+      "query": "安全规范的会议录制小节中，默认云端保留期是多少？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-RECORDING"
+      ],
+      "reference_answer": "90 天。",
+      "evidence": [
+        "云端录制默认保留 90 天。会议所有者可缩短期限，但不能超过组织设置的上限。删除后进入 7 天恢复区，恢复区到期后不可由用户恢复。"
+      ],
+      "notes": "父级主题避免日志保留混淆。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q055",
+      "query": "FAQ 的声音条目说明普通静音不会关掉什么？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-FAQ"
+      ],
+      "relevant_locators": [
+        "FAQ-MUTE"
+      ],
+      "reference_answer": "摄像头。",
+      "evidence": [
+        "普通静音只关闭麦克风。A100 V2 可长按静音键 2 秒进入隐私模式，同时关闭麦克风和摄像头；A100 V1 与 A200 没有相同的遥控器快捷操作。"
+      ],
+      "notes": "标题提供问题主题。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q056",
+      "query": "运维手册的证据采集章节要求故障前后各覆盖多久？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-LOGS"
+      ],
+      "reference_answer": "各 15 分钟。",
+      "evidence": [
+        "采集时间范围应覆盖故障前后各 15 分钟，记录终端序列号、站点、会议 ID、网络路径和时钟偏差。普通工单上传前必须按安全规范脱敏。"
+      ],
+      "notes": "通用数值需父语境。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q057",
+      "query": "部署验收章节说哪一种状态本身不能算交付完成？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-ACCEPTANCE"
+      ],
+      "reference_answer": "仅看到设备在线。",
+      "evidence": [
+        "验收至少包括注册、呼入呼出、共享屏幕、20 分钟压力会议、断网重连和日志上传。只看到设备在线不能视为完成验收。"
+      ],
+      "notes": "父标题补充验收语境。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q058",
+      "query": "A200 更新章节里的 U103 要先升级哪个节点？",
+      "category": "parent_context",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-UPDATE"
+      ],
+      "reference_answer": "备用节点。",
+      "evidence": [
+        "A200 离线包扩展名为 `.a2k`。错误 U103 表示主备节点版本不一致，应先升级备用节点，再升级主节点。"
+      ],
+      "notes": "同码异义且需父产品。",
+      "tags": [
+        "parent_context"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": true,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q059",
+      "query": "A100 V1 和 V2 的供电方式分别是什么？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V1-POWER",
+        "A100V2-POWER"
+      ],
+      "reference_answer": "V1 为 12 V/3 A 圆口；V2 为 USB-C PD 45 W。",
+      "evidence": [
+        "A100 V1 使用 12 V/3 A 圆口适配器。通电后状态灯先呈白色约 40 秒，完成启动后转为绿色。安装时应在设备两侧各保留至少 8 cm 散热空间，不得放入封闭抽屉。",
+        "A100 V2 使用 USB-C PD 45 W 供电。正常启动约需 25 秒，指示灯由紫色呼吸转为绿色常亮。设备两侧各保留 5 cm 即可，但顶部散热孔不得覆盖。"
+      ],
+      "notes": "同型号跨版本。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q060",
+      "query": "A100 两代配对失败的次数和锁定时间有什么变化？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V1-PAIR",
+        "A100V2-PAIR"
+      ],
+      "reference_answer": "V1 错 5 次暂停入口 15 分钟；V2 错 3 次锁当前管理员 20 分钟。",
+      "evidence": [
+        "管理员在终端输入六位配对码，配对码有效期 10 分钟。连续输入错误 5 次后，配对入口暂停 15 分钟，但设备本身不会退出已加入的会议。",
+        "六位配对码有效期缩短为 5 分钟。连续输入错误 3 次后，当前管理员账号锁定 20 分钟；其他已授权管理员仍可登录。"
+      ],
+      "notes": "相似流程关键数字不同。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q061",
+      "query": "A100 V1 与 V2 分别能保存多少常用会议室？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V1-MEETING",
+        "A100V2-MEETING"
+      ],
+      "reference_answer": "V1 为 20 个，V2 为 50 个。",
+      "evidence": [
+        "A100 V1 单场会议最多显示 9 路视频画面，可保存 20 个常用会议室。V1 不支持本地 4K 录制；云端录制能力取决于企业订阅。",
+        "A100 V2 单场会议最多显示 16 路视频画面，可保存 50 个常用会议室。在插入通过兼容性认证的 USB 3.0 存储设备后，可启用本地 4K 录制。"
+      ],
+      "notes": "版本容量。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q062",
+      "query": "A100 V2 的 U103 能按 V1 的签名错误处理吗？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V1-UPDATE",
+        "A100V2-UPDATE"
+      ],
+      "reference_answer": "不能；V2 表示空间不足 2 GB，V1 才表示签名不匹配。",
+      "evidence": [
+        "V1 的升级包必须使用 `.a1u` 格式，通过“维护 > 本地升级”导入。升级过程中不得断电；失败代码 U103 表示升级包签名不适用于 A100-G1。",
+        "V2 使用 `.a2u` 升级包，并支持 HTTPS 在线升级。错误 U103 在 V2 中表示可用存储空间不足 2 GB，而不是签名错误。"
+      ],
+      "notes": "同错误码异义。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q063",
+      "query": "A100 V1 与 V2 恢复出厂的按键流程相同吗？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V1-RESET",
+        "A100V2-RESET"
+      ],
+      "reference_answer": "不同；V1 按 12 秒直接恢复，V2 按 8 秒进入菜单后还需确认。",
+      "evidence": [
+        "短按复位孔仅重启设备。持续按住 12 秒并在红灯闪烁后松开，才会恢复出厂设置；本地网络、配对关系和自定义布局都会被清除。",
+        "按住复位键 8 秒会进入恢复菜单，不会立即清空数据。只有在恢复菜单二次确认“擦除并恢复”后才执行出厂恢复。管理员可选择保留网络证书。"
+      ],
+      "notes": "恢复流程混淆。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q064",
+      "query": "A100 V2 与 A200 哪个支持本地 4K 录制？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2",
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A100V2-MEETING",
+        "A200-RECORD"
+      ],
+      "reference_answer": "A100 V2 在兼容 USB 3.0 设备上支持；A200 本地仅 1080p。",
+      "evidence": [
+        "A100 V2 单场会议最多显示 16 路视频画面，可保存 50 个常用会议室。在插入通过兼容性认证的 USB 3.0 存储设备后，可启用本地 4K 录制。",
+        "本地录制上限为 1080p，不支持本地 4K；如需 4K 录制必须启用云端高级录制服务。每小时 1080p 录制约占 2.5 GB。"
+      ],
+      "notes": "相似产品能力。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "2.0|1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q065",
+      "query": "A100 V1、V2、A200 的离线升级包分别是什么？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2",
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A100V1-UPDATE",
+        "A100V2-UPDATE",
+        "A200-UPDATE"
+      ],
+      "reference_answer": "依次为 .a1u、.a2u、.a2k。",
+      "evidence": [
+        "V1 的升级包必须使用 `.a1u` 格式，通过“维护 > 本地升级”导入。升级过程中不得断电；失败代码 U103 表示升级包签名不适用于 A100-G1。",
+        "V2 使用 `.a2u` 升级包，并支持 HTTPS 在线升级。错误 U103 在 V2 中表示可用存储空间不足 2 GB，而不是签名错误。",
+        "A200 离线包扩展名为 `.a2k`。错误 U103 表示主备节点版本不一致，应先升级备用节点，再升级主节点。"
+      ],
+      "notes": "三文档包格式。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0|1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q066",
+      "query": "A100 V1 和 V2 的有线网络速率差多少？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A100-V2"
+      ],
+      "relevant_locators": [
+        "A100V1-NET",
+        "A100V2-NET"
+      ],
+      "reference_answer": "V1 为 100 Mbps，V2 为 1 Gbps。",
+      "evidence": [
+        "有线网络只支持 100 Mbps 以太网；无线支持 2.4 GHz 和 5 GHz Wi-Fi 5。首次配置入口为“设置 > 网络 > 接入向导”。办公网采用 802.1X 时，V1 只支持 PEAP-MSCHAPv2。",
+        "有线网络支持 1 Gbps；无线支持 Wi-Fi 6。接入入口调整为“系统设置 > 连接 > 网络配置”。802.1X 支持 PEAP-MSCHAPv2 与 EAP-TLS，EAP-TLS 客户端证书必须包含设备序列号。"
+      ],
+      "notes": "同章节版本差异。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q067",
+      "query": "A100 V2 的账号锁定与管理门户账号锁定是否同一规则？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2",
+        "EVAL-ACCOUNT"
+      ],
+      "relevant_locators": [
+        "A100V2-PAIR",
+        "ACC-LOCK"
+      ],
+      "reference_answer": "不是；设备端为配对错 3 次锁 20 分钟，门户为密码错 6 次锁 30 分钟。",
+      "evidence": [
+        "六位配对码有效期缩短为 5 分钟。连续输入错误 3 次后，当前管理员账号锁定 20 分钟；其他已授权管理员仍可登录。",
+        "管理门户在连续 6 次密码失败后锁定账号 30 分钟。此规则与 A100 V2 设备端三次配对失败后的 20 分钟锁定无关。"
+      ],
+      "notes": "相同关键词不同业务。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q068",
+      "query": "售后 S1 与运维 P1 是同一个分级吗？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS",
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-SLA",
+        "OPS-SEVERITY"
+      ],
+      "reference_answer": "不是；S 级是售后服务等级，P 级是内部事件优先级。",
+      "evidence": [
+        "| 级别 | 示例 | 首次响应目标 | 更新频率 | |---|---|---:|---:| | S1 | 大面积会议中断 | 30 分钟 | 每 2 小时 | | S2 | 单会议室核心功能不可用 | 4 小时 | 每工作日 | | S3 | 咨询或非阻断缺陷 | 1 工作日 | 每 3 工作日 |",
+        "影响三个及以上会议室且无法绕过的故障定为 P1；单会议室核心功能中断为 P2；有替代方案的性能下降为 P3。P1/P2/P3 是内部事件优先级，不等同于售后 S1/S2/S3 服务等级。"
+      ],
+      "notes": "相似分级体系。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document",
+        "table"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q069",
+      "query": "A100 V1 和 A200 都不能本地录 4K，但替代方案一样吗？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V1",
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A100V1-MEETING",
+        "A200-RECORD"
+      ],
+      "reference_answer": "都可依赖云端能力，但 A200 明确需要云端高级录制；V1 取决于企业订阅。",
+      "evidence": [
+        "A100 V1 单场会议最多显示 9 路视频画面，可保存 20 个常用会议室。V1 不支持本地 4K 录制；云端录制能力取决于企业订阅。",
+        "本地录制上限为 1080p，不支持本地 4K；如需 4K 录制必须启用云端高级录制服务。每小时 1080p 录制约占 2.5 GB。"
+      ],
+      "notes": "相似结论细节不同。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.0|1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q070",
+      "query": "U103 出现在 A200 上时，清理 2 GB 空间是否正确？",
+      "category": "version_confusion",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2",
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A100V2-UPDATE",
+        "A200-UPDATE"
+      ],
+      "reference_answer": "不正确；A200 的 U103 是主备版本不一致，空间不足 2 GB 是 A100 V2 的含义。",
+      "evidence": [
+        "V2 使用 `.a2u` 升级包，并支持 HTTPS 在线升级。错误 U103 在 V2 中表示可用存储空间不足 2 GB，而不是签名错误。",
+        "A200 离线包扩展名为 `.a2k`。错误 U103 表示主备节点版本不一致，应先升级备用节点，再升级主节点。"
+      ],
+      "notes": "错误码干扰。",
+      "tags": [
+        "version_confusion",
+        "multi_document",
+        "similar_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.3|2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q071",
+      "query": "部署一台 A100 V2 做 4K 会议，需要预留多少带宽且设备侧还需满足什么录制条件？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2",
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH",
+        "A100V2-MEETING"
+      ],
+      "reference_answer": "预留双向 12 Mbps；本地录制还需兼容的 USB 3.0 存储设备。",
+      "evidence": [
+        "单台终端的推荐预留带宽如下。数字是双向可用带宽，不是月度流量。 | 模式 | A100 V1 | A100 V2 | A200 | |---|---:|---:|---:| | 720p | 2 Mbps | 2 Mbps | 3 Mbps | | 1080p | 4 Mbps | 4 Mbps | 6 Mbps | | 双屏/4K | 不支持 | 12 Mbps | 16 Mbps |",
+        "A100 V2 单场会议最多显示 16 路视频画面，可保存 50 个常用会议室。在插入通过兼容性认证的 USB 3.0 存储设备后，可启用本地 4K 录制。"
+      ],
+      "notes": "部署表与产品手册组合。",
+      "tags": [
+        "multi_document",
+        "table"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q072",
+      "query": "A200 无媒体时应查哪些端口，同时它的双屏显示器有什么要求？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200",
+        "EVAL-NETWORK"
+      ],
+      "relevant_locators": [
+        "NET-NO-MEDIA",
+        "A200-CAPACITY"
+      ],
+      "reference_answer": "查 UDP 30000-31999 和 NAT；第二屏需支持 HDCP 2.2。",
+      "evidence": [
+        "信令成功但双向无媒体时，检查 UDP 30000-31999 是否放通以及 NAT 会话是否过早回收。单向无声还应交换测试麦克风和扬声器，区分网络与外设问题。",
+        "A200 最多同时显示 25 路视频，可登记 200 个会议室模板，并支持双屏异显。双屏模式下第二块显示器必须支持 HDCP 2.2。"
+      ],
+      "notes": "跨网络与设备。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q073",
+      "query": "返修 A100 前，返修申请要准备什么，随工单提交的日志又应怎样保护隐私？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY",
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-RMA",
+        "SEC-REDACT"
+      ],
+      "reference_answer": "返修申请准备序列号、购买凭证、故障时间、复现步骤和诊断包编号；普通工单日志需掩码邮箱和公网 IP。",
+      "evidence": [
+        "提交返修需提供序列号、购买凭证、故障时间、复现步骤和诊断包编号。服务台发出 RMA 编号后方可寄送；未经授权到付件会被拒收。",
+        "用于一般故障工单的日志必须掩码用户邮箱和公网 IP。涉及安全调查时可保留原值，但工单需标记“受限”并限定安全响应人员访问。"
+      ],
+      "notes": "跨售后与安全规范。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q074",
+      "query": "普通故障工单采集日志时，时间范围和隐私处理分别怎么做？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS",
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "OPS-LOGS",
+        "SEC-REDACT"
+      ],
+      "reference_answer": "覆盖故障前后各 15 分钟，并掩码邮箱和公网 IP。",
+      "evidence": [
+        "采集时间范围应覆盖故障前后各 15 分钟，记录终端序列号、站点、会议 ID、网络路径和时钟偏差。普通工单上传前必须按安全规范脱敏。",
+        "用于一般故障工单的日志必须掩码用户邮箱和公网 IP。涉及安全调查时可保留原值，但工单需标记“受限”并限定安全响应人员访问。"
+      ],
+      "notes": "跨运维与安全规范。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q075",
+      "query": "会议终端部署到访客网是否可行，为什么仅显示在线还不能交付？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY",
+        "EVAL-FAQ"
+      ],
+      "relevant_locators": [
+        "DEPLOY-VLAN",
+        "FAQ-ONLINE"
+      ],
+      "reference_answer": "不可与访客 Wi-Fi 共二层广播域；在线只代表注册可用，还需呼叫、共享、压力会议、重连和日志上传。",
+      "evidence": [
+        "会议终端应放入独立的会议设备 VLAN。管理流量和媒体流量可以共享物理链路，但不得与访客 Wi-Fi 使用同一二层广播域。DHCP 租约建议不少于 24 小时。",
+        "不代表。在线只说明注册链路可用，还需要完成呼叫、共享、压力会议、断网重连和日志上传等验收项目。"
+      ],
+      "notes": "跨部署指南与 FAQ。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q076",
+      "query": "A100 V2 启用 EAP-TLS 后仍认证失败，除了证书内容还应检查什么时间条件？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2",
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "A100V2-NET",
+        "DEPLOY-DNS"
+      ],
+      "reference_answer": "证书需含设备序列号，并检查 NTP 偏差不得超过 90 秒。",
+      "evidence": [
+        "有线网络支持 1 Gbps；无线支持 Wi-Fi 6。接入入口调整为“系统设置 > 连接 > 网络配置”。802.1X 支持 PEAP-MSCHAPv2 与 EAP-TLS，EAP-TLS 客户端证书必须包含设备序列号。",
+        "终端必须解析 `meet.synthetic.example` 与 `update.synthetic.example`。NTP 偏差超过 90 秒会导致证书认证失败；推荐配置两个独立时间源。"
+      ],
+      "notes": "产品与通用部署。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q077",
+      "query": "升级后批量注册失败时，回退动作和网络首查项是什么？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-NETWORK",
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-ROLLBACK",
+        "NET-NO-REGISTER"
+      ],
+      "reference_answer": "暂停批次并按型号回退；网络侧先查 DNS、TCP 443 和终端时间。",
+      "evidence": [
+        "升级后 30 分钟内出现批量注册失败，应暂停后续批次、保留一台故障样机，并按对应型号手册执行版本回退。不得拿 A100 V2 的 `.a2u` 包回退 A200。",
+        "先确认 DNS 能解析注册域名，再检查 TCP 443。若浏览器能访问门户但终端仍失败，应核对终端时间；偏差超过 90 秒会使 TLS 证书校验失败。不要首先恢复出厂设置。"
+      ],
+      "notes": "变更与网络排障。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q078",
+      "query": "组织管理员导出全量审计日志需要什么审批，下载包又有什么限制？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-ACCOUNT",
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "ACC-EXPORT",
+        "SEC-EXPORT"
+      ],
+      "reference_answer": "组织管理员发起、审计员批准；导出包 24 小时有效且最多下载 3 次。",
+      "evidence": [
+        "导出全量成员列表需要组织管理员发起并由审计员批准。站点管理员只能导出本授权站点的成员摘要。",
+        "全量审计日志导出需要组织管理员发起、审计员批准。导出包有效期 24 小时，下载链接最多使用 3 次。"
+      ],
+      "notes": "权限和数据规则。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q079",
+      "query": "A200 建主备后升级 U103，应该按什么顺序处理，事件关闭还需观察多久？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200",
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "A200-UPDATE",
+        "OPS-CLOSE"
+      ],
+      "reference_answer": "先升级备用节点再升级主节点；恢复后至少观察 60 分钟。",
+      "evidence": [
+        "A200 离线包扩展名为 `.a2k`。错误 U103 表示主备节点版本不一致，应先升级备用节点，再升级主节点。",
+        "恢复服务后至少观察 60 分钟。关闭记录必须包含影响范围、根因状态、临时措施、长期行动项和负责人；根因未知时应明确写“待分析”，不能推测填充。"
+      ],
+      "notes": "设备与运维闭环。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q080",
+      "query": "A100 V2 进入隐私模式的操作是什么，FAQ 对普通静音又如何说明？",
+      "category": "multi_document",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A100-V2",
+        "EVAL-FAQ"
+      ],
+      "relevant_locators": [
+        "A100V2-PRIVACY",
+        "FAQ-MUTE"
+      ],
+      "reference_answer": "长按静音键 2 秒；普通静音只关麦克风，不关摄像头。",
+      "evidence": [
+        "长按遥控器静音键 2 秒可同时关闭麦克风与摄像头，屏幕显示橙色隐私图标。普通静音只关闭麦克风，不会关闭摄像头。",
+        "普通静音只关闭麦克风。A100 V2 可长按静音键 2 秒进入隐私模式，同时关闭麦克风和摄像头；A100 V1 与 A200 没有相同的遥控器快捷操作。"
+      ],
+      "notes": "手册与 FAQ 一致性。",
+      "tags": [
+        "multi_document"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": true,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q081",
+      "query": "A100 V2 跑双屏或 4K 时建议预留多少双向带宽？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH"
+      ],
+      "reference_answer": "12 Mbps。",
+      "evidence": [
+        "单台终端的推荐预留带宽如下。数字是双向可用带宽，不是月度流量。 | 模式 | A100 V1 | A100 V2 | A200 | |---|---:|---:|---:| | 720p | 2 Mbps | 2 Mbps | 3 Mbps | | 1080p | 4 Mbps | 4 Mbps | 6 Mbps | | 双屏/4K | 不支持 | 12 Mbps | 16 Mbps |"
+      ],
+      "notes": "表格单元格。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q082",
+      "query": "A200 的 1080p 推荐带宽是多少？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH"
+      ],
+      "reference_answer": "6 Mbps。",
+      "evidence": [
+        "单台终端的推荐预留带宽如下。数字是双向可用带宽，不是月度流量。 | 模式 | A100 V1 | A100 V2 | A200 | |---|---:|---:|---:| | 720p | 2 Mbps | 2 Mbps | 3 Mbps | | 1080p | 4 Mbps | 4 Mbps | 6 Mbps | | 双屏/4K | 不支持 | 12 Mbps | 16 Mbps |"
+      ],
+      "notes": "相邻型号干扰。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q083",
+      "query": "实时媒体的协议、端口范围和方向分别是什么？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-PORTS"
+      ],
+      "reference_answer": "UDP、30000-31999、双向。",
+      "evidence": [
+        "| 用途 | 协议 | 端口 | 方向 | |---|---|---:|---| | 设备注册 | TCP | 443 | 出站 | | 会议信令 | TCP | 8443 | 出站 | | 实时媒体 | UDP | 30000-31999 | 双向 | | 时间同步 | UDP | 123 | 出站 |"
+      ],
+      "notes": "多列表格。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q084",
+      "query": "S2 服务事件多久首次响应，后续多久更新一次？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-WARRANTY"
+      ],
+      "relevant_locators": [
+        "WAR-SLA"
+      ],
+      "reference_answer": "4 小时首次响应，每工作日更新。",
+      "evidence": [
+        "| 级别 | 示例 | 首次响应目标 | 更新频率 | |---|---|---:|---:| | S1 | 大面积会议中断 | 30 分钟 | 每 2 小时 | | S2 | 单会议室核心功能不可用 | 4 小时 | 每工作日 | | S3 | 咨询或非阻断缺陷 | 1 工作日 | 每 3 工作日 |"
+      ],
+      "notes": "服务表。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q085",
+      "query": "有替代方案的性能下降属于哪个内部事件级别？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-SEVERITY"
+      ],
+      "reference_answer": "P3。",
+      "evidence": [
+        "影响三个及以上会议室且无法绕过的故障定为 P1；单会议室核心功能中断为 P2；有替代方案的性能下降为 P3。P1/P2/P3 是内部事件优先级，不等同于售后 S1/S2/S3 服务等级。"
+      ],
+      "notes": "正文分级，与 S3 干扰。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q086",
+      "query": "无线掉线时快速检查表禁止先做什么？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-CHECKLIST"
+      ],
+      "reference_answer": "禁止先提高全部 AP 功率。",
+      "evidence": [
+        "| 现象 | 首查项 | 禁止的第一动作 | |---|---|---| | 无法注册 | DNS、TCP 443、时间 | 恢复出厂 | | 能入会无媒体 | UDP 30000-31999、NAT | 更换账号 | | 无线掉线 | RSSI、信道利用率 | 提高全部 AP 功率 | | 升级失败 | 型号、包格式、空间 | 反复强制断电 |"
+      ],
+      "notes": "运维表。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q087",
+      "query": "升级失败在快速检查表里首查哪三项？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-OPS"
+      ],
+      "relevant_locators": [
+        "OPS-CHECKLIST"
+      ],
+      "reference_answer": "型号、包格式、空间。",
+      "evidence": [
+        "| 现象 | 首查项 | 禁止的第一动作 | |---|---|---| | 无法注册 | DNS、TCP 443、时间 | 恢复出厂 | | 能入会无媒体 | UDP 30000-31999、NAT | 更换账号 | | 无线掉线 | RSSI、信道利用率 | 提高全部 AP 功率 | | 升级失败 | 型号、包格式、空间 | 反复强制断电 |"
+      ],
+      "notes": "表格枚举。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q088",
+      "query": "A100 V1 在 1080p 模式的推荐双向带宽是多少？",
+      "category": "table",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-DEPLOY"
+      ],
+      "relevant_locators": [
+        "DEPLOY-BANDWIDTH"
+      ],
+      "reference_answer": "4 Mbps。",
+      "evidence": [
+        "单台终端的推荐预留带宽如下。数字是双向可用带宽，不是月度流量。 | 模式 | A100 V1 | A100 V2 | A200 | |---|---:|---:|---:| | 720p | 2 Mbps | 2 Mbps | 3 Mbps | | 1080p | 4 Mbps | 4 Mbps | 6 Mbps | | 双屏/4K | 不支持 | 12 Mbps | 16 Mbps |"
+      ],
+      "notes": "版本与表格。",
+      "tags": [
+        "table"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q089",
+      "query": "A300 会议终端最多支持多少路视频？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "知识库没有 A300 型号信息，无法确定。",
+      "evidence": [],
+      "notes": "不存在的型号。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q090",
+      "query": "A100 V2 的摄像头传感器尺寸是多少？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "现有文档未提供传感器尺寸。",
+      "evidence": [],
+      "notes": "合理但缺失的规格。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q091",
+      "query": "A200 的整机重量是多少公斤？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "现有文档未提供重量。",
+      "evidence": [],
+      "notes": "缺失硬件参数。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q092",
+      "query": "公司是否报销家庭宽带用于远程会议？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "知识库没有费用报销政策。",
+      "evidence": [],
+      "notes": "域外政策。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q093",
+      "query": "主机保修期内是否承诺直接换新而不是维修？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档未承诺保修期内直接换新。",
+      "evidence": [],
+      "notes": "看似合理但无证据。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q094",
+      "query": "S1 故障一定会在两小时内彻底解决吗？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档只有首次响应和更新频率，没有解决时限。",
+      "evidence": [],
+      "notes": "不可从 SLA 推断。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q095",
+      "query": "A100 V2 为什么在某个房间每天早上九点断网？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档不足以确定该具体故障的根因。",
+      "evidence": [],
+      "notes": "未知原因类。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q096",
+      "query": "会议录制是否可以永久保留且永不删除？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档没有永久保留政策。",
+      "evidence": [],
+      "notes": "不存在的政策。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q097",
+      "query": "审计日志导出包的加密密码是什么？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档未提供导出包密码。",
+      "evidence": [],
+      "notes": "安全敏感且缺失。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q098",
+      "query": "A100 V1 支持蓝牙 5.3 吗？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档没有蓝牙版本信息。",
+      "evidence": [],
+      "notes": "缺失无线规格。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q099",
+      "query": "A200 能否连接 8 个 M20 阵列？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-A200"
+      ],
+      "relevant_locators": [
+        "A200-AUDIO"
+      ],
+      "reference_answer": "不能；文档明确主机最多级联 4 个 M20 麦克风阵列。",
+      "evidence": [
+        "主机最多级联 4 个 M20 麦克风阵列。链路超过 30 米时必须使用光电转换模块；普通网线延长器不在支持范围内。"
+      ],
+      "notes": "Freeze 前审查确认该问题可由容量上限直接回答。",
+      "tags": [],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "1.3",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q100",
+      "query": "网络团队应该购买哪个品牌的交换机？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "知识库没有品牌采购建议。",
+      "evidence": [],
+      "notes": "采购域外。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q101",
+      "query": "EAP-TLS 证书应由哪一家 CA 签发？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档未指定 CA。",
+      "evidence": [],
+      "notes": "细节缺失。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q102",
+      "query": "云端高级录制服务每月多少钱？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "知识库没有价格信息。",
+      "evidence": [],
+      "notes": "价格缺失。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "easy",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q103",
+      "query": "P1 事件的根因分析必须在几天内完成？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档没有规定根因分析完成期限。",
+      "evidence": [],
+      "notes": "运维期限缺失。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q104",
+      "query": "离职员工的个人网盘文件由谁继承？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "知识库只规定自动化任务移交，没有个人网盘规则。",
+      "evidence": [],
+      "notes": "相邻政策干扰。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q105",
+      "query": "本地 USB 录制一定符合 AES-256 吗？",
+      "category": "exact_fact",
+      "answerable": true,
+      "relevant_documents": [
+        "EVAL-SECURITY"
+      ],
+      "relevant_locators": [
+        "SEC-ENCRYPT"
+      ],
+      "reference_answer": "不一定；文档明确本地录制是否加密取决于 USB 自身能力，系统不会自动加密普通 U 盘。",
+      "evidence": [
+        "传输使用 TLS 1.2 或更高版本；云端录制静态存储使用 AES-256。客户自备 USB 设备上的本地录制是否加密取决于 USB 自身能力，系统不会自动加密普通 U 盘。"
+      ],
+      "notes": "Freeze 前审查确认源文档可直接支持否定答案。",
+      "tags": [],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q106",
+      "query": "设备发生雷击后维修中心收费多少？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档说明雷击不免费保修，但未给收费金额。",
+      "evidence": [],
+      "notes": "部分相关但答案缺失。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q107",
+      "query": "会议室模板能否自动同步到个人日历？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档没有日历同步信息。",
+      "evidence": [],
+      "notes": "功能缺失。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q108",
+      "query": "A100 V2 在线升级平均需要几分钟？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "文档支持在线升级，但没有平均耗时。",
+      "evidence": [],
+      "notes": "性能数字不可推断。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": "2.0",
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q109",
+      "query": "N305 是否由某个特定运营商网络导致？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "N305 说明媒体 UDP 超时，无法据此确定运营商原因。",
+      "evidence": [],
+      "notes": "原因归因不足。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "hard",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    },
+    {
+      "query_id": "v2q110",
+      "query": "公司允许员工用私人手机录制会议吗？",
+      "category": "no_answer",
+      "answerable": false,
+      "relevant_documents": [],
+      "relevant_locators": [],
+      "reference_answer": "现有知识库没有私人手机录制政策。",
+      "evidence": [],
+      "notes": "合理企业问题但无证据。",
+      "tags": [
+        "no_answer"
+      ],
+      "difficulty": "medium",
+      "requires_parent_context": false,
+      "requires_multi_document": false,
+      "expected_version": null,
+      "review_status": "self_reviewed"
+    }
+  ]
+}

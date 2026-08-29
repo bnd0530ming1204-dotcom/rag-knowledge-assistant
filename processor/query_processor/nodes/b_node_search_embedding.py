@@ -7,6 +7,7 @@ from processor.query_processor.state import QueryGraphState
 from tool.logger import logger
 from utils.embedding_utils import generate_embeddings
 from utils.milvus_utils import get_milvus_client, create_hybrid_search_requests, hybrid_search
+from utils.retrieval_errors import EmbeddingUnavailable, RetrievalFailed, VectorDatabaseUnavailable
 
 
 class NodeSearchEmbedding(NodeBase):
@@ -29,12 +30,19 @@ class NodeSearchEmbedding(NodeBase):
         logger.info(f"【{self.name}】节点逻辑")
         query = state.get("rewritten_query")  # 语义搜索条件
 
-        query_embeddings = generate_embeddings([query])  # 参数向量化
+        try:
+            query_embeddings = generate_embeddings([query])
+        except Exception as exc:
+            raise EmbeddingUnavailable("Query embedding is unavailable") from exc
         dense_vector = query_embeddings["dense"][0]
         sparse_vector = query_embeddings["sparse"][0]
 
         # 2 milvus客户端
-        milvus_client = get_milvus_client()  # 客户端
+        try:
+            milvus_client = get_milvus_client()
+            milvus_client.load_collection(milvus_config.chunks_collection)
+        except Exception as exc:
+            raise VectorDatabaseUnavailable("Vector database is unavailable") from exc
         chunks_collection = milvus_config.chunks_collection  # 表(集合)
 
         # 3 请求对象
@@ -50,14 +58,22 @@ class NodeSearchEmbedding(NodeBase):
             client=milvus_client,
             collection_name=chunks_collection,
             reqs=reqs,
-            ranker_weights=(0.8, 0.2),
+            ranker_weights=(retrieval_config.dense_weight, retrieval_config.sparse_weight),
             limit=retrieval_config.initial_candidate_limit,
             output_fields=["chunk_id", "content", "title", "file_title"]
         )
 
-        # print(response[0])
-        # return state
-        return {"embedding_chunks": response[0] if response else []}  # [[结果解析]]
+        if response is None:
+            raise RetrievalFailed("Hybrid retrieval returned an invalid response")
+        hits = response[0] if response else []
+        final_docs = []
+        for hit in hits[:retrieval_config.final_output_limit]:
+            entity = hit.get("entity") if isinstance(hit, dict) else getattr(hit, "entity", None)
+            entity = dict(entity or {})
+            score = hit.get("distance") if isinstance(hit, dict) else getattr(hit, "distance", None)
+            entity.update({"score": float(score) if score is not None else None, "source": "local", "url": None})
+            final_docs.append(entity)
+        return {"embedding_chunks": hits, "reranked_docs": final_docs}
 
 
 if __name__ == "__main__":

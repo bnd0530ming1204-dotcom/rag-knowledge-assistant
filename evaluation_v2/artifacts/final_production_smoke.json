@@ -1,0 +1,84 @@
+{
+  "run_at": "2026-08-29T08:31:49.226137+00:00",
+  "scope": "Real production graph + real BGE-M3 + real isolated Milvus + real Mongo; external answer/rewrite LLM mocked",
+  "cases": [
+    {
+      "case": "exact_fact",
+      "status": "PASS",
+      "query": "A100 V2 使用什么规格的电源？",
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "answer_present": true,
+      "source_count": 2,
+      "top_document": "eval-a100-v2",
+      "history_message_count": 2,
+      "limitation": null
+    },
+    {
+      "case": "paraphrase",
+      "status": "PASS",
+      "query": "二代 A100 开会时画面老卡，网速最低得多少才稳？",
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "answer_present": true,
+      "source_count": 2,
+      "top_document": "eval-a100-v2",
+      "history_message_count": 2,
+      "limitation": null
+    },
+    {
+      "case": "version_confusion",
+      "status": "PASS",
+      "query": "A100 V1 和 V2 恢复出厂设置的步骤有什么不同？",
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "answer_present": true,
+      "source_count": 3,
+      "top_document": "eval-faq",
+      "history_message_count": 2,
+      "limitation": null
+    },
+    {
+      "case": "multi_document",
+      "status": "PASS",
+      "query": "A100 V2 开 4K 会议需要哪些网络条件和账号权限？",
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "answer_present": true,
+      "source_count": 3,
+      "top_document": "eval-a100-v2",
+      "history_message_count": 2,
+      "limitation": null
+    },
+    {
+      "case": "table",
+      "status": "PASS",
+      "query": "A200 在 1080p 模式下建议准备多少带宽？",
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "answer_present": true,
+      "source_count": 3,
+      "top_document": "eval-a200",
+      "history_message_count": 2,
+      "limitation": null
+    },
+    {
+      "case": "unsupported",
+      "status": "PASS",
+      "query": "A300 的太阳能充电板保修几年？",
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "answer_present": true,
+      "source_count": 3,
+      "top_document": "eval-warranty",
+      "history_message_count": 2,
+      "limitation": "No reliable refusal expected; Evidence Gate v1 is not deployed."
+    },
+    {
+      "case": "conversation_history",
+      "status": "PASS",
+      "query": "它怎么升级？",
+      "rewritten_query": "A100 V2 如何升级固件？",
+      "history_entered_rewrite": true,
+      "answer_llm": "MOCKED_EXTERNAL_API",
+      "source_count": 3
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "milvus_failure_injection": "Covered by automated API and SSE behavior tests"
+}

@@ -1,0 +1,83 @@
+{
+  "status": "FROZEN EVALUATION SET",
+  "dataset_path": "dataset/dataset_v2_frozen.json",
+  "dataset_sha256": "6c99b11ffaa35142bc6dd3f7fd483a04fe090cfbb3210772f0db8b5cd5cd7634",
+  "corpus_manifest_sha256": "0086b5357ff0c88cc0a5a78b660f8656d2b8814a133303a24dc4f08109ec682d",
+  "query_count": 110,
+  "document_count": 10,
+  "locator_count": 60,
+  "category_distribution": {
+    "exact_fact": 30,
+    "multi_document": 10,
+    "no_answer": 20,
+    "paraphrase_colloquial": 18,
+    "parent_context": 12,
+    "table": 8,
+    "version_confusion": 12
+  },
+  "tag_distribution": {
+    "multi_document": 22,
+    "no_answer": 20,
+    "paraphrase": 18,
+    "parent_context": 12,
+    "similar_document": 12,
+    "table": 12,
+    "version_confusion": 12
+  },
+  "answerable_count": 90,
+  "no_answer_count": 20,
+  "frozen_at": "2026-08-29T03:39:29.283740+00:00",
+  "documents": [
+    {
+      "document_id": "EVAL-A100-V1",
+      "file": "documents_frozen/eval-a100-v1.md",
+      "sha256": "f30f2ea2411c780448d180564dc5e35e78f365f72f351a3cb7cf53fafe4138c7"
+    },
+    {
+      "document_id": "EVAL-A100-V2",
+      "file": "documents_frozen/eval-a100-v2.md",
+      "sha256": "5732254f1cec4b794eeb1e85ae8186d6142a309859af40ab0e74d6d422252bdc"
+    },
+    {
+      "document_id": "EVAL-A200",
+      "file": "documents_frozen/eval-a200.md",
+      "sha256": "a3c8ef8e9d35fecbeac2096c50d066642d703c0a255436000eaeeeb12bd8fa8b"
+    },
+    {
+      "document_id": "EVAL-ACCOUNT",
+      "file": "documents_frozen/eval-account.md",
+      "sha256": "b72761ef63986e31657637ff0b1934ff87f243c6baff8cfc8387aef3116b4211"
+    },
+    {
+      "document_id": "EVAL-DEPLOY",
+      "file": "documents_frozen/eval-deploy.md",
+      "sha256": "535198c6ea8aa0775e2236b1556a5f337a822f76cfd2adcd6a67c34daff37bc8"
+    },
+    {
+      "document_id": "EVAL-FAQ",
+      "file": "documents_frozen/eval-faq.md",
+      "sha256": "cb9951b889b91b745ea63b2cec56eb50a5628834039aa6a7dc0e93706692fe93"
+    },
+    {
+      "document_id": "EVAL-NETWORK",
+      "file": "documents_frozen/eval-network.md",
+      "sha256": "e512269cfa5bbf3511f7a98bd5bbbd6c42182a167ab547d3d89147500b092694"
+    },
+    {
+      "document_id": "EVAL-OPS",
+      "file": "documents_frozen/eval-ops.md",
+      "sha256": "06ff9274e610d8fb8532ba20f286469f6fc708c8125c44f04b000418cddf9f9b"
+    },
+    {
+      "document_id": "EVAL-SECURITY",
+      "file": "documents_frozen/eval-security.md",
+      "sha256": "d2a5dd89806fab5a739a60afd534cc731f6f32e2f32a922354b16d28244ac12d"
+    },
+    {
+      "document_id": "EVAL-WARRANTY",
+      "file": "documents_frozen/eval-warranty.md",
+      "sha256": "f58c25108f25640cf289d1a5ad4feff17494c1a0a4c72d24fcd2ea1f6440b62a"
+    }
+  ],
+  "correction_policy": "Corrections require correction_log.jsonl and a new dataset version; never edit silently."
+}

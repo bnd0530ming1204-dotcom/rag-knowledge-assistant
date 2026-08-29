@@ -1,0 +1,98 @@
+{
+  "status": "COMPLETED",
+  "completed_at": "2026-08-29T08:26:08.497691+00:00",
+  "collection": "rag_eval_v2_chunks",
+  "document_count": 10,
+  "chunk_count": 39,
+  "insert_count": 39,
+  "collection_row_count": 0,
+  "embedding_model": "BAAI/bge-m3",
+  "embedding_model_path_configured": true,
+  "embedding_device": "cpu",
+  "vector_dimension": 1024,
+  "errors": [],
+  "documents": [
+    {
+      "document_id": "EVAL-A100-V1",
+      "file": "documents_frozen/eval-a100-v1.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.674,
+      "embedding_latency_ms": 6462.706,
+      "total_latency_ms": 6463.471
+    },
+    {
+      "document_id": "EVAL-A100-V2",
+      "file": "documents_frozen/eval-a100-v2.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.777,
+      "embedding_latency_ms": 4888.506,
+      "total_latency_ms": 4889.318
+    },
+    {
+      "document_id": "EVAL-A200",
+      "file": "documents_frozen/eval-a200.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.53,
+      "embedding_latency_ms": 4872.054,
+      "total_latency_ms": 4872.611
+    },
+    {
+      "document_id": "EVAL-ACCOUNT",
+      "file": "documents_frozen/eval-account.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.853,
+      "embedding_latency_ms": 5253.7,
+      "total_latency_ms": 5254.581
+    },
+    {
+      "document_id": "EVAL-DEPLOY",
+      "file": "documents_frozen/eval-deploy.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.764,
+      "embedding_latency_ms": 8850.064,
+      "total_latency_ms": 8850.857
+    },
+    {
+      "document_id": "EVAL-FAQ",
+      "file": "documents_frozen/eval-faq.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.807,
+      "embedding_latency_ms": 6258.794,
+      "total_latency_ms": 6259.633
+    },
+    {
+      "document_id": "EVAL-NETWORK",
+      "file": "documents_frozen/eval-network.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.969,
+      "embedding_latency_ms": 5013.869,
+      "total_latency_ms": 5014.873
+    },
+    {
+      "document_id": "EVAL-OPS",
+      "file": "documents_frozen/eval-ops.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.739,
+      "embedding_latency_ms": 4381.706,
+      "total_latency_ms": 4382.472
+    },
+    {
+      "document_id": "EVAL-SECURITY",
+      "file": "documents_frozen/eval-security.md",
+      "chunk_count": 4,
+      "split_latency_ms": 0.758,
+      "embedding_latency_ms": 4483.193,
+      "total_latency_ms": 4483.984
+    },
+    {
+      "document_id": "EVAL-WARRANTY",
+      "file": "documents_frozen/eval-warranty.md",
+      "chunk_count": 3,
+      "split_latency_ms": 0.606,
+      "embedding_latency_ms": 3856.528,
+      "total_latency_ms": 3857.163
+    }
+  ],
+  "total_ingestion_latency_ms": 58515.174,
+  "configuration": "CURRENT PRODUCTION CHUNKING/PARENT CONTEXT/BGE-M3/MILVUS SCHEMA; NO EVALUATION TUNING"
+}

@@ -1,4 +1,6 @@
-# Retrieval Evaluation：从 Hybrid Baseline 到 Parent Context Embedding
+# Retrieval Evaluation：从 Hybrid Baseline 到 Parent Context Embedding（Legacy Development Experiment）
+
+> 本报告记录旧 30-query、单文档开发实验。它帮助发现 Parent Heading 缺失问题，但不是 RAG Evaluation V2 Frozen Benchmark，不能直接作为 V2 最终指标。
 
 ## 评测背景
 

@@ -3,6 +3,7 @@ from pymilvus import MilvusClient, AnnSearchRequest, WeightedRanker
 
 from config.milvus_config import milvus_config
 from tool.logger import logger
+from utils.retrieval_errors import VectorDatabaseUnavailable
 
 _milvus_client = None
 
@@ -115,4 +116,4 @@ def hybrid_search(client, collection_name, reqs, ranker_weights=(0.5, 0.5), norm
         return res
     except Exception as e:
         logger.error(f"Milvus混合搜索执行失败，集合[{collection_name}]：{str(e)}", exc_info=True)
-        return None
+        raise VectorDatabaseUnavailable("Milvus hybrid search is unavailable") from e

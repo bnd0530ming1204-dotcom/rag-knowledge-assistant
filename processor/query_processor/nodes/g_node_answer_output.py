@@ -336,7 +336,12 @@ class NodeAnswerOutput(NodeBase):
             if key in seen or not any(key):
                 continue
             seen.add(key)
-            item = {"file_name": file_name, "document_source": document_source}
+            item = {
+                "file_name": file_name,
+                "document_source": document_source,
+                "title": (doc.get("title") or "").strip(),
+                "chunk_id": str(doc.get("chunk_id") or ""),
+            }
             if page is not None:
                 item["page"] = page
             sources.append(item)

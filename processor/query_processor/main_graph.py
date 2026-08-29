@@ -4,9 +4,6 @@ from langgraph.graph import StateGraph
 
 from processor.query_processor.nodes.a_node_prepare_query import NodePrepareQuery
 from processor.query_processor.nodes.b_node_search_embedding import NodeSearchEmbedding
-from processor.query_processor.nodes.c_node_search_embedding_hyde import NodeSearchEmbeddingHyde
-from processor.query_processor.nodes.e_node_rrf import NodeRrf
-from processor.query_processor.nodes.f_node_rerank import NodeRerank
 from processor.query_processor.nodes.g_node_answer_output import NodeAnswerOutput
 from processor.query_processor.state import QueryGraphState
 
@@ -38,9 +35,6 @@ class KBQueryWorkflow:
         print("实例化所有节点...")
         self.node_prepare_query = NodePrepareQuery()
         self.node_search_embedding = NodeSearchEmbedding()
-        self.node_search_embedding_hyde = NodeSearchEmbeddingHyde()
-        self.node_rrf = NodeRrf()
-        self.node_rerank = NodeRerank()
         self.node_answer_output = NodeAnswerOutput()
 
     # 注册
@@ -48,9 +42,6 @@ class KBQueryWorkflow:
         print("注册所有节点...")
         self.workflow.add_node("node_prepare_query", self.node_prepare_query)
         self.workflow.add_node("node_search_embedding", self.node_search_embedding)
-        self.workflow.add_node("node_search_embedding_hyde", self.node_search_embedding_hyde)
-        self.workflow.add_node("node_rrf", self.node_rrf)
-        self.workflow.add_node("node_rerank", self.node_rerank)
         self.workflow.add_node("node_answer_output", self.node_answer_output)
 
     # 路由
@@ -60,28 +51,9 @@ class KBQueryWorkflow:
         self.workflow.set_entry_point("node_prepare_query")
         # self.workflow.add_node(START,"node_item_name_confirm")
 
-        # 条件边
-        self.workflow.add_conditional_edges(
-            "node_prepare_query",
-            self._route_after_prepare_query,
-            {
-                "node_search_embedding": "node_search_embedding",
-                "node_search_embedding_hyde": "node_search_embedding_hyde",
-            }
-        )
-
-        # 注册边
-        self.workflow.add_edge("node_search_embedding", "node_rrf")
-        self.workflow.add_edge("node_search_embedding_hyde", "node_rrf")
-
-        self.workflow.add_edge("node_rrf", "node_rerank")
-        self.workflow.add_edge("node_rerank", "node_answer_output")
+        self.workflow.add_edge("node_prepare_query", "node_search_embedding")
+        self.workflow.add_edge("node_search_embedding", "node_answer_output")
         self.workflow.add_edge("node_answer_output", END)
-
-    # 路由-条件
-    def _route_after_prepare_query(self, state: QueryGraphState):
-        print("路由-条件...")
-        return ["node_search_embedding", "node_search_embedding_hyde"]
 
     # 编译图
     def compile(self):
