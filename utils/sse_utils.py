@@ -1,6 +1,7 @@
 import json
 import queue
 import asyncio
+import threading
 from typing import Dict, Any, Optional, AsyncGenerator
 from fastapi import Request
 
@@ -17,6 +18,7 @@ class SSEEvent:
 # 全局 SSE 会话队列存储
 # Key: session_id, Value: queue.Queue
 _session_stream: Dict[str, "queue.Queue"] = {}
+_request_cancel: Dict[str, threading.Event] = {}
 
 def get_sse_queue(session_id: str) -> Optional["queue.Queue"]:
     """获取指定 session 的队列"""
@@ -26,11 +28,19 @@ def create_sse_queue(session_id: str) -> "queue.Queue":
     """创建并注册一个新的 SSE 队列"""
     q = queue.Queue()
     _session_stream[session_id] = q
+    _request_cancel[session_id] = threading.Event()
     return q
+
+def get_cancel_event(request_id: str) -> threading.Event:
+    return _request_cancel.setdefault(request_id, threading.Event())
+
+def cancel_request(request_id: str) -> None:
+    get_cancel_event(request_id).set()
 
 def remove_sse_queue(session_id: str):
     """移除指定 session 的队列"""
     _session_stream.pop(session_id, None)
+    _request_cancel.pop(session_id, None)
 
 def _sse_pack(event: str, data: Dict[str, Any]) -> str:
     """打包 SSE 消息格式"""
@@ -62,6 +72,9 @@ async def sse_generator(session_id: str, request: Request) -> AsyncGenerator[str
         while True:
             # 若客户端断开，尽快退出
             if await request.is_disconnected():
+                cancel_request(session_id)
+                from utils.observability import finish_trace
+                finish_trace(session_id, "CANCELLED")
                 break
 
             try:
@@ -84,4 +97,6 @@ async def sse_generator(session_id: str, request: Request) -> AsyncGenerator[str
     finally:
         # 清理资源
         remove_sse_queue(session_id)
+        from utils.task_utils import clear_task
+        clear_task(session_id)
 

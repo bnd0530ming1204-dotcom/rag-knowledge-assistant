@@ -30,7 +30,7 @@ services:
       - ./volumes/minio:/data
     command: minio server /data
     ports:
-      - "9000:9000"
+      - "19000:9000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 10s

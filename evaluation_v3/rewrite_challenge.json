@@ -1,0 +1,15 @@
+{
+  "status": "DEVELOPMENT_CHALLENGE_ONLY",
+  "cases": [
+    {"id":"rw001","history":[{"role":"user","text":"A100 V2 的保修政策是什么？"}],"query":"它支持多久？","rewrite_required":true,"category":"pronoun"},
+    {"id":"rw002","history":[{"role":"user","text":"比较 A100 V1 和 V2。"}],"query":"那第二个呢？","rewrite_required":true,"category":"ellipsis"},
+    {"id":"rw003","history":[{"role":"user","text":"我们刚才在讨论 A200。"}],"query":"它的音频扩展距离是多少？","rewrite_required":true,"category":"coreference"},
+    {"id":"rw004","history":[{"role":"user","text":"A100 怎么升级？"}],"query":"什么是 RRF？","rewrite_required":false,"category":"standalone_with_history"},
+    {"id":"rw005","history":[{"role":"user","text":"A100 的电源规格是什么？"}],"query":"A200 在 1080p 模式需要多少带宽？","rewrite_required":false,"category":"topic_switch"},
+    {"id":"rw006","history":[{"role":"user","text":"午饭吃什么？"},{"role":"assistant","text":"可以吃面。"}],"query":"部署指南建议配置几个时间源？","rewrite_required":false,"category":"history_pollution"},
+    {"id":"rw007","history":[],"query":"它支持多久？","rewrite_required":false,"category":"no_history"},
+    {"id":"rw008","history":[{"role":"user","text":"A100 V1 和 V2 都列出来。"}],"query":"前者怎么恢复出厂？","rewrite_required":true,"category":"pronoun"},
+    {"id":"rw009","history":[{"role":"user","text":"A200 有哪些更新方式？"}],"query":"还有呢？","rewrite_required":true,"category":"ellipsis"},
+    {"id":"rw010","history":[{"role":"user","text":"解释一下混合检索。"}],"query":"BGE-M3 如何生成稀疏向量？","rewrite_required":false,"category":"topic_switch"}
+  ]
+}

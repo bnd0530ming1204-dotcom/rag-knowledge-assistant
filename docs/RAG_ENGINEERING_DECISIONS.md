@@ -120,3 +120,47 @@ Code commit recorded at experiment start: `d7a66502d980ded067b95b8572676f4961c3a
 - Latency: P50 106.5 ms vs 80.9 ms across separate runs; not interpreted as causal.
 - Trade-off: added ingestion complexity without measured benefit.
 - Final Decision: REMOVE; retain original table content and investigate representation only with new development evidence.
+
+## Final V3 promotion decisions
+
+The Phase 2 entries above are retained as historical evidence. The following decisions use the final V3 production-compatible runs and supersede earlier wording where results differ. Production default did not change.
+
+### Real `gte-rerank-v2` — KEEP_OPTIONAL / REJECT_DEFAULT
+
+- Experiment: Weighted Hybrid Candidate10 -> real reranker -> Fixed Top5, all 110 Frozen queries.
+- Result: R@1 `.6481→.6667`, R@3 `.8574→.8630`, R@5 `.8944→.9056`, MRR@5 unchanged at `.8204`; 8 improved, 9 degraded, 73 unchanged answerable queries.
+- Latency: total retrieval/context P50/P95 `706.52/883.40 ms`; paired total-latency overhead proxy P50/P95 `603/765 ms` (not separately instrumented rerank-stage latency).
+- Failure: `v2q030` relevant evidence moved from rank 2 to outside Top5.
+- Final Decision: KEEP_OPTIONAL, REJECT_DEFAULT. Small recall gains do not offset inconsistent ranking and remote latency.
+
+### Targeted HyDE — KEEP_OPTIONAL / REJECT_DEFAULT
+
+- Experiment: 18 paraphrase/colloquial answerable queries plus all 20 Frozen no-answer queries, with saved real qwen-flash hypotheses.
+- Result on answerable subset: R@1 `.5000→.5556`, R@3/R@5 unchanged at `.8333`, MRR `.6574→.6852`; 2 improved, 1 degraded, 15 unchanged.
+- Latency: HyDE generation P50/P95 `1305.94/1661.57 ms`.
+- Failure: manual review found unsupported concrete assertions in 20/20 no-answer hypotheses. This is hypothesis drift, not final-answer hallucination.
+- Final Decision: KEEP_OPTIONAL for controlled experiments, REJECT_DEFAULT.
+
+### Explicit RRF — KEEP_OPTIONAL / REJECT_DEFAULT
+
+- Result: R@1 `.6481→.6389`, R@3 `.8574→.8611`, R@5 `.8944→.9056`, MRR `.8204→.8065`; local P50/P95 `384.20/530.46 ms`.
+- Final Decision: KEEP_OPTIONAL, REJECT_DEFAULT because tail recall gain accompanied early-rank regression and latency.
+
+### Dynamic Selector — KEEP_OPTIONAL / REJECT_DEFAULT
+
+- Result: identical retrieval metrics, average context count and average context tokens to Fixed under locked parameters.
+- Final Decision: KEEP_OPTIONAL, REJECT_DEFAULT; it did not demonstrate the required context reduction.
+
+### Generation evaluation — DIAGNOSTIC ONLY
+
+- Experiment: real qwen-flash generation for 110/110 Frozen queries using production-default retrieval contexts.
+- Diagnostic/reference-based proxies on answerable queries: correctness `.7333`, faithfulness `.5477`, source/citation coverage `.9111`, context relevance `.2300`; LLM P50/P95 `933.45/2315.85 ms`.
+- No-answer: 14 supported refusals, 5 unsupported factual claims, 1 needs review.
+- Manual review: proxy/semantic disagreements and fabricated image URLs were observed; source coverage is not claim-level citation entailment.
+- Final Decision: retain metrics for failure analysis only. Do not call them human accuracy, semantic accuracy, ground-truth accuracy, or proof that hallucination is solved.
+
+### Final production default — FREEZE
+
+- Pipeline: history-based rewrite -> BGE-M3 Weighted Hybrid `.8/.2` -> Candidate10 -> Fixed Top5 -> qwen-flash -> sources/SSE/Mongo.
+- Fresh regression: R@1 `.6481`, R@3 `.8574`, R@5 `.8944`, MRR@5 `.8204`; local P50/P95 `75.89/120.85 ms`.
+- Final Decision: FREEZE without promoting RRF, rerank, HyDE, Dynamic Selector, or Evidence Gate V1.

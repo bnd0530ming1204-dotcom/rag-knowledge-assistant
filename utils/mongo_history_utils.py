@@ -13,6 +13,7 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 from bson import ObjectId
 # 导入dotenv模块：用于从.env文件加载环境变量，避免硬编码敏感配置（如MongoDB连接地址）
 from dotenv import load_dotenv
+from utils.retrieval_errors import HistoryUnavailable
 
 # 加载.env文件中的环境变量，使os.getenv能读取到配置
 load_dotenv()
@@ -36,7 +37,7 @@ class HistoryMongoTool:
             self.db_name = os.getenv("MONGO_DB_NAME")
 
             # 创建MongoDB客户端实例，建立与数据库的连接
-            self.client = MongoClient(self.mongo_url)
+            self.client = MongoClient(self.mongo_url, serverSelectionTimeoutMS=2000, connectTimeoutMS=2000)
             # 获取指定名称的数据库对象
             self.db = self.client[self.db_name]
             # 获取对话记录的集合（相当于关系型数据库的表），集合名：chat_message
@@ -58,7 +59,7 @@ class HistoryMongoTool:
 
 # 定义全局变量：存储HistoryMongoTool的单例实例
 # 目的：将数据库连接的初始化提前到模块加载阶段，避免第一次调用接口时才建立连接（提升首次响应速度）
-_history_mongo_tool = HistoryMongoTool()
+_history_mongo_tool = None
 
 def get_history_mongo_tool() -> HistoryMongoTool:
     """
@@ -157,9 +158,8 @@ def update_message_item_names(ids: List[str], item_names: List[str]) -> int:
     :param item_names: 要设置的新商品名称列表
     :return: 实际更新的文档数量，更新失败返回0
     """
-    # 获取全局的HistoryMongoTool实例，使用单例模式
-    mongo_tool = get_history_mongo_tool()
     try:
+        mongo_tool = get_history_mongo_tool()
         # 将字符串类型的主键列表转为MongoDB的ObjectId类型（数据库中主键是ObjectId类型）
         object_ids = [ObjectId(i) for i in ids]
         # 执行批量更新操作
@@ -207,14 +207,13 @@ def get_recent_messages(session_id: str, limit: int = 10) -> List[Dict[str, Any]
     except Exception as e:
         # 捕获查询异常，记录错误日志
         logging.error(f"Error getting recent messages: {e}")
-        # 异常时返回空列表，避免上层处理None报错
-        return []
+        raise HistoryUnavailable("history read is unavailable") from e
 
 
 def get_recent_sessions(limit: int = 50) -> List[Dict[str, Any]]:
     """按最后消息时间倒序返回会话摘要。"""
-    mongo_tool = get_history_mongo_tool()
     try:
+        mongo_tool = get_history_mongo_tool()
         pipeline = [
             {"$sort": {"ts": -1}},
             {"$group": {

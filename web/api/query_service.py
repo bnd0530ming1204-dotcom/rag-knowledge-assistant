@@ -14,6 +14,10 @@ from utils.sse_utils import create_sse_queue, sse_generator
 from utils.sse_utils import push_to_session, SSEEvent
 from utils.task_utils import update_task_status, TASK_STATUS_PROCESSING, TASK_STATUS_FAILED, get_task_result
 from utils.retrieval_errors import RetrievalError
+from utils.retrieval_errors import ApplicationError
+from utils.retrieval_errors import DocumentParseFailed, GenerationFailed, GenerationTimeout
+from config.settings import get_settings
+from utils.observability import create_trace, finish_trace, get_trace
 
 app = FastAPI()
 
@@ -39,27 +43,33 @@ async def query(backgroundTasks: BackgroundTasks, query: QueryRequest):
     user_query = query.query
     session_id = query.session_id
     is_stream = query.is_stream
+    request_id = uuid.uuid4().hex
+    settings = get_settings()
+    create_trace(request_id, session_id, user_query, settings.dense_weight, settings.sparse_weight)
 
     if is_stream:
-        create_sse_queue(session_id)
+        create_sse_queue(request_id)
 
-    update_task_status(session_id, TASK_STATUS_PROCESSING, is_stream)  # 记录进度
+    update_task_status(request_id, TASK_STATUS_PROCESSING, is_stream)
 
     if is_stream:
-        backgroundTasks.add_task(run_query_graph, session_id, user_query, is_stream)  # run_query_graph调用工作流
-        return {"message": "任务已经开始，请耐心等待", "session_id": session_id}
+        backgroundTasks.add_task(run_query_graph, request_id, session_id, user_query, is_stream)
+        return {"message": "任务已经开始，请耐心等待", "session_id": session_id, "request_id": request_id}
     else:
         try:
-            result = run_query_graph(session_id, user_query, is_stream)
-        except RetrievalError as exc:
-            raise HTTPException(status_code=503, detail={"code": exc.code, "message": "Retrieval service is temporarily unavailable"}) from exc
-        answer = get_task_result(session_id, "answer", "")
+            result = run_query_graph(request_id, session_id, user_query, is_stream)
+        except (RetrievalError, ApplicationError) as exc:
+            raise HTTPException(status_code=503, detail={"code": exc.code, "message": "RAG service is temporarily unavailable"}) from exc
+        answer = get_task_result(request_id, "answer", "")
         return {
             "message": "处理完成",
             "session_id": session_id,
+            "request_id": request_id,
             "answer": answer,
             "sources": result.get("sources", []) if isinstance(result, dict) else [],
-            "image_urls": result.get("image_urls", []) if isinstance(result, dict) else []
+            "image_urls": result.get("image_urls", []) if isinstance(result, dict) else [],
+            "context_count": result.get("context_count", 0) if isinstance(result, dict) else 0,
+            "context_token_count": result.get("context_token_count", 0) if isinstance(result, dict) else 0,
         }
 
 
@@ -94,17 +104,19 @@ def upload_pdf(file: UploadFile = File(...)):
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"PDF 处理失败: {exc}") from exc
+        error = DocumentParseFailed("document parsing failed")
+        raise HTTPException(status_code=500, detail={"code": error.code, "message": "PDF processing failed"}) from exc
     finally:
         file.file.close()
 
 
-def run_query_graph(session_id: str, user_query: str, is_stream: bool):
+def run_query_graph(request_id: str, session_id: str, user_query: str, is_stream: bool):
     print("调用搜索工作流")
 
     init_state = {
         "original_query": user_query,
         "session_id": session_id,
+        "request_id": request_id,
         "is_stream": is_stream
     }
 
@@ -115,23 +127,29 @@ def run_query_graph(session_id: str, user_query: str, is_stream: bool):
             for _ in result:
                 pass
         return result
-    except RetrievalError as exc:
-        update_task_status(session_id, TASK_STATUS_FAILED, is_stream)
+    except (RetrievalError, ApplicationError) as exc:
+        update_task_status(request_id, TASK_STATUS_FAILED, is_stream)
+        current_trace = get_trace(request_id)
+        if not current_trace or current_trace.terminal_status != "CANCELLED":
+            finish_trace(request_id, "TIMEOUT" if exc.code == "GENERATION_TIMEOUT" else "FAILED", exc.code)
         if is_stream:
-            push_to_session(session_id, SSEEvent.ERROR, {
+            # Generation errors are already emitted by the answer node.
+            if not isinstance(exc, (GenerationFailed, GenerationTimeout)):
+                push_to_session(request_id, SSEEvent.ERROR, {
                 "code": exc.code,
-                "message": "Retrieval service is temporarily unavailable",
-            })
-            push_to_session(session_id, SSEEvent.CLOSE, {})
+                "message": "RAG service is temporarily unavailable",
+                })
+                push_to_session(request_id, SSEEvent.CLOSE, {})
         raise
     except Exception as exc:
-        update_task_status(session_id, TASK_STATUS_FAILED, is_stream)
+        update_task_status(request_id, TASK_STATUS_FAILED, is_stream)
+        finish_trace(request_id, "FAILED", "QUERY_PROCESSING_FAILED")
         if is_stream:
-            push_to_session(session_id, SSEEvent.ERROR, {
+            push_to_session(request_id, SSEEvent.ERROR, {
                 "code": "QUERY_PROCESSING_FAILED",
                 "message": "Query processing failed",
             })
-            push_to_session(session_id, SSEEvent.CLOSE, {})
+            push_to_session(request_id, SSEEvent.CLOSE, {})
         raise
 
 

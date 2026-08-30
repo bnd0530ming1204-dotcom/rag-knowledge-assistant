@@ -141,7 +141,7 @@
       if(!r.ok)throw Error(d.detail||d.message||'问答请求失败');
       if(!streamToggle.checked){progress(row,{status:'completed',done_list:d.done_list||[]});finish(row,d.answer||'',d.error||'',d.image_urls||[],d.sources||[]);loadSessions();return}
       let raw='';const slot=row.querySelector('.slot');slot.innerHTML='';
-      source=new EventSource(API_BASE+'/stream/'+encodeURIComponent(d.session_id||sessionId));
+      source=new EventSource(API_BASE+'/stream/'+encodeURIComponent(d.request_id||d.session_id||sessionId));
       source.addEventListener('progress',e=>{try{progress(row,JSON.parse(e.data||'{}'))}catch(_){}});
       source.addEventListener('delta',e=>{try{const p=JSON.parse(e.data||'{}');raw+=p.delta||'';slot.textContent=raw;bottom()}catch(_){}});
       const done=e=>{let p={};try{p=JSON.parse(e.data||'{}')}catch(_){}finish(row,p.answer||raw,p.error||'',p.image_urls||[],p.sources||[]);source?.close();source=null;sendBtn.disabled=false;loadSessions()};

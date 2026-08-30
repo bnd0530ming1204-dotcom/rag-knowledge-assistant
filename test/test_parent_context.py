@@ -3,6 +3,7 @@ from unittest.mock import patch
 from pathlib import Path
 
 from config.retrieval_config import retrieval_config
+from config.settings import get_settings
 from processor.import_processor.parent_context import assign_parent_titles, build_embedding_text
 from processor.import_processor.nodes.f_node_bge_embedding import NodeBGEEmbedding
 
@@ -94,24 +95,25 @@ class ParentContextTests(unittest.TestCase):
         self.assertEqual(result[0]["dense_vector"], [1.0])
         self.assertEqual(result[0]["sparse_vector"], {0: 1.0})
 
-    def test_retrieval_budget_remains_baseline_five(self):
-        self.assertEqual(retrieval_config.initial_candidate_limit, 5)
-        self.assertEqual(retrieval_config.rrf_candidate_limit, 5)
-        self.assertEqual(retrieval_config.rerank_candidate_limit, 5)
-        self.assertEqual(retrieval_config.final_output_limit, 5)
+    def test_retrieval_budget_matches_promoted_candidate10_config(self):
+        settings = get_settings()
+        self.assertEqual(retrieval_config.initial_candidate_limit, settings.hybrid_candidate_top_n)
+        self.assertEqual(retrieval_config.final_output_limit, settings.final_context_top_k)
+        self.assertEqual(settings.hybrid_candidate_top_n, 10)
+        self.assertEqual(settings.final_context_top_k, 5)
 
     def test_downstream_nodes_still_consume_original_content(self):
         project_root = Path(__file__).resolve().parents[1]
         reranker_source = (project_root / "processor/query_processor/nodes/f_node_rerank.py").read_text(
             encoding="utf-8"
         )
-        answer_source = (project_root / "processor/query_processor/nodes/g_node_answer_output.py").read_text(
+        context_source = (project_root / "utils/context_builder.py").read_text(
             encoding="utf-8"
         )
         self.assertIn('contents = [doc.get("content") for doc in merged_multi_docs]', reranker_source)
-        self.assertIn('content = doc.get("content")', answer_source)
+        self.assertIn('doc["content"]', context_source)
         self.assertNotIn("embedding_text", reranker_source)
-        self.assertNotIn("embedding_text", answer_source)
+        self.assertNotIn("embedding_text", context_source)
 
 
 if __name__ == "__main__":

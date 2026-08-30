@@ -1,16 +1,22 @@
 import re
+import queue
+import threading
+import time
 from typing import List, Dict, Tuple
 
+from config.settings import get_settings
 from processor.query_processor.prompt.answer_prompt import ANSWER_PROMPT
 
 from processor.query_processor.base import NodeBase
 from processor.query_processor.state import QueryGraphState
 from utils.llm_utils import get_llm_client
 from utils.mongo_history_utils import save_chat_message
-from utils.sse_utils import push_to_session, SSEEvent
+from utils.sse_utils import push_to_session, SSEEvent, get_cancel_event
 from utils.task_utils import set_task_result, add_done_task
-
-MAX_CONTEXT_CHARS = 12000
+from utils.context_builder import build_fixed_context, select_context
+from utils.metadata_utils import normalize_chunk_metadata
+from utils.observability import add_fallback, finish_trace, update_trace
+from utils.retrieval_errors import GenerationFailed, GenerationTimeout
 
 
 class NodeAnswerOutput(NodeBase):
@@ -38,7 +44,7 @@ class NodeAnswerOutput(NodeBase):
                 ]
               }
         """
-        # 阶段一：检查answer是否存在,如果存在直接输出answer中的答案
+        request_id = state.get("request_id", state.get("session_id"))
         answer_exists = self._step_1_check_answer(state)
 
         # # 阶段二  如果没有answer则 构建 Prompt
@@ -47,7 +53,17 @@ class NodeAnswerOutput(NodeBase):
             state["prompt"] = prompt
 
             # 阶段三：  如果没有answer则 调用大模型输出答案
-            self._step_3_generate_response(state, prompt)
+            try:
+                self._step_3_generate_response(state, prompt)
+            except (GenerationFailed, GenerationTimeout) as exc:
+                state["answer"] = ""
+                if state.get("terminal_status") != "CANCELLED":
+                    state["terminal_status"] = "TIMEOUT" if isinstance(exc, GenerationTimeout) else "FAILED"
+                if state.get("is_stream") and state["terminal_status"] != "CANCELLED":
+                    push_to_session(request_id, SSEEvent.ERROR, {"code": exc.code, "message": "Generation failed"})
+                    push_to_session(request_id, SSEEvent.CLOSE, {})
+                finish_trace(request_id, state["terminal_status"], exc.code)
+                raise
 
         # 阶段四： 提取图片URL（用于历史记录和前端展示）
         used_context_docs = state.get("used_context_docs") or []
@@ -57,25 +73,32 @@ class NodeAnswerOutput(NodeBase):
         state["sources"] = sources
 
         # 阶段五：把答案写入到mongodb的history中
-        if state.get("answer"):
+        if state.get("answer") and state.get("terminal_status") not in {"FAILED", "TIMEOUT", "CANCELLED"}:
             print("---写入MongoDB历史记录---")
             self._step_4_write_history(state, image_urls=image_urls, sources=sources)
 
-        add_done_task(state['session_id'], self.name, state.get("is_stream"))
+        # Terminal SSE ordering is delta* -> final/error -> close; do not interleave progress.
+        add_done_task(request_id, self.name, False)
 
         # 阶段六: 流式输出结束，发送 final 事件 [最后兜底，确保图片都能争取渲染和结束]
         print(f"---发送 final 事件---图片为：{image_urls}")
+        state["terminal_status"] = "COMPLETED"
         if state.get("is_stream"):
             push_to_session(
-                state['session_id'],
+                request_id,
                 SSEEvent.FINAL,
                 {
                     "answer": state["answer"],
                     "status": "completed",
                     "image_urls": image_urls,  # 发送图片URL给前端
-                    "sources": sources
+                    "sources": sources,
+                    "request_id": request_id,
+                    "context_count": state.get("context_count", 0),
+                    "context_token_count": state.get("context_token_count", 0),
                 }
             )
+            push_to_session(request_id, SSEEvent.CLOSE, {})
+        finish_trace(request_id, "COMPLETED")
 
         print("---node_answer_output 节点处理结束---")
         return state
@@ -91,9 +114,9 @@ class NodeAnswerOutput(NodeBase):
         if answer:
             if is_stream:
                 print("---Step 1: 发现已有答案，执行流式推送---")
-                push_to_session(state["session_id"], SSEEvent.DELTA, {"delta": answer})
+                push_to_session(state.get("request_id", state["session_id"]), SSEEvent.DELTA, {"delta": answer})
             else:
-                set_task_result(state["session_id"], "answer", answer)
+                set_task_result(state.get("request_id", state["session_id"]), "answer", answer)
             return True
         else:
             return False
@@ -104,23 +127,32 @@ class NodeAnswerOutput(NodeBase):
         阶段二：构建 Prompt
         根据state中的问题、重新问题、历史对话、提问商品（item_names）、 重排内容 组装 LLM 提示词
         """
-        char_budget = MAX_CONTEXT_CHARS
-
         # 1. 获取问题和商品名
         # 优先使用重写后的问题
         question = state.get("rewritten_query") or state.get("original_query", "")
         item_names = state.get("item_names") or []
 
         # 2. 格式化上下文文档
-        context_str, char_budget, used_context_docs = self._format_reranked_docs(
-            state.get("reranked_docs") or [], char_budget
+        settings = get_settings()
+        context_result = select_context(
+            state.get("reranked_docs") or [], settings.context_selector_mode,
+            settings.max_context_tokens, settings.final_context_top_k,
+            settings.min_contexts, settings.max_contexts,
+            settings.dynamic_score_gap, settings.dynamic_min_score,
         )
+        context_str, used_context_docs = context_result.text, context_result.documents
         state["used_context_docs"] = used_context_docs
+        state["context_count"] = len(used_context_docs)
+        state["context_token_count"] = context_result.token_count
+        update_trace(state.get("request_id", state.get("session_id", "")),
+                     selected_context_count=len(used_context_docs),
+                     context_token_count=context_result.token_count,
+                     context_token_count_method=context_result.token_count_method,
+                     context_selector_mode=settings.context_selector_mode,
+                     selection_reason=context_result.selection_reason)
 
         # 3. 格式化历史对话
-        history_str, char_budget = self._format_chat_history(
-            state.get("history") or [], char_budget
-        )
+        history_str, _ = self._format_chat_history(state.get("history") or [], settings.max_context_tokens * 4)
 
         # 4. 格式化 Item Names (提问商品)
         item_names_str = ", ".join(item_names) if item_names else "无指定商品"
@@ -136,50 +168,9 @@ class NodeAnswerOutput(NodeBase):
         return prompt
 
     def _format_reranked_docs(self, reranked_docs: List[Dict], char_budget: int) -> Tuple[str, int, List[Dict]]:
-        """格式化重排序文档，带字符预算控制"""
-        formatted_lines = []
-        used_context_docs = []
-        used_chars = 0
-
-        # 从重排内容中，提取为资料字符串，不可超过限额
-        # 优先使用结构化 reranked_docs（包含 source/chunk_id/url/score），便于约束与引用
-        # ---------------------------------------------------------
-        # 逻辑解释：
-        # 1. 遍历重排序后的文档列表 (reranked_docs)，这些文档已经按相关性从高到低排序。
-        # 2. 对每个文档提取关键信息 (text, source, chunk_id, url, title, score)。
-        # 3. 构造 "元数据头 + 正文" 格式的字符串，例如：
-        #    "[1] [local] [chunk_id=123] [score=0.95] [title=操作手册]
-        #     这里是文档的正文内容..."
-        # 4. 累加字符长度，如果超过 MAX_CONTEXT_CHARS (如 12000 字符)，则停止添加，
-        #    确保 Prompt 长度在 LLM 的处理范围内，避免 Token 溢出。
-        # ---------------------------------------------------------
-        for idx, doc in enumerate(reranked_docs, start=1):
-            content = doc.get("content")
-            meta_tags = [f"[{idx}]"]
-            for field, template in [
-                ("source", "[source={}]"),
-                ("chunk_id", "[chunk_id={}]"),
-                ("url", "[url={}]"),
-                ("title", "[title={}]"),
-            ]:
-                field_value = str(doc.get(field)).strip()
-                if field_value:
-                    meta_tags.append(template.format(field_value))
-
-            relevance_score = doc.get("score")
-            if relevance_score is not None:
-                meta_tags.append(f"[score={float(relevance_score):.4f}]")
-
-            doc_entry = " ".join(meta_tags) + "\n" + content
-
-            if used_chars + len(doc_entry) > char_budget:
-                break
-
-            formatted_lines.append(doc_entry)
-            used_context_docs.append(doc)
-            used_chars += len(doc_entry) + 2
-
-        return "\n\n".join(formatted_lines), char_budget - used_chars, used_context_docs
+        """Backward-compatible adapter; char_budget is treated as approximate tokens."""
+        result = build_fixed_context(reranked_docs, char_budget, get_settings().final_context_top_k)
+        return result.text, max(0, char_budget - result.token_count), result.documents
 
     def _format_chat_history(self, chat_history: List[Dict], char_budget: int) -> Tuple[str, int]:
         """格式化历史对话"""
@@ -217,43 +208,80 @@ class NodeAnswerOutput(NodeBase):
 
         # 判断是否需要流式输出
         # 通常 state 中会注入 stream_queue 用于 SSE 推送
-        session_id = state.get("session_id")
+        request_id = state.get("request_id", state.get("session_id"))
         is_stream = state.get("is_stream")
+        timeout = get_settings().llm_timeout
+        started = time.perf_counter()
 
         if is_stream:
-            print(f"模式: 流式输出 (Streaming), Session: {session_id}")
-            final_text = ""
-            try:
-                # 使用 stream 方法进行流式生成
-                for chunk in llm.stream(prompt):
-                    delta = getattr(chunk, "content", "") or ""
-                    if delta:
-                        final_text += delta
-                        # 将增量内容放入队列
-                        push_to_session(session_id, SSEEvent.DELTA, {"delta": delta})
-
-                print(f"流式输出完成，总长度: {len(final_text)}")
-
-            except Exception as e:
-                print(f"流式生成出错: {e}", exc_info=True)
-                # 发生错误时，尝试推送到前端
-                push_to_session(session_id, SSEEvent.ERROR, {"error": str(e)})
-
+            print(f"模式: 流式输出 (Streaming), Request: {request_id}")
+            final_text, output = "", queue.Queue()
+            cancel_event = get_cancel_event(request_id)
+            def consume():
+                try:
+                    for chunk in llm.stream(prompt):
+                        if cancel_event.is_set():
+                            break
+                        output.put(("delta", getattr(chunk, "content", "") or ""))
+                    output.put(("done", None))
+                except Exception as exc:
+                    output.put(("error", exc))
+            threading.Thread(target=consume, daemon=True).start()
+            deadline = time.perf_counter() + timeout
+            while True:
+                if cancel_event.is_set():
+                    state["terminal_status"] = "CANCELLED"
+                    update_trace(request_id, llm_latency_ms=round((time.perf_counter() - started) * 1000, 3))
+                    finish_trace(request_id, "CANCELLED")
+                    raise GenerationFailed("generation cancelled")
+                remaining = deadline - time.perf_counter()
+                if remaining <= 0:
+                    cancel_event.set()
+                    update_trace(request_id, llm_latency_ms=round((time.perf_counter() - started) * 1000, 3))
+                    raise GenerationTimeout("generation timed out")
+                try:
+                    kind, value = output.get(timeout=min(0.1, remaining))
+                except queue.Empty:
+                    continue
+                if kind == "error":
+                    update_trace(request_id, llm_latency_ms=round((time.perf_counter() - started) * 1000, 3))
+                    raise GenerationFailed("generation failed") from value
+                if kind == "done":
+                    break
+                if value:
+                    final_text += value
+                    push_to_session(request_id, SSEEvent.DELTA, {"delta": value})
             state["answer"] = final_text
         else:
             # 非流式直接调用
-            print(f"模式: 非流式输出 (Blocking), Session: {session_id}")
+            print(f"模式: 非流式输出 (Blocking), Request: {request_id}")
+            output = queue.Queue()
+            threading.Thread(target=lambda: self._invoke_into_queue(llm, prompt, output), daemon=True).start()
             try:
-                response = llm.invoke(prompt)
+                kind, response = output.get(timeout=timeout)
+                if kind == "error":
+                    raise response
                 content = response.content
                 state["answer"] = content
-                set_task_result(session_id, "answer", content)
+                set_task_result(request_id, "answer", content)
                 print(f"生成回答完成，长度: {len(content)}")
-            except Exception as e:
-                print(f"生成回答出错: {e}", exc_info=True)
-                state["answer"] = "抱歉，生成回答时出现错误。"
+            except queue.Empty as exc:
+                update_trace(request_id, llm_latency_ms=round((time.perf_counter() - started) * 1000, 3))
+                raise GenerationTimeout("generation timed out") from exc
+            except Exception as exc:
+                update_trace(request_id, llm_latency_ms=round((time.perf_counter() - started) * 1000, 3))
+                raise GenerationFailed("generation failed") from exc
+
+        update_trace(request_id, llm_latency_ms=round((time.perf_counter() - started) * 1000, 3))
 
         return state
+
+    @staticmethod
+    def _invoke_into_queue(llm, prompt, output):
+        try:
+            output.put(("ok", llm.invoke(prompt)))
+        except Exception as exc:
+            output.put(("error", exc))
 
     def _extract_images_from_docs(self, docs):
         """
@@ -325,21 +353,26 @@ class NodeAnswerOutput(NodeBase):
         sources = []
         seen = set()
         for doc in docs or []:
-            file_name = (doc.get("file_title") or doc.get("title") or "").strip()
+            doc = normalize_chunk_metadata(doc)
+            file_name = doc["document_name"]
             document_source = (doc.get("url") or doc.get("source") or "").strip()
             page = None
             for page_key in ("page", "page_num", "page_number", "page_no"):
                 if doc.get(page_key) is not None:
                     page = doc.get(page_key)
                     break
-            key = (file_name, document_source, str(page) if page is not None else "")
+            key = (file_name, doc["chunk_id"], doc["title"], doc["parent_title"],
+                   document_source, str(page) if page is not None else "")
             if key in seen or not any(key):
                 continue
             seen.add(key)
             item = {
                 "file_name": file_name,
+                "document_id": doc["document_id"],
+                "document_name": doc["document_name"],
                 "document_source": document_source,
                 "title": (doc.get("title") or "").strip(),
+                "parent_title": doc["parent_title"],
                 "chunk_id": str(doc.get("chunk_id") or ""),
             }
             if page is not None:
@@ -370,7 +403,7 @@ class NodeAnswerOutput(NodeBase):
                 )
         except Exception as e:
             # 写历史失败不应影响主链路
-            print(f"写入Mongo历史记录失败: {e}")
+            add_fallback(state.get("request_id", state.get("session_id", "")), "history_write_failure")
 
         return state
 

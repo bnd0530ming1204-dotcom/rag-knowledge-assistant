@@ -1,0 +1,743 @@
+{
+  "scope": "paraphrase_colloquial plus all frozen no-answer",
+  "query_count": 38,
+  "answerable_count": 18,
+  "no_answer_count": 20,
+  "normal_metrics": {
+    "recall@1": 0.5,
+    "recall@3": 0.8333333333333334,
+    "recall@5": 0.8333333333333334,
+    "mrr@5": 0.6574074074074074
+  },
+  "hyde_metrics": {
+    "recall@1": 0.5555555555555556,
+    "recall@3": 0.8333333333333334,
+    "recall@5": 0.8333333333333334,
+    "mrr@5": 0.6851851851851851
+  },
+  "changes": {
+    "improved": 2,
+    "degraded": 1,
+    "unchanged": 15
+  },
+  "latency": {
+    "hyde_generation_p50_ms": 1305.9395,
+    "hyde_generation_p95_ms": 1661.567,
+    "total_p50_ms": 1631.0975,
+    "total_p95_ms": 2098.826
+  },
+  "no_answer_unsupported_assertion_proxy_count": 19,
+  "metric_warning": "unsupported assertion is a lexical review proxy, not final-answer hallucination",
+  "queries": [
+    {
+      "query_id": "v2q029",
+      "query": "一代 A100 老是输错那个六位数，会被晾多久？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "一代A100在输入六位数验证码时若连续输错，系统将触发安全锁定机制。根据NVIDIA官方设定，连续错误5次后，设备将立即进入60秒锁定状态，期间无法继续尝试。此机制旨在防止暴力破解，保障硬件安全。锁定结束后可重新输入，但若再次连续错误，锁定时间将按指数递增（如120秒、240秒等），直至达到最大限制。建议用户在输入时仔细核对，避免误操作。该机制为标准安全策略，不可绕过。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "mrr@5": 0.0,
+        "first_relevant_rank": null
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "mrr@5": 0.0,
+        "first_relevant_rank": null
+      },
+      "hyde_latency_ms": 2602.53,
+      "total_latency_ms": 4623.186,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q030",
+      "query": "二代小终端密码试三回都不对，是整台机器都不能用了吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "二代小终端密码连续三次错误后，系统会触发锁定机制，暂时禁止登录，但设备本身仍可正常开机使用。此时需等待30秒至1分钟自动解锁，或通过管理员后台远程重置锁定状态。若未及时处理，可能影响业务操作，建议立即联系运维人员进行密码重置或检查是否因配置异常导致误锁。整机并未损坏，仅限制登录权限，不影响硬件运行与基础功能。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.3333333333333333,
+        "first_relevant_rank": 3
+      },
+      "hyde_latency_ms": 1145.699,
+      "total_latency_ms": 1454.724,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q031",
+      "query": "会议能进去，可大家互相都听不见也看不到，网络先查哪儿？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "优先检查网络带宽与稳定性。会议无法音视频传输，核心问题通常在本地网络质量。首先确认终端设备的上行带宽是否充足（建议≥2Mbps），使用测速工具（如Speedtest）验证实际上传速率。其次，检查是否存在网络拥塞或丢包，通过ping命令测试网关及会议服务器IP的延迟与丢包率。若延迟＞150ms或丢包＞1%，则为网络瓶颈。同时排查路由器是否启用QoS策略，确保音视频流量优先级。最后，确认防火墙或代理未阻断UDP端口（如3478、50000-60000），这些端口是实时音视频通信的关键。以上步骤可快速定位并解决网络层面的音视频中断问题。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1661.567,
+      "total_latency_ms": 2098.826,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q032",
+      "query": "网页门户没问题，盒子死活认证不上，别急着重置的话先看什么？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "先检查设备网络连接状态，确认盒子是否正常获取IP地址。若未获取，排查路由器DHCP服务是否启用，或尝试重启光猫与路由器。其次，查看盒子系统时间是否准确，错误的时间会导致认证失败。再确认盒子固件版本是否为官方最新版，旧版本可能存在认证兼容性问题。最后，检查是否有防火墙或MAC过滤策略拦截设备接入。以上步骤均需在重置前完成，避免因配置错误导致重复故障。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1044.401,
+      "total_latency_ms": 1342.136,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q033",
+      "query": "Wi-Fi 信号已经很差了，把每个 AP 功率都拉满是不是最快？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "不是。将每个AP功率拉满不仅不能提升信号质量，反而会加剧干扰。高功率发射会扩大覆盖范围，导致相邻AP信号重叠区域增多，产生同频干扰，降低整体网络性能。尤其在密集部署场景下，干扰会显著影响吞吐量和连接稳定性。正确的做法是根据实际覆盖需求合理设置AP功率，结合信道规划、负载均衡与客户端分布进行优化。通过动态调整功率与信道，才能实现最佳覆盖与容量平衡。盲目拉满功率是典型的“治标不治本”操作，反而可能使问题恶化。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_latency_ms": 1022.029,
+      "total_latency_ms": 1372.609,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q034",
+      "query": "给盒子配了网页代理，是不是媒体端口就不用开了？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "配置网页代理后，媒体端口无需开启。网页代理通过HTTP/HTTPS协议完成数据传输，已覆盖媒体流的访问需求，无需依赖独立的媒体端口（如RTSP、RTP等）。只要代理配置正确且网络可达，媒体数据可通过代理通道正常传输。因此，在使用网页代理的场景下，关闭媒体端口可降低安全风险并简化网络配置。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_latency_ms": 1244.829,
+      "total_latency_ms": 1523.642,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q035",
+      "query": "机器进水了还在两年内，能不能免费修？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "机器进水属于人为使用不当导致的损坏，不在保修范围内。根据国家三包规定及多数厂商保修政策，进水造成的故障不享受免费维修服务，即使在两年保修期内。进水会引发内部电路腐蚀、短路等不可逆损伤，属于非产品质量问题。因此，即便设备仍在保修期，也无法免费维修。建议立即断电并送至专业维修点检测，费用需自付。为避免类似情况，应确保设备防水性能完好，避免接触液体。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1187.803,
+      "total_latency_ms": 1456.958,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q036",
+      "query": "管理员一直没绑验证器，过了一天账号会怎样？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "若管理员未绑定验证器，超过24小时后系统将自动触发安全机制，导致账号进入受限状态。根据安全策略，未绑定验证器的账户在超时后无法执行敏感操作（如权限变更、数据导出等），且登录时需强制重新验证身份。若持续未绑定，系统将在72小时后锁定账号，需通过人工审核或上级授权方可恢复。此机制旨在防止未认证管理员滥用权限，确保系统安全性。建议立即绑定验证器以避免服务中断。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 909.857,
+      "total_latency_ms": 1238.348,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q037",
+      "query": "员工走人以后，能不能直接把账号删了省事？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "员工离职后不得直接删除账号。根据信息安全与合规管理要求，账号应立即停用并进入审计状态，保留操作日志以备追溯。直接删除可能导致数据丢失、权限失控及法律风险，尤其涉及财务、客户或敏感信息系统时，违反《网络安全法》及企业内部管理制度。正确做法是：冻结账号权限，归档必要数据，完成离职交接流程后，再按安全策略进行清理或归档。此举确保责任可追溯、合规可审查，避免潜在纠纷与监管处罚。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1254.462,
+      "total_latency_ms": 1572.754,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q038",
+      "query": "普通 U 盘插终端录会，系统会顺手把文件加密吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "普通U盘插入终端设备不会自动加密文件。系统是否加密取决于终端的配置和所用操作系统策略，而非U盘本身。若终端未启用加密功能（如使用FDE全盘加密或特定文件加密机制），仅插入U盘不会触发任何加密操作。U盘作为外接存储介质，其数据读写行为由主机系统控制。若需加密，必须通过主动配置（如使用BitLocker、LUKS或第三方工具）或在传输时启用加密协议。因此，用户应明确终端的安全策略，避免误判。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1286.272,
+      "total_latency_ms": 1620.44,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q039",
+      "query": "工单日志里带着同事邮箱和公网地址，可以原样上传吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "不可以原样上传。工单日志中包含同事邮箱和公网地址属于敏感个人信息，违反数据安全与隐私保护规范。根据《个人信息保护法》及企业数据管理要求，此类信息需进行脱敏处理后方可上传。建议将邮箱替换为“xxx@company.com”格式，公网IP地址应替换为“[REDACTED]”或统一网段标识。未经脱敏的原始日志存在泄露风险，可能导致信息滥用或合规处罚。作为专业实践，所有涉及个人身份信息（PII）的数据在共享、存储或传输前必须完成去标识化处理。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1366.747,
+      "total_latency_ms": 1744.182,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q040",
+      "query": "终端亮着在线绿点，就算会议室交付完了吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "终端亮着在线绿点仅表示设备已连接网络并处于在线状态，不能作为会议室交付完成的依据。会议室交付需完成音视频系统调试、网络配置验证、设备功能测试（如摄像头、麦克风、扬声器）、会议软件集成及权限配置等关键环节。绿点仅反映基础连通性，无法确认会议质量、设备协同或用户体验。专业交付标准应包含完整的验收文档、测试报告和用户确认签字。因此，必须通过系统级测试与验收流程，才能判定会议室正式交付。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "mrr@5": 0.0,
+        "first_relevant_rank": null
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "mrr@5": 0.0,
+        "first_relevant_rank": null
+      },
+      "hyde_latency_ms": 961.645,
+      "total_latency_ms": 1300.992,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q041",
+      "query": "A100 二代按住复位八秒会不会直接全清？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "A100 二代按住复位键8秒不会直接全清。该操作仅触发系统重置，恢复默认设置，不删除用户数据或固件配置。全清需通过专用工具或进入特定维护模式执行。复位操作属于常规故障排除手段，用于解决系统卡死或参数异常，但不会清除存储内容。建议在必要时使用官方固件刷写工具进行完整初始化。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_latency_ms": 1054.05,
+      "total_latency_ms": 1333.947,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q042",
+      "query": "大会议室主机录一小时 1080p，大概得留多少盘？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "录制一小时1080p视频，主机码率通常为8-12Mbps。按10Mbps计算，每小时约需450MB存储空间。单盘容量以64GB计，可容纳约14小时视频。因此，录制一小时1080p视频，仅需1盘即可。建议使用至少64GB硬盘，确保文件完整写入。若使用SD卡或移动硬盘，应选择UHS-I及以上规格，避免录制中断。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1284.745,
+      "total_latency_ms": 1589.083,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q043",
+      "query": "线上升级后好多房间突然注册不了，运维第一步该怎么收手？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "线上升级后房间注册失败，运维第一步应立即回滚至升级前的稳定版本。根据故障现象，注册功能异常属于核心业务链路中断，需优先恢复服务可用性。通过快速回滚可有效隔离升级引入的变更，避免影响范围扩大。同时，立即启动日志采集与监控分析，定位注册接口在升级后出现的错误码、数据库连接异常或认证服务超时等关键指标。回滚操作须在预设的灰度发布策略下执行，确保不影响其他未受影响的服务模块。此步骤遵循“先保可用，再查根因”的运维原则，是应对生产环境重大故障的标准响应流程。",
+      "normal_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1356.286,
+      "total_latency_ms": 1698.181,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q044",
+      "query": "故障原因还没查明，关单时能先猜一个填上吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "不能。关单时必须填写真实、准确的故障原因，不得以猜测内容替代。根据运维规范，故障原因未查明前，系统应保持工单开放状态，直至通过排查、测试或数据分析确认根本原因。擅自填写猜测内容会导致问题溯源失效，影响后续分析、责任追溯及预防措施制定。专业处理流程要求所有记录具备可验证性与可追溯性，任何未经证实的推测均不符合质量标准。因此，关单前必须完成根本原因分析，确保信息准确完整。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "mrr@5": 0.0,
+        "first_relevant_rank": null
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "mrr@5": 0.0,
+        "first_relevant_rank": null
+      },
+      "hyde_latency_ms": 1341.128,
+      "total_latency_ms": 1641.755,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q045",
+      "query": "公网出口把语音优先级标签洗掉了，终端反复保存有用吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "公网出口丢弃语音优先级标签后，终端反复保存无实际意义。原因在于：QoS优先级标签（如DSCP/802.1p）由网络层在报文进入公网前标记，一旦出口设备丢弃该标签，后续终端重设的优先级无法被上游网络识别和处理。终端保存配置仅影响本地行为，无法穿透网络中间节点恢复已丢失的调度信息。因此，即使终端反复保存，也无法重建端到端的语音优先级保障机制。解决路径应为在出口设备配置保留或重新标记语音流量优先级，而非依赖终端重复操作。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 1.0,
+        "first_relevant_rank": 1
+      },
+      "hyde_latency_ms": 1623.21,
+      "total_latency_ms": 1993.71,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q046",
+      "query": "想把会议盒子塞在访客无线同一个二层网里，规范允许吗？",
+      "category": "paraphrase_colloquial",
+      "answerable": true,
+      "hypothesis": "不允许。根据网络安全规范，会议盒子（通常为音视频终端或协作设备）与访客无线网络同属二层网络存在严重安全风险。访客网络属于开放区域，而会议盒子常承载敏感业务数据或接入内部系统，若二者处于同一二层域，将导致跨网段通信、广播域扩大及潜在横向渗透风险。依据等保2.0及企业安全策略，必须通过三层隔离（如VLAN划分、防火墙策略）实现逻辑隔离，禁止将高安全等级设备与访客终端置于同一二层广播域。建议为会议盒子配置独立VLAN，并启用ACL控制访问权限，确保符合最小权限原则与网络分区分域要求。",
+      "normal_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.3333333333333333,
+        "first_relevant_rank": 3
+      },
+      "hyde_metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "mrr@5": 0.5,
+        "first_relevant_rank": 2
+      },
+      "hyde_latency_ms": 1482.914,
+      "total_latency_ms": 1935.572,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q089",
+      "query": "A300 会议终端最多支持多少路视频？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "A300会议终端最多支持4路视频输入。作为专业级音视频通信设备，A300采用高性能编解码引擎与多路视频处理架构，可同时接入并显示4路高清视频流（如摄像头、PC源或外部视频信号），支持灵活的画布布局与主辅流切换。该能力满足中大型会议室多会场协同需求，确保画面清晰流畅，适用于远程协作、指挥调度等高要求场景。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1056.842,
+      "total_latency_ms": 1379.975,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q090",
+      "query": "A100 V2 的摄像头传感器尺寸是多少？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "A100 V2 采用1/1.28英寸CMOS图像传感器，有效像素约1200万。该传感器尺寸在同级别设备中属于较大规格，具备优异的低光成像能力与动态范围表现。其大尺寸感光单元可提升进光量，降低噪点，适用于高精度视觉识别与复杂光照环境下的稳定成像。传感器支持全局快门模式，确保高速运动场景下无拖影，满足工业检测、智能安防等专业应用需求。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1286.892,
+      "total_latency_ms": 1588.726,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q091",
+      "query": "A200 的整机重量是多少公斤？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "A200整机重量为41.5公斤。该数据为制造商官方公布的空机重量（OEW，Operating Empty Weight），包含机体结构、发动机、系统设备及标准航电等固定配置，不含燃油、乘客及货物。作为一款轻型运动飞机，A200采用复合材料机身与高效气动设计，在保证结构强度的同时实现轻量化，其整机重量控制在同级别机型中处于领先水平。该重量参数直接影响飞机的性能表现，如起飞距离、爬升率与燃油效率，是飞行操作与载重规划的重要依据。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1403.356,
+      "total_latency_ms": 1727.178,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q092",
+      "query": "公司是否报销家庭宽带用于远程会议？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "公司通常不报销家庭宽带费用用于远程会议。根据企业差旅与办公成本管理规范，家庭宽带属于个人生活支出，不属于公务用途。远程会议所用网络应由员工自行承担，除非公司有明确政策规定在特定情况下（如长期驻外、项目特殊需求）提供补贴或报销。若需合规使用公司资源，建议通过公司统一采购的办公网络或专用通信服务接入会议系统。擅自将家庭宽带费用列为公务支出可能违反财务制度，影响审计合规性。建议查阅公司《差旅与通讯费用管理办法》或咨询财务部门获取具体政策依据。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1444.612,
+      "total_latency_ms": 1797.182,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q093",
+      "query": "主机保修期内是否承诺直接换新而不是维修？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "在主机保修期内，厂商通常不承诺直接换新，而是优先提供维修服务。根据《中华人民共和国产品质量法》及多数厂商的保修政策，若产品出现非人为损坏的性能故障，厂商应免费维修或更换零部件。只有在维修两次仍无法解决故障，或维修时间超过30日未完成，或因同一问题反复维修达三次以上时，消费者方可要求更换同型号新品或退货。因此，直接换新并非默认选项，需满足法定或合同约定的特定条件。建议查阅具体产品的保修条款以确认权益。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1340.057,
+      "total_latency_ms": 1673.045,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q094",
+      "query": "S1 故障一定会在两小时内彻底解决吗？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "S1故障不会在两小时内必然彻底解决。根据系统故障分级标准，S1级为最高优先级，要求立即响应并启动应急流程，但解决时间取决于故障根源复杂度、资源调配效率及修复方案可行性。实际处理时长受硬件损坏程度、备件可用性、跨部门协同速度等多重因素影响。即使在最优条件下，部分S1故障（如核心组件物理损毁或软件深层缺陷）仍可能超过两小时。因此，S1故障的解决时限需以现场评估为准，不能一概承诺两小时内完成。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1126.19,
+      "total_latency_ms": 1472.205,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q095",
+      "query": "A100 V2 为什么在某个房间每天早上九点断网？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "A100 V2在每日早上九点断网，系因该时段触发了网络设备的定时策略。经排查，核心交换机配置了每日9:00执行的ACL（访问控制列表）更新任务，导致与A100 V2相连的端口被临时阻断。该策略原用于安全加固，但未考虑对AI计算节点的影响。建议修改策略执行时间或为A100 V2所在VLAN设置例外规则，避免服务中断。同时，应启用日志监控，实时追踪策略生效情况。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1575.587,
+      "total_latency_ms": 1891.743,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q096",
+      "query": "会议录制是否可以永久保留且永不删除？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "会议录制通常不可永久保留且不会自动永不删除。根据多数云服务协议，录制文件会按存储策略定期清理，一般保留期限为30至90天，具体取决于平台设置与用户配置。即使启用长期保存功能，也需主动管理并支付额外费用。系统默认不提供无限期保留服务，且数据删除机制在合规要求下可能触发，如隐私法规或存储限额。因此，永久保留需通过手动归档至独立存储系统（如企业级NAS或私有云）实现，并建立明确的备份与归档流程。建议用户及时导出重要录制内容并制定数据生命周期管理计划，以确保关键信息可长期可用。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1323.15,
+      "total_latency_ms": 1696.671,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q097",
+      "query": "审计日志导出包的加密密码是什么？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "审计日志导出包的加密密码由系统自动生成并唯一绑定于当前导出会话，无法通过常规方式获取。该密码遵循高强度随机生成规则，确保数据传输与存储安全。导出时系统会通过安全通道（如HTTPS）将密码同步至授权用户终端，且仅在本次会话有效期内可用。密码不存储于系统数据库，过期后自动失效。若需解密，请使用导出时提供的原始密码，或通过权限管理平台申请重置。建议定期更新访问凭证，避免泄露风险。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1069.98,
+      "total_latency_ms": 1375.262,
+      "unsupported_assertion_proxy": false,
+      "error": null
+    },
+    {
+      "query_id": "v2q098",
+      "query": "A100 V1 支持蓝牙 5.3 吗？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "A100 V1 不支持蓝牙 5.3。该设备搭载的是蓝牙 5.2 协议版本，具备稳定的低功耗连接能力与更广的传输范围，但未升级至蓝牙 5.3 所引入的增强功能，如更精准的定位、更低的延迟及更高的数据吞吐效率。蓝牙 5.3 的新特性需硬件和固件双重支持，而 A100 V1 的芯片平台与协议栈均未集成该版本。因此，其蓝牙功能在性能与兼容性上仍以 5.2 标准为准。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1552.455,
+      "total_latency_ms": 1864.471,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q100",
+      "query": "网络团队应该购买哪个品牌的交换机？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "推荐选择华为或H3C品牌的交换机。两者在企业级网络中具备成熟的技术架构与高可靠性，支持SDN、VXLAN等先进功能，满足大规模组网与精细化管理需求。华为交换机在性能、安全性和可扩展性方面表现突出，尤其在数据中心和核心层部署中具有显著优势；H3C则以性价比高、本地化服务响应快著称，适合中大型企业网络建设。两款品牌均通过多项国际认证，具备良好的兼容性与长期运维支持。根据实际网络规模与预算，优先选择华为用于高性能场景，H3C适用于成本敏感型部署。综合来看，二者均为当前网络团队的优选方案。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1239.396,
+      "total_latency_ms": 1582.32,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q101",
+      "query": "EAP-TLS 证书应由哪一家 CA 签发？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "EAP-TLS 证书必须由受信任的证书颁发机构（CA）签发，且该CA需具备完整的公钥基础设施（PKI）支持能力。在企业级网络认证中，通常使用企业内部自建的私有CA（如Microsoft AD CS、OpenSSL CA）或经过广泛认可的公共CA（如DigiCert、GlobalSign、Let's Encrypt）。关键要求是：证书链必须可验证，客户端和服务器均需信任该CA的根证书。若使用私有CA，需将根证书预置到所有客户端的信任存储中。EAP-TLS依赖双向证书验证，因此CA的可信性直接决定认证安全性。不推荐使用非标准或未经验证的CA，以避免中间人攻击风险。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1817.186,
+      "total_latency_ms": 2207.793,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q102",
+      "query": "云端高级录制服务每月多少钱？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "云端高级录制服务每月费用为800元起，按实际使用时长与存储容量计费。该服务支持4K高清录制、多路音视频同步、自动转码及智能检索功能，适用于企业级会议、在线教育及直播回放场景。基础套餐包含100小时录制时长与500GB存储空间，超出部分按0.8元/分钟和0.2元/GB收取。支持按月订阅，可选包年优惠，节省15%费用。所有数据加密存储于阿里云或华为云合规数据中心，确保安全与高可用性。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1459.657,
+      "total_latency_ms": 1872.19,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q103",
+      "query": "P1 事件的根因分析必须在几天内完成？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "P1事件的根因分析必须在24小时内完成。作为故障响应专家，我明确指出：P1事件属于最高优先级，直接影响核心业务或系统可用性，必须在第一时间启动根因分析（RCA），确保在24小时内完成并输出完整报告。此时限基于SLA标准及应急响应流程要求，旨在快速定位问题根源、防止重复发生，并支持后续恢复与改进。延迟将导致风险累积，影响整体服务稳定性。因此，24小时是必须遵守的硬性时间窗口。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1332.275,
+      "total_latency_ms": 1669.968,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q104",
+      "query": "离职员工的个人网盘文件由谁继承？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "离职员工的个人网盘文件所有权归属于本人，不因离职而自动转移。根据《中华人民共和国个人信息保护法》及企业数据管理规范，个人网盘中的文件属于员工个人数据，企业无权直接继承或访问。若文件涉及工作内容且为职务成果，企业可依据劳动合同或公司制度主张知识产权归属，但需通过合法程序确认。建议企业在员工离职前明确数据交接流程，要求员工主动导出或移交工作相关文件，并签署数据移交确认书。个人网盘中非工作相关的私密文件，企业不得干预。因此，离职员工的个人网盘文件由其本人继续持有，企业无法自动继承。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1422.657,
+      "total_latency_ms": 1780.038,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q106",
+      "query": "设备发生雷击后维修中心收费多少？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "设备雷击后维修中心收费根据损坏程度和维修项目确定，通常包括检测费、零部件更换费及人工工时费。雷击导致的电路板、电源模块等关键部件损坏，维修成本较高，单次维修费用一般在500元至3000元之间。若设备已超出保修期且无保险理赔，需全额承担费用。建议用户第一时间联系专业维修机构进行评估，避免二次故障。维修中心会出具详细报价单，确保收费透明。为降低风险，建议为贵重设备配置防雷保护装置并投保财产险。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1288.729,
+      "total_latency_ms": 1611.529,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q107",
+      "query": "会议室模板能否自动同步到个人日历？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "会议室模板可自动同步至个人日历，前提是系统已配置双向同步机制且权限设置正确。在主流协作平台（如Microsoft Outlook、Google Calendar）中，当会议室资源被预订并关联日历时，系统会通过API实时推送事件信息至用户个人日历。该过程依赖于统一的身份认证与日历服务集成，确保时间冲突检测、提醒通知及变更追踪的准确性。若使用企业级日历管理工具（如Exchange Server或Teams），需启用“自动同步”功能，并确保会议室资源账户具备写入权限。因此，只要配置合规，会议室模板即可实现无缝同步，无需手动重复添加。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1383.981,
+      "total_latency_ms": 1726.725,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q108",
+      "query": "A100 V2 在线升级平均需要几分钟？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "A100 V2在线升级平均耗时约8至12分钟。该时间主要受网络环境、设备当前负载及固件包大小影响。作为专业级边缘计算设备，A100 V2采用增量式升级机制，仅传输差异数据，显著缩短升级周期。升级过程在后台静默执行，不影响设备正常运行。建议在低峰时段进行升级以确保稳定性。完成升级后，系统将自动重启并验证固件完整性。整体流程高效可靠，符合工业级部署要求。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1277.808,
+      "total_latency_ms": 1620.376,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q109",
+      "query": "N305 是否由某个特定运营商网络导致？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "N305频段并非由特定运营商专属，而是3GPP标准定义的全球通用频段，工作在2.3 GHz频段。该频段被多个运营商用于5G网络部署，尤其在亚太及欧洲地区广泛应用。其使用取决于运营商的频谱分配策略，而非技术绑定。因此，N305的可用性与运营商网络相关，但并非由单一运营商独占或导致。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1002.509,
+      "total_latency_ms": 1298.866,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    },
+    {
+      "query_id": "v2q110",
+      "query": "公司允许员工用私人手机录制会议吗？",
+      "category": "no_answer",
+      "answerable": false,
+      "hypothesis": "公司通常不允许员工使用私人手机录制会议，除非事先获得明确授权。根据信息安全与数据合规要求，会议内容可能涉及敏感商业信息或个人隐私，使用私人设备录音存在数据泄露风险。企业应统一使用受控的会议系统（如企业级视频会议平台），并确保录音存储在合规的服务器上，便于权限管理与审计追踪。若确需录音，须遵循公司IT政策，通过审批流程并使用指定设备。擅自使用私人手机录音违反企业信息安全规范，可能导致纪律处分。建议员工始终以公司制度为准，避免个人设备参与敏感信息处理。",
+      "normal_metrics": null,
+      "hyde_metrics": null,
+      "hyde_latency_ms": 1416.675,
+      "total_latency_ms": 1790.36,
+      "unsupported_assertion_proxy": true,
+      "error": null
+    }
+  ]
+}

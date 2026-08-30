@@ -8,6 +8,7 @@ from processor.import_processor.base import BaseNode, setup_logging
 from processor.import_processor.exceptions import StateFieldError, MilvusError
 from processor.import_processor.state import ImportGraphState
 from utils.milvus_utils import get_milvus_client, escape_milvus_string
+from utils.metadata_utils import normalize_chunk_metadata
 
 
 class NodeImportMilvus(BaseNode):
@@ -93,7 +94,7 @@ class NodeImportMilvus(BaseNode):
         # 数据处理
         data_to_insert=[]
         for item in chunks_json_data:
-            item_copy = item.copy()
+            item_copy = normalize_chunk_metadata(item)
             if "part" not in item_copy:
                 item_copy["part"] = 0
             data_to_insert.append(item_copy)

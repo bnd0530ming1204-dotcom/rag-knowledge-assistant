@@ -1,18 +1,20 @@
 # RAG Knowledge Assistant
 
-A knowledge-base assistant built with **FastAPI, LangGraph, BGE-M3, and Milvus**. It supports PDF ingestion, dense/sparse hybrid retrieval, conversation history, SSE streaming, and an evaluation-driven retrieval design validated with a frozen dataset and component ablations.
+## Overview
 
-> This is an AI application engineering portfolio project. It does not claim enterprise production-grade readiness.
+An end-to-end RAG knowledge-base assistant built with **Python, FastAPI, and LangGraph**. It supports PDF/Markdown parsing and ingestion, multi-turn conversations, query rewriting, BGE-M3 dense+sparse hybrid retrieval, context construction, streaming LLM generation, and source tracking. Milvus manages vector retrieval, MongoDB stores conversation history, and structured errors, fallbacks, and request traces improve observability and application stability.
 
 ## Demo
 
-### PDF Upload and Knowledge-Base Ingestion
+### Document Upload and Knowledge-Base Ingestion
 
 <img alt="PDF upload and knowledge-base ingestion" height="450" src="docs/images/upload.png" width="300"/>
 
-### RAG Chat, Answers, and Sources
+### Knowledge QA
 
 <img alt="RAG chat interface" height="700" src="docs/images/chat.png" width="900"/>
+
+### Answer + Sources
 
 <img alt="RAG answer and structured sources" height="800" src="docs/images/chatresult.png" width="950"/>
 
@@ -22,67 +24,116 @@ A knowledge-base assistant built with **FastAPI, LangGraph, BGE-M3, and Milvus**
 
 ### Demo Video
 
-[View the complete running demo](https://github.com/bnd0530ming1204-dotcom/rag-knowledge-assistant/releases/tag/v1.0.0)
+[View the complete running demo in the GitHub Release](https://github.com/bnd0530ming1204-dotcom/rag-knowledge-assistant/releases/tag/v1.0.0)
 
-## Features
+## Core Features
 
-- PDF/Markdown ingestion with MinerU, Markdown processing, and heading-aware chunking.
-- BGE-M3 dense and sparse vectors with Milvus Hybrid Retrieval at 0.8/0.2.
-- MongoDB conversation history and history-aware query rewriting with original-query fallback.
-- FastAPI upload, chat, history, and SSE endpoints.
-- Incremental SSE deltas, final answers with structured sources, and structured error termination.
-- Typed handling for embedding, vector-database, and retrieval failures; an infrastructure error is never treated as a normal empty result.
-- Frozen evaluation, ablation, and regression artifacts used to justify retrieval decisions.
+- PDF / Markdown ingestion with MinerU parsing
+- Heading-aware / hierarchical chunking and parent metadata
+- BGE-M3 dense and sparse embeddings
+- Milvus Weighted Hybrid Retrieval
+- Conditional / history-aware query rewriting with original-query fallback
+- Configurable Explicit RRF, Rerank, HyDE Router, and Fixed / Dynamic Context Selectors
+- Context deduplication, same-parent control, and token budgets
+- qwen-flash answer generation with structured sources
+- Incremental SSE `delta → final/error → close`
+- MongoDB conversation history
+- Structured errors, reliability fallbacks, and request traces
 
-## Architecture
+## System Architecture
+
+The application combines a document knowledge pipeline, an online query pipeline, and supporting infrastructure. Documents are parsed, chunked, embedded, and stored in Milvus; queries use conversation history for retrieval and context construction before streaming an answer with sources; MongoDB, SSE, and request traces manage state and runtime visibility.
+
+## Document Pipeline
 
 ```text
-Document:
-PDF / Markdown → MinerU / Markdown processing → heading-aware chunking
-→ parent-heading enrichment → BGE-M3 dense+sparse → Milvus
-
-Query:
-Query → optional history-aware rewrite → Hybrid Retrieval 0.8/0.2
-→ Candidate10 → Top5 Context → LLM → Answer + Sources / SSE
+PDF / Markdown
+→ MinerU / Markdown Processing
+→ Cleaner
+→ Heading-aware / Hierarchical Chunking
+→ Metadata / Parent Heading
+→ BGE-M3 Dense + Sparse Embeddings
+→ Milvus
 ```
 
-Parent-heading enrichment is retained for ingestion compatibility, but Frozen V2 measured no retrieval improvement from it. Earlier versions evaluated HyDE, custom RRF, and reranking; they remain available as experimental/history modules but are disabled in the default query graph after ablation. Cliff cutoff was removed.
+## Query Pipeline
 
-## Why This Is More Than a Basic RAG Demo
+```text
+User Query
+→ MongoDB History
+→ History-aware Rewrite
+→ BGE-M3 Dense + Sparse Retrieval
+→ Weighted Hybrid 0.8 / 0.2
+→ Candidate10
+→ Fixed Top5 Context Builder
+→ qwen-flash
+→ Answer + Structured Sources
+→ SSE Streaming
+→ MongoDB History
+```
 
-1. A 110-query synthetic benchmark is frozen with dataset and corpus hashes.
-2. Dense, Sparse, Hybrid, Parent Heading, HyDE, Rerank, cutoff, and candidate budget were evaluated independently.
-3. Decisions report Recall@K, MRR@5, and wall-clock latency—including regressions such as lower Recall@3.
-4. Retrieval no-result and retrieval infrastructure failure have different API/SSE behavior.
+## Tech Stack
 
-## Evaluation
+| Layer | Technology |
+| --- | --- |
+| Application | Python 3.11, FastAPI, LangGraph |
+| Document Processing | MinerU, Markdown |
+| Embedding | BGE-M3 Dense + Sparse |
+| Retrieval | Milvus, Weighted Hybrid, optional RRF / Rerank / HyDE |
+| Generation | DashScope, qwen-flash |
+| History | MongoDB |
+| Streaming | Server-Sent Events |
+| Infrastructure | Docker Compose, Milvus, MinIO, etcd, MongoDB |
 
-Evaluation V2 is explicitly **SYNTHETIC / FOR EVALUATION ONLY**: 10 documents, 110 frozen queries (90 answerable, 20 no-answer), and 39 production-ingestion chunks.
+## Engineering Design & Reliability
 
-| Metric | Original full pipeline | Final default pipeline |
-| --- | ---: | ---: |
-| Recall@1 | 0.6444 | 0.6481 |
-| Recall@3 | **0.8741** | **0.8574 ↓** |
-| Recall@5 | 0.8907 | 0.8944 |
-| MRR@5 | 0.8120 | 0.8204 |
-| Retrieval P50 | 2623.1 ms | 85.8 ms* |
+- Typed structured errors for embedding, Milvus, and generation failures
+- Query Rewrite failure falls back to the original query
+- HyDE / Rerank failure falls back to base retrieval results
+- Mongo read failure enters stateless mode; write failure preserves a successful answer
+- SSE terminal states: `COMPLETED / FAILED / TIMEOUT / CANCELLED`
+- Request traces for strategy, candidates, context tokens, latency, fallbacks, and errors
+- Context token budgets, metadata normalization, and source deduplication
+- Docker Compose for Milvus, MinIO, etcd, and MongoDB
 
-`*` Local frozen-evaluation wall-clock observation, not a production SLA. Recall@3 declined, so these results must not be described as across-the-board metric improvement.
+## Retrieval Optimization & Engineering Decisions
 
-Details: [Phase 2 Ablation](evaluation_v2/reports/phase2_ablation_report.md), [Phase 3 Report](evaluation_v2/reports/phase3_targeted_optimization_report.md), and [Engineering Decisions](docs/RAG_ENGINEERING_DECISIONS.md).
+For semantic matching, keyword matching, and complex query scenarios, the project compares Dense, Sparse, Weighted Hybrid, Explicit RRF, Rerank, HyDE, and Context Selection strategies, then selects the default path using retrieval quality, latency, and runtime stability.
 
-## Key Engineering Decisions
+- 110-query evaluation set (90 answerable / 20 no-answer)
+- 10 synthetic evaluation documents with dataset and corpus hash freeze
+- Real BGE-M3, Milvus, `gte-rerank-v2`, and `qwen-flash` runs
 
-- **Hybrid: keep.** It improved early ranking, although it did not win every metric.
-- **Candidate10: keep.** Retrieve a wider pool, then pass only Top5 to answer generation.
-- **HyDE: disabled by default.** Its tail-query gains did not justify latency and unsupported assertions on no-answer prompts.
-- **Current reranker: disabled by default.** It added remote latency and regressed Recall@1/MRR.
-- **Cliff cutoff: removed.** It deleted relevant evidence without a validated benefit.
-- **Evidence Gate v1: not deployed.** Frozen-test false rejection was unacceptable; the system does not claim reliable no-answer detection.
+Final retrieval and generation path:
+
+```text
+History-aware Rewrite
+→ BGE-M3 Weighted Hybrid 0.8 / 0.2
+→ Candidate10
+→ Fixed Top5
+→ qwen-flash
+```
+
+## Core Results
+
+| Final Retrieval Metric | Result |
+| --- | ---: |
+| Recall@1 | 0.6481 |
+| Recall@3 | 0.8574 |
+| Recall@5 | 0.8944 |
+| MRR@5 | 0.8204 |
+| Retrieval / Context P50 | 75.89 ms |
+| Retrieval / Context P95 | 120.85 ms |
+
+| Verification | Result |
+| --- | ---: |
+| Automated tests | 66 passed, 0 failed |
+| Real Milvus integration | PASS |
+| Real MongoDB integration | PASS |
 
 ## Quick Start
 
-Requirements: Python 3.11, Docker Compose, MinerU and OpenAI-compatible API credentials, and BGE-M3 locally or through an available model download.
+Requirements: Python 3.11, Docker Desktop / Docker Compose, available MinerU and OpenAI-compatible LLM APIs, and BGE-M3 locally or through an available model download.
 
 ```powershell
 python -m venv .venv
@@ -90,18 +141,12 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 docker compose up -d
+docker compose ps
 .\.venv\Scripts\uvicorn.exe web.api.query_service:app --host 127.0.0.1 --port 8001
 ```
 
-Open `http://127.0.0.1:8001/chat.html` for the bundled UI or `http://127.0.0.1:8001/docs` for Swagger. Upload a PDF through the UI or `POST /upload`, then call `POST /chat` with a stable `session_id`.
-
-```json
-{
-  "query": "What is this document mainly about?",
-  "session_id": "demo-session-001",
-  "is_stream": true
-}
-```
+- Chat UI: `http://127.0.0.1:8001/chat.html`
+- Swagger: `http://127.0.0.1:8001/docs`
 
 Run acceptance tests:
 
@@ -109,12 +154,22 @@ Run acceptance tests:
 .\.venv\Scripts\python.exe -m unittest discover -s test -p "test_final*.py" -v
 ```
 
-## Limitations
+## Project Structure
 
-- The evaluation corpus is synthetic and does not represent real enterprise traffic or production scale.
-- Evidence Gate v1 is not deployed; no-answer queries are not reliably rejected.
-- Sources do not provide reliable page-level metadata.
-- Frozen V2 did not reproduce a parent-heading retrieval gain.
-- Markdown-table retrieval remains imperfect.
-- No production-scale load test, online SLA, HA, or Kubernetes claim is made.
-- External MinerU/LLM availability depends on network access, credentials, and quota.
+```text
+config/                 Application and retrieval settings
+processor/              Ingestion and query-graph nodes
+utils/                  Embedding, Milvus, Mongo, context, and reliability utilities
+web/                    FastAPI APIs and bundled Chat UI
+evaluation_v2/          Frozen dataset and historical experiment artifacts
+evaluation_v3/          Final strategy, generation, and regression artifacts
+test/                   Unit, acceptance, and integration tests
+docs/                   Engineering decisions, resume evidence, and Demo assets
+```
+
+## Technical Reports
+
+- [RAG V3 Final Report](evaluation_v3/reports/RAG_V3_FINAL_REPORT.md)
+- [RAG Engineering Decisions](docs/RAG_ENGINEERING_DECISIONS.md)
+- [Resume-safe Evidence](docs/RESUME_EVIDENCE.md)
+- [Evaluation V2 and Artifacts](evaluation_v2/README.md)

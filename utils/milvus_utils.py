@@ -38,7 +38,7 @@ def escape_milvus_string(value: str) -> str:
 
 
 def create_hybrid_search_requests(dense_vector, sparse_vector, dense_params=None, sparse_params=None, expr=None,
-                                  limit=5):
+                                  limit=5, dense_limit=None, sparse_limit=None):
     """
     构建Milvus混合搜索请求对象
     分别创建稠密/稀疏向量的搜索请求，用于后续混合搜索融合
@@ -63,7 +63,7 @@ def create_hybrid_search_requests(dense_vector, sparse_vector, dense_params=None
         anns_field="dense_vector",
         param=dense_params,
         expr=expr,
-        limit=limit
+        limit=dense_limit or limit
     )
 
     # 构建稀疏向量搜索请求，关联Milvus的sparse_vector字段
@@ -72,7 +72,7 @@ def create_hybrid_search_requests(dense_vector, sparse_vector, dense_params=None
         anns_field="sparse_vector",
         param=sparse_params,
         expr=expr,
-        limit=limit
+        limit=sparse_limit or limit
     )
 
     return [dense_req, sparse_req]

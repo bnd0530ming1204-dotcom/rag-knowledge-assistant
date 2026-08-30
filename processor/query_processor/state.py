@@ -7,6 +7,7 @@ class QueryGraphState(TypedDict):
     """
 
     session_id: str  # 会话ID
+    request_id: str  # 单次请求ID，不与会话ID复用
     message_id: str  # 消息ID
 
     original_query: str  # 用户原始问题
@@ -32,3 +33,6 @@ class QueryGraphState(TypedDict):
     rewritten_query: str  # 改写后的问题
     history: list  # 历史对话记录
     is_stream: bool  # 是否流式输出
+    context_count: int
+    context_token_count: int
+    terminal_status: str
